@@ -6,9 +6,12 @@ $color-nav: #F8F8F8;
 $color-text-clic: #9B084F;
 $color-button: rgba(25, 108, 132, 0.30);
 $color-tab: #F3976B;
+$margin-little: 2rem;
 
-$border-radius: 6.25rem;
+$border-radius-button: 6.25rem;
+$border-radius: 2rem;
 $box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+$box-shadow-total: 1px 1px 8px #555;
 
 $size-h1: 4rem;
 $size-h2: 1.25rem;
@@ -16,11 +19,13 @@ $size-p: 1rem;
 
 $font-text: "Raleway, Arial, sans-serif";
 
+
 .button-big {
     color: $color-text;
     background-color: $color-button;
     border: none;
-    border-radius: $border-radius;
+    border-radius: $border-radius-button;
+    margin: $margin-little;
     padding: 0.6rem 1.8rem;
     font-size: $size-h1;
     font-family: $font-text;
@@ -33,8 +38,9 @@ $font-text: "Raleway, Arial, sans-serif";
     color: $color-text;
     background-color: $color-button;
     border: none;
-    border-radius: $border-radius;
+    border-radius: $border-radius-button;
     padding: 0.6rem 1.8rem;
+    margin: $margin-little;
     font-size: $size-h2;
     font-family: $font-text;
     box-shadow: $box-shadow;
@@ -42,19 +48,68 @@ $font-text: "Raleway, Arial, sans-serif";
     cursor: pointer;
 }
 
-.onglet {
+.onglet-use {
     color: $color-text;
     background-color: $color-tab;
     border: none;
-    border-radius: 0px 50px;;
+    border-radius: 0rem 3.1rem;
+    margin: $margin-little;
     padding: 0.6rem 5rem;
     font-size: $size-h2;
     font-family: $font-text;
     font-weight: bold;
 }
 
-.texte {
+.onglet {
     color: $color-text;
+    background-color: $color-second;
+    border: none;
+    border-radius: 0rem 3.1rem;
+    margin: $margin-little;
+    padding: 0.6rem 5rem;
+    font-size: $size-h2;
+    font-family: $font-text;
+    font-weight: bold;
+}
+
+.my-card {
+    width: 18rem;
+    border-radius: $border-radius;
+    background-color: $color-first;
+    box-shadow: $box-shadow-total;
+}
+
+.my-card-body {
+    padding: 1.2rem;
+}
+
+.my-card-title {
+    color: $color-text;
+    font-size: $size-h2;
+    font-weight: bold;
+}
+
+.my-card-subtitle {
+    font-size: 1rem;
+}
+
+.my-card-text {
+    font-size: $size-p;
+    color: $color-text;
+    font-weight: bold;
+}
+
+.decision {
+    color: $color-text;
+    background-color: $color-button;
+    border: none;
+    border-radius: $border-radius-button;
+    padding: 0.6rem 1.8rem;
+    margin: $margin-little;
+    font-size: $size-h2;
+    font-family: $font-text;
+    box-shadow: $box-shadow;
+    font-weight: bold;
 }
 
 
