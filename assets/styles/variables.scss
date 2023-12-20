@@ -6,7 +6,9 @@ $color-nav: #F8F8F8;
 $color-text-clic: #9B084F;
 $color-button: rgba(25, 108, 132, 0.30);
 $color-tab: #F3976B;
-$radius: 6.25rem;
+
+$border-radius: 6.25rem;
+$box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 
 $size-h1: 4rem;
 $size-h2: 1.25rem;
@@ -14,9 +16,45 @@ $size-p: 1rem;
 
 $font-text: "Raleway, Arial, sans-serif";
 
-.style-big-button {
+.button-big {
+    color: $color-text;
     background-color: $color-button;
+    border: none;
+    border-radius: $border-radius;
+    padding: 0.6rem 1.8rem;
+    font-size: $size-h1;
+    font-family: $font-text;
+    box-shadow: $box-shadow;
+    font-weight: bold;
+    cursor: pointer;
+}
 
+.button {
+    color: $color-text;
+    background-color: $color-button;
+    border: none;
+    border-radius: $border-radius;
+    padding: 0.6rem 1.8rem;
+    font-size: $size-h2;
+    font-family: $font-text;
+    box-shadow: $box-shadow;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.onglet {
+    color: $color-text;
+    background-color: $color-tab;
+    border: none;
+    border-radius: 0px 50px;;
+    padding: 0.6rem 5rem;
+    font-size: $size-h2;
+    font-family: $font-text;
+    font-weight: bold;
+}
+
+.texte {
+    color: $color-text;
 }
 
 
