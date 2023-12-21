@@ -16,6 +16,7 @@ $box-shadow-total: 1px 1px 8px #555;
 $size-h1: 4rem;
 $size-h2: 1.25rem;
 $size-p: 1rem;
+$size-little: 0.8rem;
 
 $font-text: "Raleway, Arial, sans-serif";
 
@@ -101,14 +102,71 @@ $font-text: "Raleway, Arial, sans-serif";
     font-weight: bold;
 }
 
-.decision {
-    color: $color-text;
-    background-color: $color-button;
-    border: none;
+.decision-starting {
+    display: inline-block;
+    color: #3E8A9F;
+    background-color: #F2E8F3;
+    border: 2px solid #3E8A9F;
     border-radius: $border-radius-button;
     padding: 0.6rem 1.8rem;
     margin: $margin-little;
-    font-size: $size-h2;
+    font-size: $size-little;
+    font-family: $font-text;
+    box-shadow: $box-shadow;
+    font-weight: bold;
+}
+
+.give-opinion {
+    display: inline-block;
+    color: #C1E94E;
+    background-color: #FAFEED;
+    border: 2px solid #C1E94E;
+    border-radius: $border-radius-button;
+    padding: 0.6rem 1.8rem;
+    margin: $margin-little;
+    font-size: $size-little;
+    font-family: $font-text;
+    box-shadow: $box-shadow;
+    font-weight: bold;
+}
+
+.decision-taken {
+    display: inline-block;
+    color: #BEB700;
+    background-color: #FFFFF0;
+    border: 2px solid #BEB700;
+    border-radius: $border-radius-button;
+    padding: 0.6rem 1.8rem;
+    margin: $margin-little;
+    font-size: $size-little;
+    font-family: $font-text;
+    box-shadow: $box-shadow;
+    font-weight: bold;
+}
+
+.conflict {
+    display: inline-block;
+    color: #D6A936;
+    background-color: #FFFAEA;
+    border: 2px solid #D6A936;
+    border-radius: $border-radius-button;
+    padding: 0.6rem 1.8rem;
+    margin: $margin-little;
+    font-size: $size-little;
+    font-family: $font-text;
+    box-shadow: $box-shadow;
+    font-weight: bold;
+}
+
+.decision-ending {
+    display: inline-block;
+    color: #FF1616;
+    background-color: #F3E8E8;
+    border: 2px solid #FF1616;
+    border-radius: $border-radius-button;
+    padding: 0.6rem 1.8rem;
+    margin: $margin-little;
+    font-size: $size-little;
     font-family: $font-text;
     box-shadow: $box-shadow;
     font-weight: bold;
