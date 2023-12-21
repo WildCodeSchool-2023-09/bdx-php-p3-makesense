@@ -1,7 +1,7 @@
 $color-text: #0B3A44;
 $color-background: #FFFFFF;
 $color-first: #FFFFFF;
-$color-second: #D9D9D9;
+$color-second: #EEEEEE;
 $color-nav: #F8F8F8;
 $color-text-clic: #9B084F;
 $color-button: rgba(25, 108, 132, 0.30);
@@ -226,6 +226,39 @@ $font-text: "Raleway, Arial, sans-serif";
 
 .flex {
     display: flex;
+}
+
+
+
+.square-container-column {
+    display: flex;
+    border-radius: $border-radius;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: $color-second;
+    width: 90%;
+    margin: 1rem auto;
+    padding: 0 2rem;
+    font-family: $font-text;
+    color: $color-text;
+    font-weight: bold;
+    box-shadow: $box-shadow;
+}
+
+.square-container {
+    display: flex;
+    border-radius: $border-radius;
+    align-items: center;
+    justify-content: center;
+    background-color: $color-second;
+    width: 90%;
+    margin: 1rem auto;
+    padding: 0 2rem;
+    font-family: $font-text;
+    color: $color-text;
+    font-weight: bold;
+    box-shadow: $box-shadow;
 }
 
 
