@@ -66,9 +66,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Favori::class)]
     private Collection $favoris;
 
+    #[ORM\ManyToMany(mappedBy: 'user', targetEntity: Decision::class)]
+    private Collection $decision;
+
+    #[ORM\ManyToMany(targetEntity: Group::class, inversedBy: 'users')]
+    private Collection $memberGroup;
+
     public function __construct()
     {
         $this->favoris = new ArrayCollection();
+        $this->decision = new ArrayCollection();
+        $this->memberGroup = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -299,6 +307,60 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $favori->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Decision>
+     */
+    public function getDecision(): Collection
+    {
+        return $this->decision;
+    }
+
+    public function addDecision(Decision $decision): static
+    {
+        if (!$this->decision->contains($decision)) {
+            $this->decision->add($decision);
+            $decision->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDecision(Decision $decision): static
+    {
+        if ($this->decision->removeElement($decision)) {
+            // set the owning side to null (unless already changed)
+            if ($decision->getUser() === $this) {
+                $decision->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Group>
+     */
+    public function getMemberGroup(): Collection
+    {
+        return $this->memberGroup;
+    }
+
+    public function addMemberGroup(Group $memberGroup): static
+    {
+        if (!$this->memberGroup->contains($memberGroup)) {
+            $this->memberGroup->add($memberGroup);
+        }
+
+        return $this;
+    }
+
+    public function removeMemberGroup(Group $memberGroup): static
+    {
+        $this->memberGroup->removeElement($memberGroup);
 
         return $this;
     }

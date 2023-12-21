@@ -58,10 +58,19 @@ class Decision
     #[ORM\OneToMany(mappedBy: 'decision', targetEntity: Favori::class, orphanRemoval: true)]
     private Collection $favoris;
 
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'decision')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
+
+
+    #[ORM\ManyToMany(targetEntity: Group::class, mappedBy: 'decision')]
+    private Collection $memberGroups;
+
     public function __construct()
     {
         $this->opinions = new ArrayCollection();
         $this->favoris = new ArrayCollection();
+        $this->memberGroups = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -268,6 +277,45 @@ class Decision
             if ($favori->getDecision() === $this) {
                 $favori->setDecision(null);
             }
+        }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Group>
+     */
+    public function getMemberGroups(): Collection
+    {
+        return $this->memberGroups;
+    }
+
+    public function addMemberGroup(Group $memberGroup): static
+    {
+        if (!$this->memberGroups->contains($memberGroup)) {
+            $this->memberGroups->add($memberGroup);
+            $memberGroup->addDecision($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMemberGroup(Group $memberGroup): static
+    {
+        if ($this->memberGroups->removeElement($memberGroup)) {
+            $memberGroup->removeDecision($this);
         }
 
         return $this;
