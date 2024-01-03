@@ -25,6 +25,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 180, unique: true)]
     #[Assert\NotBlank(message: 'Le email ne doit pas être vide')]
     #[Assert\Email(message: 'Le email {{ value }} n\'ai pas valide.')]
+    #[Assert\Length(
+        max: 100,
+        maxMessage: 'Le mail saisie {{ value }} est trop longue, elle ne devrait pas dépasser {{ limit }} caractères',
+    )]
     private ?string $email = null;
 
     #[ORM\Column]
@@ -35,6 +39,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     #[Assert\NotBlank(message: 'Le mot de passe ne doit pas être vide')]
+    #[Assert\Length(
+        min: 8,
+        max: 100,
+        minMessage: 'Votre mot de passe doit comporter au moins {{ limit }} caractères',
+        maxMessage: 'Votre mot de passe ne peut pas contenir plus de {{ limit }} caractères',
+    )]
     private ?string $password = null;
 
     #[ORM\Column(length: 100)]
