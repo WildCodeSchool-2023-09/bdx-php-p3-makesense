@@ -70,7 +70,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $city = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: 'L occupation ne doit pas être vide')]
+    #[Assert\NotBlank(message: 'L\'occupation ne doit pas être vide')]
     private ?string $occupation = null;
 
     #[ORM\Column(type: Types::TEXT)]
