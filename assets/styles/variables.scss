@@ -2,7 +2,7 @@ $color-text: #0B3A44;
 $color-background: #FFFFFF;
 $color-first: #FFFFFF;
 $color-second: #EEEEEE;
-$color-nav: #F8F8F8;
+$color-nav: #EEEEEE;
 $color-text-clic: #9B084F;
 $color-button: rgba(25, 108, 132, 0.30);
 $color-tab: #F3976B;
@@ -20,6 +20,11 @@ $size-little: 0.8rem;
 
 $font-text: "Raleway, Arial, sans-serif";
 
+* {
+    margin: 0;
+    padding: 0;
+    font-family: $font-text;
+}
 
 .button-big {
     color: $color-text;
