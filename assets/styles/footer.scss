@@ -1,3 +1,21 @@
 .footer {
-    background-color: #99b4df;
+    display: flex;
+    justify-content: flex-end;
+    border-radius: 3.125rem 3.125rem 0rem 0rem;
+    background-color: $color-nav;
+    color: $color-text;
+    padding: 10px;
+    box-shadow: $box-shadow;
+    border-radius: 1rem 1rem 0 0;
+
+    /* Pour positionner le footer en bas de page */
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.footer img {
+    border-radius: $border-radius;
+    width: 8.25756rem;
+    height: 4.00144rem;
 }

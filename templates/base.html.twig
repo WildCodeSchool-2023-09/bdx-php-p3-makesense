@@ -13,13 +13,13 @@
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
         <header>
-            {% include '_navbar.html.twig' %}
         </header>
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
     <body>
+        {% include '_navbar.html.twig' %}
         {% block body %}{% endblock %}
         {% include 'footer.html.twig' %}
     </body>
