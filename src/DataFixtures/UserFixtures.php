@@ -63,6 +63,7 @@ class UserFixtures extends Fixture
             $user->setInstagram($userDataItem['instagram']);
             $user->setFacebook($userDataItem['facebook']);
             $manager->persist($user);
+            $this->addReference('user_' .  $userDataItem['email'], $user);
         }
         $manager->flush();
     }

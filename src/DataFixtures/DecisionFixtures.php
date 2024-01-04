@@ -25,6 +25,7 @@ class DecisionFixtures extends Fixture
             $decision->setDeadlineDecision(new DateTimeImmutable(true));
             $decision->setDeadlineConflict(new DateTimeImmutable(false));
             $decision->setDeadlineFinal(new DateTimeImmutable(false));
+            $this->addReference('decision_' . $i, $decision);
 
             $manager->persist($decision);
         }
