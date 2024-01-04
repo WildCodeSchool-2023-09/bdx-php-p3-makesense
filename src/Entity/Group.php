@@ -11,6 +11,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: GroupRepository::class)]
 #[ORM\Table(name: '`group`')]
+#[UniqueEntity(fields: ['name'], message: 'Ce Nom existe déjà')]
 class Group
 {
     #[ORM\Id]

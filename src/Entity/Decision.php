@@ -30,19 +30,19 @@ class Decision
     private ?string $description = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    #[Assert\NotBlank(message: 'La impact ne doit pas être vide')]
+    #[Assert\NotBlank(message: 'L\'impact ne doit pas être vide')]
     private ?string $impact = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    #[Assert\NotBlank(message: 'La context ne doit pas être vide')]
+    #[Assert\NotBlank(message: 'Le contexte ne doit pas être vide')]
     private ?string $context = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    #[Assert\NotBlank(message: 'La benefits ne doit pas être vide')]
+    #[Assert\NotBlank(message: 'L\'avantages ne doit pas être vide')]
     private ?string $benefits = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    #[Assert\NotBlank(message: 'La risk ne doit pas être vide')]
+    #[Assert\NotBlank(message: 'Le risque ne doit pas être vide')]
     private ?string $risk = null;
 
     #[ORM\Column]

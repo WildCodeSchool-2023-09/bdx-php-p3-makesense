@@ -41,7 +41,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotBlank(message: 'Le mot de passe ne doit pas être vide')]
     #[Assert\Length(
         min: 8,
-        max: 100,
+        max: 255,
         minMessage: 'Votre mot de passe doit comporter au moins {{ limit }} caractères',
         maxMessage: 'Votre mot de passe ne peut pas contenir plus de {{ limit }} caractères',
     )]
@@ -80,7 +80,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $city = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: 'L\'occupation ne doit pas être vide')]
+    #[Assert\NotBlank(message: 'La profession ne doit pas être vide')]
     private ?string $occupation = null;
 
     #[ORM\Column(type: Types::TEXT)]
