@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\OpinionRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: OpinionRepository::class)]
 class Opinion
@@ -15,6 +16,7 @@ class Opinion
     private ?int $id = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank(message: 'L\'Opinion ne doit pas être vide')]
     private ?string $text = null;
 
 

@@ -6,9 +6,12 @@ use App\Repository\GroupRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: GroupRepository::class)]
 #[ORM\Table(name: '`group`')]
+#[UniqueEntity(fields: ['name'], message: 'Ce Nom existe déjà')]
 class Group
 {
     #[ORM\Id]
@@ -17,6 +20,7 @@ class Group
     private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotBlank(message: 'Le Nom ne doit pas être vide')]
     private ?string $name = null;
 
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'memberGroup')]
