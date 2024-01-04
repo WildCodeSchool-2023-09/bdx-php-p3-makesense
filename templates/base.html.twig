@@ -12,7 +12,9 @@
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
-
+        <header>
+            {% include '_navbar.html.twig' %}
+        </header>
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
