@@ -13,4 +13,10 @@ class HomeController extends AbstractController
     {
         return $this->render('home/index.html.twig');
     }
+
+    #[Route('/variables', name: 'variables')]
+    public function test(): Response
+    {
+        return $this->render('variables.html.twig');
+    }
 }
