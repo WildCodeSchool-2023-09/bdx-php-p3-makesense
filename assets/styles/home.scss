@@ -1,5 +1,6 @@
 .my-card-home {
-    width: 120rem;
+    width: 100%;
+    max-width: 120rem;
     border-radius: $border-radius;
     background-color: $color-first;
     box-shadow: $box-shadow-total;
@@ -9,12 +10,29 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 10rem;
+    margin: 5%;
 }
 
 .buttons {
     display: flex;
-    justify-content: space-between;
-    margin: 5rem 5rem;
+    justify-content: space-around;
+}
 
+.imageContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10rem;
+}
+
+.photoStaff {
+    border-radius: $border-radius;
+    width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+    .buttons {
+        flex-direction: column; /* Change la direction en colonne */
+        align-items: center; /* Centre les boutons */
+    }
 }
