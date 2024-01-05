@@ -27,12 +27,12 @@
 
 .photoStaff {
     border-radius: $border-radius;
-    width: 100%;
+    width: 80%;
 }
 
 @media screen and (max-width: 768px) {
     .buttons {
-        flex-direction: column; /* Change la direction en colonne */
-        align-items: center; /* Centre les boutons */
+        flex-direction: column;
+        align-items: center;
     }
 }
