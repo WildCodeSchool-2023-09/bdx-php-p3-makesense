@@ -5,17 +5,25 @@ namespace App\DataFixtures;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserFixtures extends Fixture
 {
+    private UserPasswordHasherInterface $passwordHasher;
+
+    public function __construct(UserPasswordHasherInterface $passwordHasher)
+    {
+        $this->passwordHasher = $passwordHasher;
+    }
     public function load(ObjectManager $manager): void
     {
         // Fixture data
         $userData = [
             [
                 'email' => 'john.doe@example.com',
-                'roles' => ['ROLE_USER'],
-                'password' => 'hashed_password_1',
+                'roles' => ['ROLE_ADMIN'],
+                'password' => 'tototata',
                 'lastname' => 'Doe',
                 'firstname' => 'John',
                 'phoneNumber' => 123456789,
@@ -62,9 +70,11 @@ class UserFixtures extends Fixture
             $user->setTwitter($userDataItem['twitter']);
             $user->setInstagram($userDataItem['instagram']);
             $user->setFacebook($userDataItem['facebook']);
-            $manager->persist($user);
             $this->addReference('user_' .  $userDataItem['email'], $user);
+            $hashedPassword = $this->passwordHasher->hashPassword($user, $userDataItem['password']);
+            $user->setPassword($hashedPassword);
+            $manager->persist($user);
+            $manager->flush();
         }
-        $manager->flush();
     }
 }
