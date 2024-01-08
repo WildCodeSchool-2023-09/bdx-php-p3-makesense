@@ -1,20 +1,3 @@
-
-.log {
-    font-size: 2.5rem;
-    font-family: $font-text;
-    font-weight: bold;
-    text-align: center;
-    margin: 6%;
-}
-
-.container {
-    display: flex;
-    justify-content: center;
-    font-family: $font-text;
-    align-items: center;
-    margin: 5%;
-}
-
 .my-card-log {
     width: 100%;
     max-width: 130rem;
@@ -28,11 +11,33 @@
     text-align: center;
 }
 
+.container {
+    display: flex;
+    justify-content: center;
+    font-family: $font-text;
+    font-weight: bold;
+    align-items: center;
+    margin: 5%;
+}
+
+.log {
+    font-size: 2.5rem;
+    font-family: $font-text;
+    font-weight: bold;
+    text-align: center;
+    margin: 6%;
+}
+
 .bottom {
     display: inline;
 }
 
-
+@media screen and (max-width: 768px){
+.my-card-log{
+    display: flex;
+    flex-direction: column;
+}
+}
 
 
 
