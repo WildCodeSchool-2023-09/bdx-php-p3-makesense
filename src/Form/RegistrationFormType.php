@@ -54,18 +54,9 @@ class RegistrationFormType extends AbstractType
             ->add('occupation', TextType::class)
             ->add('description', TextareaType::class)
             ->add('photo', TextType::class)
-            ->add('website', UrlType::class, [
+            ->add('reseau', UrlType::class, [
                 'required' => false,
             ])
-            ->add('twitter', TextType::class, [
-                'required' => false,
-            ])
-            ->add('instagram', TextType::class, [
-                'required' => false,
-            ])
-            ->add('facebook', TextType::class, [
-                'required' => false,
-            ]);
         ;
     }
 
