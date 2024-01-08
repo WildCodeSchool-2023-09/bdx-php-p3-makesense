@@ -39,7 +39,7 @@ class UserFixtures extends Fixture
             [
                 'email' => 'jane.doe@example.com',
                 'roles' => ['ROLE_USER'],
-                'password' => 'hashed_password_2',
+                'password' => 'taratata',
                 'lastname' => 'Doe',
                 'firstname' => 'Jane',
                 'phoneNumber' => 987654321,
@@ -51,6 +51,23 @@ class UserFixtures extends Fixture
                 'twitter' => 'jane_doe_twitter',
                 'instagram' => 'jane_doe_instagram',
                 'facebook' => 'jane_doe_facebook',
+            ],
+
+            [
+                'email' => 'johan.doe@example.com',
+                'roles' => ['ROLE_VISITOR'],
+                'password' => 'azertyui',
+                'lastname' => 'Doe',
+                'firstname' => 'Johan',
+                'phoneNumber' => 897653412,
+                'city' => 'Las Vegas',
+                'occupation' => 'Developer',
+                'description' => 'Coding.',
+                'photo' => 'johan_doe.jpg',
+                'website' => 'http://www.johandoe.com',
+                'twitter' => 'johan_doe_twitter',
+                'instagram' => 'johan_doe_instagram',
+                'facebook' => 'johan_doe_facebook',
             ],
         ];
         // Create User entities and persist them
