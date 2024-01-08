@@ -31,10 +31,7 @@ class UserFixtures extends Fixture
                 'occupation' => 'Developer',
                 'description' => 'Passionate about coding.',
                 'photo' => 'john_doe.jpg',
-                'website' => 'http://www.johndoe.com',
-                'twitter' => 'john_doe_twitter',
-                'instagram' => 'john_doe_instagram',
-                'facebook' => 'john_doe_facebook',
+                'reseau' => 'http://www.johndoe.com',
             ],
             [
                 'email' => 'jane.doe@example.com',
@@ -47,10 +44,7 @@ class UserFixtures extends Fixture
                 'occupation' => 'Designer',
                 'description' => 'Creative and artistic.',
                 'photo' => 'jane_doe.jpg',
-                'website' => 'http://www.janedoe.com',
-                'twitter' => 'jane_doe_twitter',
-                'instagram' => 'jane_doe_instagram',
-                'facebook' => 'jane_doe_facebook',
+                'reseau' => 'http://www.janedoe.com',
             ],
         ];
         // Create User entities and persist them
@@ -66,10 +60,7 @@ class UserFixtures extends Fixture
             $user->setOccupation($userDataItem['occupation']);
             $user->setDescription($userDataItem['description']);
             $user->setPhoto($userDataItem['photo']);
-            $user->setWebsite($userDataItem['website']);
-            $user->setTwitter($userDataItem['twitter']);
-            $user->setInstagram($userDataItem['instagram']);
-            $user->setFacebook($userDataItem['facebook']);
+            $user->setReseau($userDataItem['reseau']);
             $this->addReference('user_' .  $userDataItem['email'], $user);
             $hashedPassword = $this->passwordHasher->hashPassword($user, $userDataItem['password']);
             $user->setPassword($hashedPassword);
