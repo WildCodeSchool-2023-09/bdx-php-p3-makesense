@@ -23,12 +23,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    #[Assert\NotBlank(message: 'Le email ne doit pas être vide')]
-    #[Assert\Email(message: 'Le email {{ value }} n\'ai pas valide.')]
-    #[Assert\Length(
-        max: 100,
-        maxMessage: 'Le mail saisie {{ value }} est trop longue, elle ne devrait pas dépasser {{ limit }} caractères',
-    )]
     private ?string $email = null;
 
     #[ORM\Column]
@@ -38,41 +32,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
-    #[Assert\NotBlank(message: 'Le mot de passe ne doit pas être vide')]
-    #[Assert\Length(
-        min: 8,
-        max: 255,
-        minMessage: 'Votre mot de passe doit comporter au moins {{ limit }} caractères',
-        maxMessage: 'Votre mot de passe ne peut pas contenir plus de {{ limit }} caractères',
-    )]
     private ?string $password = null;
 
     #[ORM\Column(length: 100)]
-    #[Assert\NotBlank(message: 'Le Nom ne doit pas être vide')]
-    #[Assert\Length(
-        min: 2,
-        max: 100,
-        minMessage: 'Votre Nom doit comporter au moins {{ limit }} caractères',
-        maxMessage: 'Votre Nom ne peut pas contenir plus de {{ limit }} caractères',
-    )]
     private ?string $lastname = null;
 
     #[ORM\Column(length: 100)]
-    #[Assert\NotBlank(message: 'Le prénom  ne doit pas être vide')]
-    #[Assert\Length(
-        min: 2,
-        max: 100,
-        minMessage: 'Votre prénom doit comporter au moins {{ limit }} caractères',
-        maxMessage: 'Votre prénom ne peut pas contenir plus de {{ limit }} caractères',
-    )]
     private ?string $firstname = null;
 
     #[ORM\Column]
-    #[Assert\NotBlank(message: 'Le numéro de téléphone ne doit pas être vide')]
-    #[Assert\Regex(
-        pattern: '/^\d{10}$/',
-        message: 'Le numéro de téléphone doit être composé de 10 chiffres'
-    )]
     private ?int $phoneNumber = null;
 
     #[ORM\Column(length: 50)]
@@ -91,16 +59,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $photo = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $website = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $twitter = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $instagram = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $facebook = null;
+    private ?string $reseau = null;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Favori::class)]
     private Collection $favoris;
@@ -110,6 +69,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\ManyToMany(targetEntity: Group::class, inversedBy: 'users')]
     private Collection $memberGroup;
+
+    #[ORM\Column(type: 'boolean')]
+    private bool $isVerified = false;
 
     public function __construct()
     {
@@ -272,50 +234,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getWebsite(): ?string
+    public function getReseau(): ?string
     {
-        return $this->website;
+        return $this->reseau;
     }
 
-    public function setWebsite(?string $website): static
+    public function setReseau(?string $reseau): static
     {
-        $this->website = $website;
-
-        return $this;
-    }
-
-    public function getTwitter(): ?string
-    {
-        return $this->twitter;
-    }
-
-    public function setTwitter(?string $twitter): static
-    {
-        $this->twitter = $twitter;
-
-        return $this;
-    }
-
-    public function getInstagram(): ?string
-    {
-        return $this->instagram;
-    }
-
-    public function setInstagram(?string $instagram): static
-    {
-        $this->instagram = $instagram;
-
-        return $this;
-    }
-
-    public function getFacebook(): ?string
-    {
-        return $this->facebook;
-    }
-
-    public function setFacebook(?string $facebook): static
-    {
-        $this->facebook = $facebook;
+        $this->reseau = $reseau;
 
         return $this;
     }
@@ -400,6 +326,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeMemberGroup(Group $memberGroup): static
     {
         $this->memberGroup->removeElement($memberGroup);
+
+        return $this;
+    }
+
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(bool $isVerified): static
+    {
+        $this->isVerified = $isVerified;
 
         return $this;
     }
