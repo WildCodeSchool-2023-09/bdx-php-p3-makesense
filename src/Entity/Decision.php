@@ -13,6 +13,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 #[ORM\Entity(repositoryClass: DecisionRepository::class)]
 class Decision
 {
+    use DecisionDeadlines;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -45,12 +47,6 @@ class Decision
     #[Assert\NotBlank(message: 'Le risque ne doit pas être vide')]
     private ?string $risk = null;
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $startingDate = null;
-
-    #[ORM\Column]
-    private ?\DateTimeImmutable $deadlineOpinion = null;
-
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     private ?\DateTimeImmutable $deadlineDecision = null;
 
@@ -66,19 +62,21 @@ class Decision
     #[ORM\OneToMany(mappedBy: 'decision', targetEntity: Favori::class, orphanRemoval: true)]
     private Collection $favoris;
 
-    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'decision')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?User $user = null;
-
-
     #[ORM\ManyToMany(targetEntity: Group::class, mappedBy: 'decision')]
     private Collection $memberGroups;
+
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'decisions')]
+    private Collection $users;
+    #[ORM\ManyToMany(targetEntity: Group::class, inversedBy: 'decisions')]
+    private Collection $groupes;
 
     public function __construct()
     {
         $this->opinions = new ArrayCollection();
         $this->favoris = new ArrayCollection();
         $this->memberGroups = new ArrayCollection();
+        $this->users = new ArrayCollection();
+        $this->groupes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -166,30 +164,6 @@ class Decision
     public function setRisk(string $risk): static
     {
         $this->risk = $risk;
-
-        return $this;
-    }
-
-    public function getStartingDate(): ?\DateTimeImmutable
-    {
-        return $this->startingDate;
-    }
-
-    public function setStartingDate(\DateTimeImmutable $startingDate): static
-    {
-        $this->startingDate = $startingDate;
-
-        return $this;
-    }
-
-    public function getDeadlineOpinion(): ?\DateTimeImmutable
-    {
-        return $this->deadlineOpinion;
-    }
-
-    public function setDeadlineOpinion(\DateTimeImmutable $deadlineOpinion): static
-    {
-        $this->deadlineOpinion = $deadlineOpinion;
 
         return $this;
     }
@@ -290,18 +264,6 @@ class Decision
         return $this;
     }
 
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): static
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, Group>
      */
@@ -325,6 +287,54 @@ class Decision
         if ($this->memberGroups->removeElement($memberGroup)) {
             $memberGroup->removeDecision($this);
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): static
+    {
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Group>
+     */
+    public function getGroupes(): Collection
+    {
+        return $this->groupes;
+    }
+
+    public function addGroupe(Group $groupe): static
+    {
+        if (!$this->groupes->contains($groupe)) {
+            $this->groupes->add($groupe);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): static
+    {
+        $this->users->removeElement($user);
+
+        return $this;
+    }
+
+    public function removeGroupe(Group $groupe): static
+    {
+        $this->groupes->removeElement($groupe);
 
         return $this;
     }

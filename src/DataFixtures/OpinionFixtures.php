@@ -5,9 +5,10 @@ namespace App\DataFixtures;
 use App\Entity\Opinion;
 use DateTimeImmutable;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class OpinionFixtures extends Fixture
+class OpinionFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
