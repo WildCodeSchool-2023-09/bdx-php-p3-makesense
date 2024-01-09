@@ -288,7 +288,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->decision;
     }
 
+/*    public function addDecision(Decision $decision): static
+    {
+        if (!$this->decision->contains($decision)) {
+            $this->decision->add($decision);
+            $decision->getUsers($this);
+        }
 
+        return $this;
+    }
+
+    public function removeDecision(Decision $decision): static
+    {
+        if ($this->decision->removeElement($decision)) {
+            // set the owning side to null (unless already changed)
+            if ($decision->getUsers() === $this) {
+                $decision->getUsers(null);
+            }
+        }
+
+        return $this;
+    }*/
 
     /**
      * @return Collection<int, Group>
