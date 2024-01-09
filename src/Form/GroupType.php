@@ -18,15 +18,11 @@ class GroupType extends AbstractType
             ->add('name')
             ->add('users', EntityType::class, [
                 'class' => User::class,
-                'choice_label' => 'id',
+                'choice_label' => function (User $user) {
+                    return $user->getLastname() . ' ' . $user->getFirstname();
+                },
                 'multiple' => true,
-            ])
-            ->add('decision', EntityType::class, [
-                'class' => Decision::class,
-                'choice_label' => 'id',
-                'multiple' => true,
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

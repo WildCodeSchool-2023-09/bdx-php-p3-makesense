@@ -74,11 +74,17 @@ class Decision
     #[ORM\ManyToMany(targetEntity: Group::class, mappedBy: 'decision')]
     private Collection $memberGroups;
 
+    #[ORM\ManyToMany(targetEntity: Group::class, inversedBy: 'decisions')]
+    private Collection $groupes;
+
+
+
     public function __construct()
     {
         $this->opinions = new ArrayCollection();
         $this->favoris = new ArrayCollection();
         $this->memberGroups = new ArrayCollection();
+        $this->groupes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -325,6 +331,30 @@ class Decision
         if ($this->memberGroups->removeElement($memberGroup)) {
             $memberGroup->removeDecision($this);
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Group>
+     */
+    public function getGroupes(): Collection
+    {
+        return $this->groupes;
+    }
+
+    public function addGroupe(Group $groupe): static
+    {
+        if (!$this->groupes->contains($groupe)) {
+            $this->groupes->add($groupe);
+        }
+
+        return $this;
+    }
+
+    public function removeGroupe(Group $groupe): static
+    {
+        $this->groupes->removeElement($groupe);
 
         return $this;
     }
