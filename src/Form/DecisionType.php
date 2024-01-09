@@ -7,6 +7,7 @@ use App\Entity\Group;
 use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -27,6 +28,12 @@ class DecisionType extends AbstractType
             ->add('deadlineDecision')
             ->add('deadlineConflict')
             ->add('deadlineFinal')
+            ->add('users', EntityType::class, [
+                'class' => User::class,
+                'choice_label' => 'email',
+                'multiple' => true,
+                'expanded' => false,
+            ])
         ;
     }
 

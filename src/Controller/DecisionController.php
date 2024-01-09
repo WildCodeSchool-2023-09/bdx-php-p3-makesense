@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
 
-
 #[Route('/decision')]
 class DecisionController extends AbstractController
 {
@@ -25,11 +24,9 @@ class DecisionController extends AbstractController
     }
 
     #[Route('/new', name: 'app_decision_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, Security $security): Response
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $user = $security->getUser();
         $decision = new Decision();
-        $decision->setUser($user);
 
         $form = $this->createForm(DecisionType::class, $decision);
         $form->handleRequest($request);
@@ -76,7 +73,7 @@ class DecisionController extends AbstractController
     #[Route('/{id}', name: 'app_decision_delete', methods: ['POST'])]
     public function delete(Request $request, Decision $decision, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$decision->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $decision->getId(), $request->request->get('_token'))) {
             $entityManager->remove($decision);
             $entityManager->flush();
         }
