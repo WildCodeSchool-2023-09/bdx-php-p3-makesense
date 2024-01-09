@@ -106,6 +106,4 @@ class Group
 
         return $this;
     }
-
-
 }
