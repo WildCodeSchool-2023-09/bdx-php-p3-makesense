@@ -73,11 +73,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'boolean')]
     private bool $isVerified = false;
 
+    #[ORM\ManyToMany(targetEntity: Decision::class, mappedBy: 'users')]
+    private Collection $decisions;
+
     public function __construct()
     {
         $this->favoris = new ArrayCollection();
         $this->decision = new ArrayCollection();
         $this->memberGroup = new ArrayCollection();
+        $this->decisions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -284,11 +288,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->decision;
     }
 
-    public function addDecision(Decision $decision): static
+/*    public function addDecision(Decision $decision): static
     {
         if (!$this->decision->contains($decision)) {
             $this->decision->add($decision);
-            $decision->setUser($this);
+            $decision->getUsers($this);
         }
 
         return $this;
@@ -298,13 +302,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->decision->removeElement($decision)) {
             // set the owning side to null (unless already changed)
-            if ($decision->getUser() === $this) {
-                $decision->setUser(null);
+            if ($decision->getUsers() === $this) {
+                $decision->getUsers(null);
             }
         }
 
         return $this;
-    }
+    }*/
 
     /**
      * @return Collection<int, Group>
@@ -340,5 +344,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->isVerified = $isVerified;
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, Decision>
+     */
+    public function getDecisions(): Collection
+    {
+        return $this->decisions;
     }
 }

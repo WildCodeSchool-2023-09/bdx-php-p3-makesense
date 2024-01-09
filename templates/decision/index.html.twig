@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Decision index{% endblock %}
+
+{% block body %}
+    <h1>Decision index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Status</th>
+                <th>Description</th>
+                <th>Impact</th>
+                <th>Context</th>
+                <th>Benefits</th>
+                <th>Risk</th>
+                <th>StartingDate</th>
+                <th>DeadlineOpinion</th>
+                <th>DeadlineDecision</th>
+                <th>DeadlineConflict</th>
+                <th>DeadlineFinal</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for decision in decisions %}
+            <tr>
+                <td>{{ decision.id }}</td>
+                <td>{{ decision.title }}</td>
+                <td>{{ decision.status ? 'Yes' : 'No' }}</td>
+                <td>{{ decision.description }}</td>
+                <td>{{ decision.impact }}</td>
+                <td>{{ decision.context }}</td>
+                <td>{{ decision.benefits }}</td>
+                <td>{{ decision.risk }}</td>
+                <td>{{ decision.startingDate ? decision.startingDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ decision.deadlineOpinion ? decision.deadlineOpinion|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ decision.deadlineDecision ? decision.deadlineDecision|date('Y-m-d') : '' }}</td>
+                <td>{{ decision.deadlineConflict ? decision.deadlineConflict|date('H:i:s') : '' }}</td>
+                <td>{{ decision.deadlineFinal ? decision.deadlineFinal|date('H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_decision_show', {'id': decision.id}) }}">show</a>
+                    <a href="{{ path('app_decision_edit', {'id': decision.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="14">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_decision_new') }}">Create new</a>
+{% endblock %}
