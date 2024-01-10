@@ -8,7 +8,7 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
+                {# <th>Id</th> #}
                 <th>Name</th>
                 <th>actions</th>
             </tr>
@@ -16,7 +16,7 @@
         <tbody>
         {% for group in groups %}
             <tr>
-                <td>{{ group.id }}</td>
+                {#  <td>{{ group.id }}</td>#}
                 <td>{{ group.name }}</td>
                 <td>
                     <a href="{{ path('app_group_show', {'id': group.id}) }}">show</a>

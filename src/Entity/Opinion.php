@@ -23,9 +23,15 @@ class Opinion
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
+   //#[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    //private ?\DateTimeInterface $createdAt = null;
+
     #[ORM\ManyToOne(inversedBy: 'opinions')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Decision $decision = null;
+
+    #[ORM\ManyToOne(inversedBy: 'opinions')]
+    private ?User $author = null;
 
     public function getId(): ?int
     {
@@ -64,6 +70,18 @@ class Opinion
     public function setDecision(?Decision $decision): static
     {
         $this->decision = $decision;
+
+        return $this;
+    }
+
+    public function getAuthor(): ?User
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?User $author): static
+    {
+        $this->author = $author;
 
         return $this;
     }

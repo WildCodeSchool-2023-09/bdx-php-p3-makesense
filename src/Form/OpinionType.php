@@ -3,33 +3,35 @@
 namespace App\Form;
 
 use App\Entity\Decision;
-use App\Entity\Group;
+use App\Entity\Opinion;
 use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class GroupType extends AbstractType
+class OpinionType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name')
-            ->add('users', EntityType::class, [
+            ->add('text')
+            ->add('createdAt')
+            /*->add('decision', EntityType::class, [
+                'class' => Decision::class,
+        'choice_label' => 'id',
+            ])
+            ->add('author', EntityType::class, [
                 'class' => User::class,
-                    function (User $user) {
-                        return $user->getLastname() . ' ' . $user->getFirstname();
-                    },
-                'multiple' => true,
-                'expanded' => false,
-            ]);
+        'choice_label' => 'id',
+            ])*/
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Group::class,
+            'data_class' => Opinion::class,
         ]);
     }
 }

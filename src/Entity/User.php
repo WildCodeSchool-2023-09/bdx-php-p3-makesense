@@ -76,12 +76,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToMany(targetEntity: Decision::class, mappedBy: 'users')]
     private Collection $decisions;
 
+    #[ORM\OneToMany(mappedBy: 'author', targetEntity: Opinion::class)]
+    private Collection $opinions;
+
     public function __construct()
     {
         $this->favoris = new ArrayCollection();
         $this->decision = new ArrayCollection();
         $this->memberGroup = new ArrayCollection();
         $this->decisions = new ArrayCollection();
+        $this->opinions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -352,5 +356,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getDecisions(): Collection
     {
         return $this->decisions;
+    }
+
+    /**
+     * @return Collection<int, Opinion>
+     */
+    public function getOpinions(): Collection
+    {
+        return $this->opinions;
+    }
+
+    public function addOpinion(Opinion $opinion): static
+    {
+        if (!$this->opinions->contains($opinion)) {
+            $this->opinions->add($opinion);
+            $opinion->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOpinion(Opinion $opinion): static
+    {
+        if ($this->opinions->removeElement($opinion)) {
+            // set the owning side to null (unless already changed)
+            if ($opinion->getAuthor() === $this) {
+                $opinion->setAuthor(null);
+            }
+        }
+
+        return $this;
     }
 }

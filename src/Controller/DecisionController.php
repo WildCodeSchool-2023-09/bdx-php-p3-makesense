@@ -49,6 +49,7 @@ class DecisionController extends AbstractController
     {
         return $this->render('decision/show.html.twig', [
             'decision' => $decision,
+
         ]);
     }
 
