@@ -1,5 +1,9 @@
 h1{
-    align-items: center;
+    font-size: 2.5rem;
+    font-family: $font-text;
+    font-weight: bold;
+    text-align: center;
+    margin: 3%;
 }
 
 .form-background{
@@ -54,8 +58,8 @@ h1{
 
 .button.center {
     margin: 0;
-    align-self: center;
-
-}
+    align-self: flex-end;
+    margin-bottom: 10px;
+    }
 
 
