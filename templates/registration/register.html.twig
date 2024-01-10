@@ -9,27 +9,32 @@
 
     <h1>Inscription</h1>
 
-    <div class="square-container-column">
+    <div class="form-background">
+
+        {{ form_errors(registrationForm) }}
+
+        {{ form_start(registrationForm, { 'attr' : { 'class': 'registration-form' } }) }}
         <div class="forminfo">
-    {{ form_errors(registrationForm) }}
 
-            {{ form_start(registrationForm) }}
-                {{ form_row(registrationForm.email) }}
-                {{ form_row(registrationForm.plainPassword, {
-                    label: 'Password'
-                }) }}
-                {{ form_row(registrationForm.agreeTerms) }}
-                {{ form_row(registrationForm.firstname) }}
-                {{ form_row(registrationForm.lastname) }}
-                {{ form_row(registrationForm.phoneNumber) }}
-                {{ form_row(registrationForm.city) }}
-                {{ form_row(registrationForm.occupation) }}
-                {{ form_row(registrationForm.description) }}
-                {{ form_row(registrationForm.photo) }}
-                {{ form_row(registrationForm.reseau) }}
+            {{ form_row(registrationForm.email) }}
+            {{ form_row(registrationForm.plainPassword, {
+                label: 'Password'
+            }) }}
+            {{ form_row(registrationForm.agreeTerms) }}
+            {{ form_row(registrationForm.firstname) }}
+            {{ form_row(registrationForm.lastname) }}
+            {{ form_row(registrationForm.phoneNumber) }}
+
         </div>
+        <div class="forminfo">
 
-            <button type="submit" class="btn">Inscription</button>
+            {{ form_row(registrationForm.city) }}
+            {{ form_row(registrationForm.occupation) }}
+            {{ form_row(registrationForm.photo) }}
+            {{ form_row(registrationForm.reseau) }}
+            {{ form_row(registrationForm.description) }}
+        </div>
+        <button type="submit" class="button center">Inscription</button>
         {{ form_end(registrationForm) }}
     </div>
 {% endblock %}

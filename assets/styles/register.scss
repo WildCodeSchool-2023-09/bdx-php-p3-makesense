@@ -1,3 +1,61 @@
+h1{
+    align-items: center;
+}
+
+.form-background{
+    align-items: center;
+    border-radius: $border-radius;
+    background-color: $color-second;
+    width: 90%;
+    margin: 1rem auto;
+    padding: 0 2rem;
+    font-family: $font-text;
+    color: $color-text;
+    font-weight: bold;
+    box-shadow: $box-shadow;
+}
+
+.registration-form{
+    display: flex;
+    flex-direction: row;
+    /*align-items: center;*/
+    justify-content: space-around;
+}
+
 .forminfo{
     display: flex;
+    flex-direction: column;
+    padding: 20px;
 }
+
+.forminfo > div{
+    margin-bottom: 20px;
+    /*display: flex;
+    flex-direction: column;*/
+}
+
+.forminfo > div > label{
+    margin-right: 20px;
+}
+
+.forminfo > div > input{
+    border-radius: 30px;
+    height: 1.25rem;
+    width: 100%;
+    border: none;
+}
+
+.forminfo > div > textarea{
+    border-radius: 30px;
+    height: 3rem;
+    width: 100%;
+    border: none;
+}
+
+.button.center {
+    margin: 0;
+    align-self: center;
+
+}
+
+
