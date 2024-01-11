@@ -17,8 +17,10 @@ class OpinionFixtures extends Fixture implements DependentFixtureInterface
         for ($i = 0; $i < 5; $i++) {
             $opinion = new Opinion();
             $opinion->setText('text');
-            $opinion->setCreatedAt(new DateTimeImmutable());
+            //opinion->setCreatedAt(new DateTimeImmutable());$opinion->setCreatedAt(new DateTimeImmutable());
             $opinion->setDecision($decision);
+            // Assurez-vous que la propriété 'opinions' de la décision est initialisée
+            $decision->addOpinion($opinion);
             $manager->persist($opinion);
         }
             $manager->flush();
