@@ -20,7 +20,13 @@
     </head>
     <body>
         {% include '_navbar.html.twig' %}
-        {% block body %}{% endblock %}
+            {% for flash in app.flashes('success') %}
+                <div class="alert alert-success">{{ flash }}</div>
+            {% endfor %}
+        <main>
+            {% block body %}
+            {% endblock %}
+        </main>
         {% include 'footer.html.twig' %}
     </body>
 </html>

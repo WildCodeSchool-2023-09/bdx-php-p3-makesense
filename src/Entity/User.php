@@ -24,6 +24,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[Assert\NotBlank(message: 'Le email ne doit pas être vide')]
+    #[Assert\Email(message: 'Le email {{ value }} n\'ai pas valide.')]
+    #[Assert\Length(
+        max: 100,
+        maxMessage: 'Le mail saisie {{ value }} est trop longue, elle ne devrait pas dépasser {{ limit }} caractères',
+    )]
     private ?string $email = null;
 
     #[ORM\Column]
@@ -36,13 +42,32 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[ORM\Column(length: 100)]
+    #[Assert\NotBlank(message: 'Le Nom ne doit pas être vide')]
+    #[Assert\Length(
+        min: 2,
+        max: 100,
+        minMessage: 'Votre Nom doit comporter au moins {{ limit }} caractères',
+        maxMessage: 'Votre Nom ne peut pas contenir plus de {{ limit }} caractères',
+    )]
     private ?string $lastname = null;
 
     #[ORM\Column(length: 100)]
+    #[Assert\NotBlank(message: 'Le prénom  ne doit pas être vide')]
+    #[Assert\Length(
+        min: 2,
+        max: 100,
+        minMessage: 'Votre prénom doit comporter au moins {{ limit }} caractères',
+        maxMessage: 'Votre prénom ne peut pas contenir plus de {{ limit }} caractères',
+    )]
     private ?string $firstname = null;
 
     #[ORM\Column]
-    private ?int $phoneNumber = null;
+    #[Assert\NotBlank(message: 'Le numéro de téléphone ne doit pas être vide')]
+    #[Assert\Regex(
+        pattern: '/^\d{10}$/',
+        message: 'Le numéro de téléphone doit être composé de 10 chiffres'
+    )]
+    private ?string $phoneNumber = null;
 
     #[ORM\Column(length: 50)]
     #[Assert\NotBlank(message: 'La ville ne doit pas être vide')]
@@ -57,6 +82,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'La Photo ne doit pas être vide')]
     private ?string $photo = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -179,12 +205,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getPhoneNumber(): ?int
+    public function getPhoneNumber(): ?string
     {
         return $this->phoneNumber;
     }
 
-    public function setPhoneNumber(int $phoneNumber): static
+    public function setPhoneNumber(string $phoneNumber): static
     {
         $this->phoneNumber = $phoneNumber;
 
