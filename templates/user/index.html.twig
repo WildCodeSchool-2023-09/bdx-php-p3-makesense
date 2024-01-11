@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User index{% endblock %}
+
+{% block body %}
+    <h1>COLLABORATEURS</h1>
+<div class="search">
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <div class="input">
+        <button>Recherche</button>
+    </div>
+    {{ form_end(form) }}
+</div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Email</th>
+                <th>Roles</th>
+                <th>Téléphone</th>
+                <th>Ville</th>
+                <th>Profession</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.lastname }}</td>
+                <td>{{ user.firstname }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+                <td>{{ user.phoneNumber }}</td>
+                <td>{{ user.city }}</td>
+                <td>{{ user.occupation }}</td>
+                <td>
+                    <a href="{{ path('app_user_show', {'id': user.id}) }}">voir</a>
+                    <a href="{{ path('app_user_edit', {'id': user.id}) }}">modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="14">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_user_new') }}">Créer</a>
+{% endblock %}

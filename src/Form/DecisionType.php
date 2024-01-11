@@ -17,7 +17,6 @@ class DecisionType extends AbstractType
     {
         $builder
             ->add('title')
-            ->add('status')
             ->add('description')
             ->add('impact')
             ->add('context')
