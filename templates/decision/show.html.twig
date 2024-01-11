@@ -62,7 +62,7 @@
         </tbody>
     </table>
     <div>
-        <a href="{{ path('app_opinion_new') }}"> Donner votre avis </a>
+        <a href="{{ path('new_opinion', {'id': decision.id}) }}"> Donner votre avis </a>
     </div>
 
     <a href="{{ path('app_decision_index') }}">back to list</a>

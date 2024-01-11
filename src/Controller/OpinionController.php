@@ -26,10 +26,27 @@ class OpinionController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $opinion = new Opinion();
+        // Vérifie si l'utilisateur est connecté
+        $user = $this->getUser();
+        if (!$user) {
+            throw $this->createAccessDeniedException('Utilisateur non connecté.');
+        }
+        // Vérifiez si l'utilisateur a une décision sur laquelle il peut faire une opinion
+        //$decision = $user->getDecision();
+
+        //if (!$decision) {
+        //    throw $this->createAccessDeniedException('L\'utilisateur n\'a pas de décision autorisée.');
+       // }
+
+        // Associez la décision à l'opinion
+        //$opinion->setDecision($decision);
         $form = $this->createForm(OpinionType::class, $opinion);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $opinion->setAuthor($user);
+            // Associer l'auteur à l'opinion
+            //$opinion->setAuthor($user);
             $entityManager->persist($opinion);
             $entityManager->flush();
 
@@ -71,7 +88,7 @@ class OpinionController extends AbstractController
     #[Route('/{id}', name: 'app_opinion_delete', methods: ['POST'])]
     public function delete(Request $request, Opinion $opinion, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$opinion->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $opinion->getId(), $request->request->get('_token'))) {
             $entityManager->remove($opinion);
             $entityManager->flush();
         }

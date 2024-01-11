@@ -16,7 +16,7 @@ class OpinionType extends AbstractType
     {
         $builder
             ->add('text')
-            ->add('createdAt')
+            /*->add('createdAt')
             /*->add('decision', EntityType::class, [
                 'class' => Decision::class,
         'choice_label' => 'id',

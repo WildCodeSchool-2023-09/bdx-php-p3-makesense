@@ -1,0 +1,18 @@
+.my-card {
+    width: 18rem;
+    margin: 2rem;
+    border-radius: $border-radius;
+    background-color: $color-first;
+    box-shadow: $box-shadow-total;
+
+}
+
+.my-card-body {
+    padding: 1.2rem;
+}
+
+.my-card-title {
+    color: $color-text;
+    font-size: $size-h2;
+    font-weight: bold;
+}
