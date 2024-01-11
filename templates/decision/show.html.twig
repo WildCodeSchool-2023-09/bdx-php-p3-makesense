@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Decision{% endblock %}
+
+{% block body %}
+    <h1>{{ decision.title }}</h1>
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Title</th>
+                <td>{{ decision.title }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ decision.status ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ decision.description }}</td>
+            </tr>
+            <tr>
+                <th>Impact</th>
+                <td>{{ decision.impact }}</td>
+            </tr>
+            <tr>
+                <th>Context</th>
+                <td>{{ decision.context }}</td>
+            </tr>
+            <tr>
+                <th>Benefits</th>
+                <td>{{ decision.benefits }}</td>
+            </tr>
+            <tr>
+                <th>Risk</th>
+                <td>{{ decision.risk }}</td>
+            </tr>
+            <tr>
+                <th>StartingDate</th>
+                <td>{{ decision.startingDate ? decision.startingDate|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>DeadlineOpinion</th>
+                <td>{{ decision.deadlineOpinion ? decision.deadlineOpinion|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>DeadlineDecision</th>
+                <td>{{ decision.deadlineDecision ? decision.deadlineDecision|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>DeadlineConflict</th>
+                <td>{{ decision.deadlineConflict ? decision.deadlineConflict|date('H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>DeadlineFinal</th>
+                <td>{{ decision.deadlineFinal ? decision.deadlineFinal|date('H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_decision_index') }}">back to list</a>
+
+    <a href="{{ path('app_decision_edit', {'id': decision.id}) }}">edit</a>
+
+    {{ include('decision/_delete_form.html.twig') }}
+{% endblock %}
