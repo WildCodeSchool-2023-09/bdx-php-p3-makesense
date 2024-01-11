@@ -14,10 +14,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Doctrine\Common\Collections\Collection;
 
-
 class DecisionType extends AbstractType
 {
-
     public function __construct(private UserRepository $userRepository)
     {
     }
