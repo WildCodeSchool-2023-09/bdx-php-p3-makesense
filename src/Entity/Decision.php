@@ -281,6 +281,14 @@ class Decision
         return $this;
     }
 
+    public function addUsers(User ...$users): static
+    {
+        foreach ($users as $user) {
+            $this->addUser($user);
+        }
+        return $this;
+    }
+
     /**
      * @return Collection<int, Group>
      */

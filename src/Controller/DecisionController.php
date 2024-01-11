@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Decision;
+use App\Entity\User;
 use App\Form\DecisionType;
 use App\Repository\DecisionRepository;
 use Doctrine\ORM\EntityManagerInterface;
