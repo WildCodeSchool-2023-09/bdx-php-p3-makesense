@@ -35,7 +35,7 @@ class UserFixtures extends Fixture
             ],
             [
                 'email' => 'jane.doe@example.com',
-                'roles' => ['ROLE_USER'],
+                'roles' => ['ROLE_MEMBER'],
                 'password' => 'taratata',
                 'lastname' => 'Doe',
                 'firstname' => 'Jane',
@@ -49,7 +49,7 @@ class UserFixtures extends Fixture
 
             [
                 'email' => 'johan.doe@example.com',
-                'roles' => ['ROLE_VISITOR'],
+                'roles' => ['ROLE_USER'],
                 'password' => 'azertyui',
                 'lastname' => 'Doe',
                 'firstname' => 'Johan',

@@ -12,6 +12,19 @@
     text-align: center;
 }
 
+/*.my-card-log > input {
+    width: 100%;
+    display: flex;
+
+}*/
+
+.txt {
+    color: $color-text;
+    display: flex;
+    justify-content: space-evenly;
+    border-radius: 30%;
+}
+
 .container {
     display: flex;
     justify-content: center;
@@ -37,7 +50,6 @@
 
 @media screen and (max-width: 768px){
 .my-card-log{
-    display: flex;
     flex-direction: column;
 }
 }
