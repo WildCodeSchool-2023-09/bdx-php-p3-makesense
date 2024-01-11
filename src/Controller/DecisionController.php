@@ -34,6 +34,7 @@ class DecisionController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $decision->setStatus(true);
             $entityManager->persist($decision);
             $entityManager->flush();
 

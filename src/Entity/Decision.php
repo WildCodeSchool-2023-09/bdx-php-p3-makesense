@@ -63,9 +63,9 @@ class Decision
     private Collection $favoris;
 
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'decisions')]
-    private Collection $users;
+    private ?Collection $users;
     #[ORM\ManyToMany(targetEntity: Group::class, inversedBy: 'decisions')]
-    private Collection $groupes;
+    private ?Collection $groupes;
 
     public function __construct()
     {

@@ -38,6 +38,10 @@ h1{
     flex-direction: column;*/
 }
 
+.forminfo > div > ul{
+    color: red;
+}
+
 .forminfo > div > label{
     margin-right: 20px;
 }
@@ -45,12 +49,14 @@ h1{
 .forminfo > div > input{
     border-radius: 30px;
     height: 1.25rem;
+    margin-top: 5px;
     width: 100%;
     border: none;
 }
 
 .forminfo > div > textarea{
-    border-radius: 30px;
+    border-radius: 10px;
+    margin-top: 5px;
     height: 3rem;
     width: 100%;
     border: none;
@@ -62,4 +68,9 @@ h1{
     margin-bottom: 10px;
     }
 
+@media screen and (max-width: 768px) {
+    .registration-form {
+        flex-direction: column;
+    }
+}
 
