@@ -26,6 +26,9 @@ $font-text: "Raleway, Arial, sans-serif";
     font-family: $font-text;
 }
 
+body {
+    margin-top: 4rem;
+}
 .button-big {
     color: $color-text;
     background-color: $color-button;

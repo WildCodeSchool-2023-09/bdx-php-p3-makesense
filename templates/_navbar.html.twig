@@ -1,15 +1,14 @@
 <nav class="navbar">
     <div class="navbar-left">
         <ul>
-            <li> <i class="fa-solid fa-house"></i> <a href="{#{{ path('') }}#}">Parcourir les décisions</a></li>
+            <li> <i class="fa-solid fa-house"></i> <a href="{{ path('app_decision_index') }}">Parcourir les décisions</a></li>
             <li> <i class="fa-regular fa-calendar-days"></i> <a href="{#{{ path('') }}#}">Mes décisions</a></li>
             <li> <i class="fa-regular fa-face-smile"></i> <a href="{#{{ path('') }}#}">Notifications</a></li>
-            <li> <i class="fa-regular fa-square-plus"></i> <a href="{#{{ path('') }}#}">Créer une décision</a></li>
+            <li> <i class="fa-regular fa-square-plus"></i> <a href="{{ path('app_decision_new') }}">Créer une décision</a></li>
         </ul>
     </div>
 
     <div class="navbar-right">
-        <i class="fa-solid fa-bars burger-menu"></i>
         <i class="fa-solid fa-user burger-menu"></i>
     </div>
 </nav>
