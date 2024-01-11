@@ -63,10 +63,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     #[Assert\NotBlank(message: 'Le numéro de téléphone ne doit pas être vide')]
     #[Assert\Regex(
-        pattern: '/^\d{10}$/',
+        pattern: '/^\d{9}$/',
         message: 'Le numéro de téléphone doit être composé de 10 chiffres'
     )]
-    private ?int $phoneNumber = null;
+    private ?string $phoneNumber = null;
 
     #[ORM\Column(length: 50)]
     #[Assert\NotBlank(message: 'La ville ne doit pas être vide')]
@@ -204,12 +204,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getPhoneNumber(): ?int
+    public function getPhoneNumber(): ?string
     {
         return $this->phoneNumber;
     }
 
-    public function setPhoneNumber(int $phoneNumber): static
+    public function setPhoneNumber(string $phoneNumber): static
     {
         $this->phoneNumber = $phoneNumber;
 

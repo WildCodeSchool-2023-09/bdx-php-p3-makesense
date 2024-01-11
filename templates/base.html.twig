@@ -23,9 +23,10 @@
             {% for flash in app.flashes('success') %}
                 <div class="alert alert-success">{{ flash }}</div>
             {% endfor %}
-                {% block body %}
-
-                {% endblock %}
+        <main>
+            {% block body %}
+            {% endblock %}
+        </main>
         {% include 'footer.html.twig' %}
     </body>
 </html>
