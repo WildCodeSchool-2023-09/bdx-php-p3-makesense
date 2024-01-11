@@ -28,6 +28,7 @@ class DecisionFixtures extends Fixture implements DependentFixtureInterface
             $decision->setDeadlineConflict(new DateTimeImmutable(false));
             $decision->setDeadlineFinal(new DateTimeImmutable(false));
             $this->addReference('decision_' . $i, $decision);
+            $decision->addGroupe($this->getReference("groupe"));
 
             $manager->persist($decision);
         }
@@ -38,6 +39,7 @@ class DecisionFixtures extends Fixture implements DependentFixtureInterface
     {
         return [
             UserFixtures::class,
+            GroupFixtures::class,
         ];
     }
 }
