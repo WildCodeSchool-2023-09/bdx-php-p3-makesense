@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Opinion{% endblock %}
+
+{% block body %}
+    <h1>Create new Opinion</h1>
+
+    {{ include('opinion/_form.html.twig') }}
+
+    <a href="{{ path('app_opinion_index') }}">back to list</a>
+{% endblock %}

@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Decision;
 use App\Entity\User;
+use App\Entity\Opinion;
 use App\Form\DecisionType;
+use App\Form\OpinionType;
 use App\Repository\DecisionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -51,6 +53,7 @@ class DecisionController extends AbstractController
     {
         return $this->render('decision/show.html.twig', [
             'decision' => $decision,
+
         ]);
     }
 
@@ -81,5 +84,34 @@ class DecisionController extends AbstractController
         }
 
         return $this->redirectToRoute('app_decision_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/{id}/opinion/new', name: 'new_opinion', methods: ['GET', 'POST'])]
+    public function newOpinion(Request $request, Decision $decision, EntityManagerInterface $entityManager): Response
+    {
+        $opinion = new Opinion();
+        // Vérifie si l'utilisateur est connecté
+        $user = $this->getUser();
+        if (!$user) {
+            throw $this->createAccessDeniedException('Utilisateur non connecté.');
+        }
+
+        $form = $this->createForm(OpinionType::class, $opinion);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $opinion->setAuthor($user);
+            //Associe la décision à l'opinion
+            $opinion->setDecision($decision);
+            $entityManager->persist($opinion);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_opinion_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('opinion/new.html.twig', [
+            'opinion' => $opinion,
+            'form' => $form,
+        ]);
     }
 }

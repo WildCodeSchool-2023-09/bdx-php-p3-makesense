@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\OpinionRepository;
+use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -23,9 +24,13 @@ class Opinion
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
+
     #[ORM\ManyToOne(inversedBy: 'opinions')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Decision $decision = null;
+
+    #[ORM\ManyToOne(inversedBy: 'opinions')]
+    private ?User $author = null;
 
     public function getId(): ?int
     {
@@ -43,8 +48,17 @@ class Opinion
 
         return $this;
     }
+    public function __construct()
+    {
+        // Initialise la date de création automatiquement lors de la création d'une nouvelle Opinion
+        $this->createdAt = new DateTimeImmutable();
+    }
 
     public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+    /*public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->createdAt;
     }
@@ -54,7 +68,7 @@ class Opinion
         $this->createdAt = $createdAt;
 
         return $this;
-    }
+    }*/
 
     public function getDecision(): ?Decision
     {
@@ -64,6 +78,18 @@ class Opinion
     public function setDecision(?Decision $decision): static
     {
         $this->decision = $decision;
+
+        return $this;
+    }
+
+    public function getAuthor(): ?User
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?User $author): static
+    {
+        $this->author = $author;
 
         return $this;
     }

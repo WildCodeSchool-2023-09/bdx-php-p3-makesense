@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Type;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -23,6 +24,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[Assert\NotBlank(message: 'Le email ne doit pas être vide')]
+    #[Assert\Email(message: 'Le email {{ value }} n\'ai pas valide.')]
+    #[Assert\Length(
+        max: 100,
+        maxMessage: 'Le mail saisie {{ value }} est trop longue, elle ne devrait pas dépasser {{ limit }} caractères',
+    )]
     private ?string $email = null;
 
     #[ORM\Column]
@@ -35,13 +42,32 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[ORM\Column(length: 100)]
+    #[Assert\NotBlank(message: 'Le Nom ne doit pas être vide')]
+    #[Assert\Length(
+        min: 2,
+        max: 100,
+        minMessage: 'Votre Nom doit comporter au moins {{ limit }} caractères',
+        maxMessage: 'Votre Nom ne peut pas contenir plus de {{ limit }} caractères',
+    )]
     private ?string $lastname = null;
 
     #[ORM\Column(length: 100)]
+    #[Assert\NotBlank(message: 'Le prénom  ne doit pas être vide')]
+    #[Assert\Length(
+        min: 2,
+        max: 100,
+        minMessage: 'Votre prénom doit comporter au moins {{ limit }} caractères',
+        maxMessage: 'Votre prénom ne peut pas contenir plus de {{ limit }} caractères',
+    )]
     private ?string $firstname = null;
 
     #[ORM\Column]
-    private ?int $phoneNumber = null;
+    #[Assert\NotBlank(message: 'Le numéro de téléphone ne doit pas être vide')]
+    #[Assert\Regex(
+        pattern: '/^\d{10}$/',
+        message: 'Le numéro de téléphone doit être composé de 10 chiffres'
+    )]
+    private ?string $phoneNumber = null;
 
     #[ORM\Column(length: 50)]
     #[Assert\NotBlank(message: 'La ville ne doit pas être vide')]
@@ -56,6 +82,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'La Photo ne doit pas être vide')]
     private ?string $photo = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -64,7 +91,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Favori::class)]
     private Collection $favoris;
 
-    #[ORM\ManyToMany(mappedBy: 'user', targetEntity: Decision::class)]
+    #[ORM\ManyToMany(targetEntity: Decision::class, mappedBy: 'user')]
     private Collection $decision;
 
     #[ORM\ManyToMany(targetEntity: Group::class, inversedBy: 'users')]
@@ -76,12 +103,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToMany(targetEntity: Decision::class, mappedBy: 'users')]
     private Collection $decisions;
 
+    #[ORM\OneToMany(mappedBy: 'author', targetEntity: Opinion::class)]
+    private Collection $opinions;
+
     public function __construct()
     {
         $this->favoris = new ArrayCollection();
         $this->decision = new ArrayCollection();
         $this->memberGroup = new ArrayCollection();
         $this->decisions = new ArrayCollection();
+        $this->opinions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -178,12 +209,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getPhoneNumber(): ?int
+    public function getPhoneNumber(): ?string
     {
         return $this->phoneNumber;
     }
 
-    public function setPhoneNumber(int $phoneNumber): static
+    public function setPhoneNumber(string $phoneNumber): static
     {
         $this->phoneNumber = $phoneNumber;
 
@@ -352,5 +383,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getDecisions(): Collection
     {
         return $this->decisions;
+    }
+
+    /**
+     * @return Collection<int, Opinion>
+     */
+    public function getOpinions(): Collection
+    {
+        return $this->opinions;
+    }
+
+    public function addOpinion(Opinion $opinion): static
+    {
+        if (!$this->opinions->contains($opinion)) {
+            $this->opinions->add($opinion);
+            $opinion->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOpinion(Opinion $opinion): static
+    {
+        if ($this->opinions->removeElement($opinion)) {
+            // set the owning side to null (unless already changed)
+            if ($opinion->getAuthor() === $this) {
+                $opinion->setAuthor(null);
+            }
+        }
+
+        return $this;
     }
 }

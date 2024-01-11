@@ -261,10 +261,6 @@ class Decision
     }
 
     /**
-     * @return Collection<int, Group>
-     */
-
-    /**
      * @return Collection<int, User>
      */
     public function getUsers(): Collection
