@@ -3,14 +3,9 @@
 {% block title %}Decision{% endblock %}
 
 {% block body %}
-    <h1>Decision</h1>
-{{ dump(decision) }}
+    <h1>{{ decision.title }}</h1>
     <table class="table">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ decision.id }}</td>
-            </tr>
             <tr>
                 <th>Title</th>
                 <td>{{ decision.title }}</td>
