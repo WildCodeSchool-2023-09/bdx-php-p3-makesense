@@ -16,6 +16,7 @@
     <h1 class="log">SE CONNECTER</h1>
     <div class="container">
         <div class="my-card-log">
+<<<<<<< HEAD
             <div class="txt">
     <label for="inputEmail">Email</label>
     <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
@@ -28,7 +29,21 @@
     <button class="button" type="submit">
         Connexion
     </button>
+=======
+            <label for="inputEmail">Email</label>
+            <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+            <label for="inputPassword">Mot de passe</label>
+            <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+
+            <input type="hidden" name="_csrf_token"
+                   value="{{ csrf_token('authenticate') }}"
+            >
+            <button class="button" type="submit">
+                Connexion
+            </button>
+>>>>>>> 2425a79d2f2d8f6c67dc9aa2449d605e71518dc8
 
         </div>
     </div>
+</form>
 {% endblock %}

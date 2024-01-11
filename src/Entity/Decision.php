@@ -62,19 +62,15 @@ class Decision
     #[ORM\OneToMany(mappedBy: 'decision', targetEntity: Favori::class, orphanRemoval: true)]
     private Collection $favoris;
 
-    #[ORM\ManyToMany(targetEntity: Group::class, mappedBy: 'decision')]
-    private Collection $memberGroups;
-
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'decisions')]
-    private Collection $users;
+    private ?Collection $users;
     #[ORM\ManyToMany(targetEntity: Group::class, inversedBy: 'decisions')]
-    private Collection $groupes;
+    private ?Collection $groupes;
 
     public function __construct()
     {
         $this->opinions = new ArrayCollection();
         $this->favoris = new ArrayCollection();
-        $this->memberGroups = new ArrayCollection();
         $this->users = new ArrayCollection();
         $this->groupes = new ArrayCollection();
     }
@@ -267,29 +263,6 @@ class Decision
     /**
      * @return Collection<int, Group>
      */
-    public function getMemberGroups(): Collection
-    {
-        return $this->memberGroups;
-    }
-
-    public function addMemberGroup(Group $memberGroup): static
-    {
-        if (!$this->memberGroups->contains($memberGroup)) {
-            $this->memberGroups->add($memberGroup);
-            $memberGroup->addDecision($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMemberGroup(Group $memberGroup): static
-    {
-        if ($this->memberGroups->removeElement($memberGroup)) {
-            $memberGroup->removeDecision($this);
-        }
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, User>
