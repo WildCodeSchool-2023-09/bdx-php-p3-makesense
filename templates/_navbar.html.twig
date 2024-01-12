@@ -9,6 +9,12 @@
     </div>
 
     <div class="navbar-right">
-        <i class="fa-solid fa-user burger-menu"></i>
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <p><a href="{{ path('app_logout') }}">Me déconnecter</a></p>
+            <i class="fa-solid fa-user burger-menu"></i>
+        {% else %}
+            <p><a href="{{ path('app_login') }}">Me connecter</a></p>
+            <i class="fa-solid fa-user burger-menu"></i>
+        {% endif %}
     </div>
 </nav>
