@@ -36,8 +36,8 @@
                 <td>{{ user.city }}</td>
                 <td>{{ user.occupation }}</td>
                 <td>
-                    <a href="{{ path('app_user_show', {'id': user.id}) }}">voir</a>
-                    <a href="{{ path('app_user_edit', {'id': user.id}) }}">modifier</a>
+                    <button onclick="window.location.href='{{ path('app_user_show', {'id': user.id}) }}'">Voir</button>
+                    <button onclick="window.location.href='{{ path('app_user_edit', {'id': user.id}) }}'">Modifier</button>
                 </td>
             </tr>
         {% else %}
@@ -48,5 +48,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_user_new') }}">Créer</a>
+{#    <a href="{{ path('app_user_new') }}">Créer</a>#}
 {% endblock %}

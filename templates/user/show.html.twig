@@ -38,9 +38,8 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_user_index') }}">Revenir à la liste</a>
-
-    <a href="{{ path('app_user_edit', {'id': user.id}) }}">Modifier</a>
+    <button onclick="window.location.href='{{ path('app_user_index')}}'">Revenir à la liste</button>
+    <button onclick="window.location.href='{{ path('app_user_edit', {'id': user.id}) }}'">Modifier</button>
 
     {{ include('user/_delete_form.html.twig') }}
 {% endblock %}

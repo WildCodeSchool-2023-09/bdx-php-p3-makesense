@@ -1,8 +1,8 @@
-//@import url('https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css');
 
 h1 {
     font-size: 2rem;
     font-family: $font-text;
+    color: #0B3A44;
     font-weight: bold;
     text-align: center;
     margin: 3%;
@@ -12,6 +12,7 @@ h1 {
 
 .search {
     font-family: $font-text;
+    color: #0B3A44;
     font-size: 1rem;
     font-weight: bold;
     display: flex;
@@ -19,12 +20,17 @@ h1 {
     padding-right: 10px;
 }
 
-.input {
-    color: rgba(25, 108, 132, 0.30);
+.search > input {
+
 }
+
+    /*.input {
+        color: rgba(25, 108, 132, 0.30);
+    }*/
 
 .table {
     font-family: $font-text;
+    color: #0B3A44;
     margin-top: 20px;
     width: 100%;
     max-width: 100%;
@@ -46,13 +52,16 @@ h1 {
     background-color: $color-second;
 }
 
-/*.table tbody > tr:nth-child(odd) > td,
+.table tbody > tr:nth-child(odd) > td,
 .table tbody > tr:nth-child(odd) > th {
     background-color: #f9f9f9;
-}*/
+}
 
 /*.table-hover tbody tr:hover > td,
 .table-hover tbody tr:hover > th {
     background-color: #f5f5f5;
 }*/
 
+tbody > tr > td {
+    background-color: rgba(69, 124, 140, 0.3);
+}

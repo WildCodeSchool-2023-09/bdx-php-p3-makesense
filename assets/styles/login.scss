@@ -1,28 +1,29 @@
-.my-card-log {
+.my-card {
     width: 100%;
-    max-width: 130rem;
+    max-width: 120rem;
     border-radius: $border-radius;
     background-color: $color-second;
     box-shadow: $box-shadow-total;
     color: $color-text;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     padding: 5rem;
     align-items: center;
-    text-align: center;
+
 }
 
-/*.my-card-log > input {
-    width: 100%;
+.bloc{
     display: flex;
+    flex-direction: column;
+    padding: 5rem;
 
-}*/
+}
 
 .txt {
     color: $color-text;
     display: flex;
-    justify-content: space-evenly;
-    border-radius: 30%;
+    border: none;
+
 }
 
 .container {
@@ -44,14 +45,14 @@
     margin: 6%;
 }
 
-.bottom {
-    display: inline;
-}
-
 @media screen and (max-width: 768px){
-.my-card-log{
+.my-card{
     flex-direction: column;
 }
+/*.txt{
+    display: flex;
+    flex-direction: column;
+}*/
 }
 
 
