@@ -51,8 +51,11 @@ class DecisionController extends AbstractController
     #[Route('/{id}', name: 'app_decision_show', methods: ['GET'])]
     public function show(Decision $decision): Response
     {
+        $users = $decision->getUsers();
+
         return $this->render('decision/show.html.twig', [
             'decision' => $decision,
+            'users' => $users,
 
         ]);
     }
