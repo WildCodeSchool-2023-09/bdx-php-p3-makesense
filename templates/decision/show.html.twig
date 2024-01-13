@@ -2,25 +2,17 @@
 
 {% block title %}Decision{% endblock %}
 
+
 {% block body %}
-<div class="square-container-column">
-    <div class="timeline-container">
-{#        <div class="timeline">
-            <div class="point" style="left: 0;"></div>
-            <div class="point" style="left: 20%;"></div>
-            <div class="point" style="left: 40%;"></div>
-            <div class="point" style="left: 60%;"></div>
-            <div class="point" style="left: 80%;"></div>
-        </div>#}
-        <div>
-            <h2>Les dates</h2>
-            <p>Début de la décision: <span class="point-label">{{ decision.startingDate ? decision.startingDate|date('Y-m-d H:i:s') : '' }}</span></p>
-            <p>Date final pour commenter: <span class="point-label">{{ decision.deadlineOpinion ? decision.deadlineOpinion|date('Y-m-d H:i:s') : '' }}</span></p>
-            <p>Date de fin de la décision: <span class="point-label">{{ decision.deadlineDecision ? decision.deadlineDecision|date('Y-m-d') : '' }}</span></p>
-            <p>Date de fin des conflits: <span class="point-label">{{ decision.deadlineConflict ? decision.deadlineConflict|date('H:i:s') : '' }}</span></p>
-            <p>Date de fin: <span class="point-label">{{ decision.deadlineFinal ? decision.deadlineFinal|date('H:i:s') : '' }}</span></p>
-        </div>
-    </div>
+    <div class="square-container-column-decision">
+            <div>
+                <h2>Les dates</h2>
+                <p>Début de la décision: <span class="">{{ decision.startingDate ? decision.startingDate|date('Y-m-d H:i:s') : '' }}</span></p>
+                <p>Date final pour commenter: <span class="">{{ decision.deadlineOpinion ? decision.deadlineOpinion|date('Y-m-d H:i:s') : '' }}</span></p>
+                <p>Date de fin de la décision: <span class="">{{ decision.deadlineDecision ? decision.deadlineDecision|date('Y-m-d') : '' }}</span></p>
+                <p>Date de fin des conflits: <span class="">{{ decision.deadlineConflict ? decision.deadlineConflict|date('H:i:s') : '' }}</span></p>
+                <p>Date de fin: <span class="">{{ decision.deadlineFinal ? decision.deadlineFinal|date('H:i:s') : '' }}</span></p>
+            </div>
     <div>
         <h2> Descritpion <i class="fa-solid fa-chevron-down"></i></h2>
     </div>
@@ -60,9 +52,9 @@
     </div>
 </div>
 
-    <a href="{{ path('app_decision_index') }}">back to list</a>
-
-    <a href="{{ path('app_decision_edit', {'id': decision.id}) }}">edit</a>
-
-    {{ include('decision/_delete_form.html.twig') }}
+    <div>
+        <a href="{{ path('app_decision_index') }}">Retour à la liste</a>
+        <a href="{{ path('app_decision_edit', {'id': decision.id}) }}">Modifier</a>
+        {{ include('decision/_delete_form.html.twig') }}
+    </div>
 {% endblock %}

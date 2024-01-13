@@ -6,3 +6,23 @@
     display: flex;
     flex-wrap: wrap;
 }
+
+.decision-container {
+    display: flex;
+}
+
+.square-container-column-decision {
+    display: flex;
+    border-radius: $border-radius;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    background-color: $color-second;
+    width: 90%;
+    margin: 1rem auto;
+    padding: 2rem 2rem;
+    font-family: $font-text;
+    color: $color-text;
+    font-weight: bold;
+    box-shadow: $box-shadow;
+}
