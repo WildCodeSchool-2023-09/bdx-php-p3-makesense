@@ -15,14 +15,16 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
+use Vich\UploaderBundle\Handler\UploadHandler;
 
 class RegistrationController extends AbstractController
 {
     private EmailVerifier $emailVerifier;
 
-    public function __construct(EmailVerifier $emailVerifier)
+    public function __construct(EmailVerifier $emailVerifier/*, UploadHandler $uploadHandler*/)
     {
         $this->emailVerifier = $emailVerifier;
+        /*$this->uploadHandler = $uploadHandler;*/
     }
 
     #[Route('/register', name: 'app_register')]
@@ -36,7 +38,7 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
+            // encoder le mot de passe en clair
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
@@ -44,6 +46,7 @@ class RegistrationController extends AbstractController
                 )
             );
             $user->setRoles(['ROLE_USER']);
+            /*$this->uploadHandler->upload($user, 'photoFile');*/
             $entityManager->persist($user);
             $entityManager->flush();
 

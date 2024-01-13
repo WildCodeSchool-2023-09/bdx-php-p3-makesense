@@ -12,10 +12,13 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'Ce email existe déjà')]
 #[UniqueEntity(fields: ['phoneNumber'], message: 'Ce numéro de téléphone existe déjà')]
+#[Vich\Uploadable]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -81,9 +84,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotBlank(message: 'La description ne doit pas être vide')]
     private ?string $description = null;
 
-    #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: 'La Photo ne doit pas être vide')]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $photo = null;
+    #[Vich\UploadableField(mapping: 'user_photo', fileNameProperty: 'photo')]
+    private ?File $photoFile = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $reseau = null;
@@ -267,6 +271,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->photo = $photo;
 
         return $this;
+    }
+
+    public function setPhotoFile(?File $photoFile = null): User
+    {
+        $this->photoFile = $photoFile;
+        return $this;
+    }
+
+    public function getPhotoFile(): ?File
+    {
+        return $this->photoFile;
     }
 
     public function getReseau(): ?string
