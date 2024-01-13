@@ -11,6 +11,8 @@ trait DecisionDeadlines
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     private ?\DateTimeImmutable $startingDate = null;
 
+    //La contrainte GreaterThan est une contrainte de validation fournie par le composant de validation de Symfony.
+    // Elle est utilisée pour s'assurer qu'une propriété a une valeur supérieure à une autre.
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     #[Assert\GreaterThan(
         propertyPath: "startingDate",
