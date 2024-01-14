@@ -97,7 +97,6 @@ h1 {
     border-radius: $border-radius;
     background-color: $color-first;
     box-shadow: $box-shadow-total;
-
 }
 
 .my-card-body {
@@ -127,7 +126,7 @@ h1 {
     border: 2px solid #3E8A9F;
     border-radius: $border-radius-button;
     padding: 0.6rem 1.8rem;
-    margin: $margin-little;
+    margin: 0.5rem;
     font-size: $size-little;
     font-family: $font-text;
     box-shadow: $box-shadow;
@@ -141,7 +140,7 @@ h1 {
     border: 2px solid #C1E94E;
     border-radius: $border-radius-button;
     padding: 0.6rem 1.8rem;
-    margin: $margin-little;
+    margin: 0.5rem;
     font-size: $size-little;
     font-family: $font-text;
     box-shadow: $box-shadow;
@@ -155,7 +154,7 @@ h1 {
     border: 2px solid #BEB700;
     border-radius: $border-radius-button;
     padding: 0.6rem 1.8rem;
-    margin: $margin-little;
+    margin: 0.5rem;
     font-size: $size-little;
     font-family: $font-text;
     box-shadow: $box-shadow;
@@ -169,7 +168,7 @@ h1 {
     border: 2px solid #D6A936;
     border-radius: $border-radius-button;
     padding: 0.6rem 1.8rem;
-    margin: $margin-little;
+    margin: 0.5rem;
     font-size: $size-little;
     font-family: $font-text;
     box-shadow: $box-shadow;
@@ -183,7 +182,7 @@ h1 {
     border: 2px solid #FF1616;
     border-radius: $border-radius-button;
     padding: 0.6rem 1.8rem;
-    margin: $margin-little;
+    margin: 0.5rem;
     font-size: $size-little;
     font-family: $font-text;
     box-shadow: $box-shadow;
@@ -244,8 +243,6 @@ h1 {
     display: flex;
 }
 
-
-
 .square-container-column {
     display: flex;
     border-radius: $border-radius;
@@ -277,5 +274,13 @@ h1 {
     box-shadow: $box-shadow;
 }
 
-
+.decisionP {
+    max-width: 100%;
+    width: auto;
+    margin: 0.5rem;
+    padding: 2rem;
+    border-radius: $border-radius;
+    background-color: $color-first;
+    box-shadow: $box-shadow-total;
+}
 

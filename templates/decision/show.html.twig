@@ -5,52 +5,76 @@
 
 {% block body %}
     <div class="square-container-column-decision">
+        <div class="dates-container">
             <div>
-                <h2>Les dates</h2>
-                <p>Début de la décision: <span class="">{{ decision.startingDate ? decision.startingDate|date('Y-m-d H:i:s') : '' }}</span></p>
-                <p>Date final pour commenter: <span class="">{{ decision.deadlineOpinion ? decision.deadlineOpinion|date('Y-m-d H:i:s') : '' }}</span></p>
-                <p>Date de fin de la décision: <span class="">{{ decision.deadlineDecision ? decision.deadlineDecision|date('Y-m-d') : '' }}</span></p>
-                <p>Date de fin des conflits: <span class="">{{ decision.deadlineConflict ? decision.deadlineConflict|date('H:i:s') : '' }}</span></p>
-                <p>Date de fin: <span class="">{{ decision.deadlineFinal ? decision.deadlineFinal|date('H:i:s') : '' }}</span></p>
+            <h2>Dates à retenir</h2>
             </div>
-    <div>
-        <h2> Descritpion <i class="fa-solid fa-chevron-down"></i></h2>
-    </div>
-    <div>
-        <p>{{ decision.description }} </p>
-    </div>
-    <div>
-    <h2> Impact sur l’organisation <i class="fa-solid fa-chevron-down"></i></h2>
-    </div>
-    <div>
-    <p>{{ decision.impact }}</p>
+            <div class="date-child">
+                <p>{{ decision.startingDate ? decision.startingDate|date('Y-m-d') : '' }}</p>
+                <p class="decision-starting">Prise de décision commencée</p>
+            </div>
+            <div class="date-child">
+                <p>{{ decision.deadlineOpinion ? decision.deadlineOpinion|date('Y-m-d') : '' }} </p>
+                <p class="give-opinion">Donner son avis</p>
+            </div>
+            <div class="date-child">
+                <p>{{ decision.deadlineDecision ? decision.deadlineDecision|date('Y-m-d') : '' }}</p>
+                <p class="decision-taken">Première décision prise</p>
+            </div>
+            <div class="date-child">
+                <p>{{ decision.deadlineConflict ? decision.deadlineConflict|date('Y-m-d') : '' }}</p>
+                <p class="conflict">Rentrer en conflit:</p>
+            </div>
+            <div class="date-child">
+                <p> {{ decision.deadlineFinal ? decision.deadlineFinal|date('Y-m-d') : '' }}</p>
+                <p class="decision-ending">Décision définitive</p>
+            </div>
         </div>
-    <div>
-            <h2> Situation actuelle  <i class="fa-solid fa-chevron-down"></i></h2>
-</div>
-    <div>
-        <p>{{ decision.context }}</p>
+        <div class="other-container">
+           <h1> {{ decision.title }} </h1>
+            <div>
+                <h2> Descritpion <i class="fa-solid fa-chevron-down"></i></h2>
+            </div>
+            <div class="decisionP">
+                <p>{{ decision.description }} </p>
+            </div>
+            <div>
+                <h2> Impact sur l’organisation <i class="fa-solid fa-chevron-down"></i></h2>
+            </div>
+            <div class="decisionP">
+                <p>{{ decision.impact }}</p>
+            </div>
+            <div>
+                <h2> Situation actuelle <i class="fa-solid fa-chevron-down"></i></h2>
+            </div>
+            <div class="decisionP">
+                <p>{{ decision.context }}</p>
+            </div>
+            <div>
+                <h2> Les bénéfices <i class="fa-solid fa-chevron-down"></i></h2>
+            </div>
+            <div class="decisionP">
+                <p>{{ decision.benefits }}</p>
+            </div>
+            <div>
+                <h2> Les risques <i class="fa-solid fa-chevron-down"></i></h2>
+            </div>
+            <div class="decisionP">
+                <p>{{ decision.risk }}</p>
+            </div>
+        </div>
+        <div class="impacted-person">
+        <div>
+            <h2> Les personne impactées</h2>
+        </div>
+        {% for user in users %}
+            <li>{{ user.firstname }}</li>
+        {% endfor %}
+        <div>
+            <a href="{{ path('new_opinion', {'id': decision.id}) }}"> Donner votre avis </a>
+        </div>
+        </div>
     </div>
-    <div>
-        <h2> Les bénéfices  <i class="fa-solid fa-chevron-down"></i></h2>
-    </div>
-    <div>
-        <p>{{ decision.benefits }}</p>
-    </div>
-    <div>
-        <h2> Les risques  <i class="fa-solid fa-chevron-down"></i></h2>
-    </div>
-    <div>
-        <p>{{ decision.risk }}</p>
-    </div>
-    <div> <h2> Les personne impactées</h2></div>
-    {% for user in users %}
-        <li>{{ user.firstname }}</li>
-    {% endfor %}
-    <div>
-        <a href="{{ path('new_opinion', {'id': decision.id}) }}"> Donner votre avis </a>
-    </div>
-</div>
 
     <div>
         <a href="{{ path('app_decision_index') }}">Retour à la liste</a>
