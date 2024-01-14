@@ -47,6 +47,7 @@ class GroupController extends AbstractController
     {
         return $this->render('group/show.html.twig', [
             'group' => $group,
+
         ]);
     }
     #[Route('/{id}/edit', name: 'app_group_edit', methods: ['GET', 'POST'])]
@@ -56,8 +57,8 @@ class GroupController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($group);
             $entityManager->flush();
-
             return $this->redirectToRoute('app_group_index', [], Response::HTTP_SEE_OTHER);
         }
 

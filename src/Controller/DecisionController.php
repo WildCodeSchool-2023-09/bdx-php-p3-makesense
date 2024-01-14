@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Decision;
 use App\Entity\User;
 use App\Entity\Opinion;
+use App\Entity\User;
 use App\Form\DecisionType;
 use App\Form\OpinionType;
 use App\Repository\DecisionRepository;

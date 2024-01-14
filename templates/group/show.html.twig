@@ -12,9 +12,16 @@
                 <td>{{ group.id }}</td> #}
             </tr>
             <tr>
-                <th>Name</th>
+                <th>Nom</th>
                 <td>{{ group.name }}</td>
             </tr>
+        <tr>
+            <th>Participants</th>
+            <td>{% for user in group.users %}
+                    {{ user.firstname }} {{ user.lastname }}
+                {% endfor %}</td>
+
+        </tr>
         </tbody>
     </table>
 
