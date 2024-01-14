@@ -21,7 +21,8 @@
 .txt {
     color: $color-text;
     display: flex;
-    justify-content: space-evenly;
+    //justify-content: space-evenly;
+    flex-direction: column;
     border-radius: 30%;
 }
 
