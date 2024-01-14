@@ -21,6 +21,25 @@ class GroupRepository extends ServiceEntityRepository
         parent::__construct($registry, Group::class);
     }
 
+//    public function findLikeName(string $name): array
+//    {
+        // Crée un objet QueryBuilder associé à l'entité "g" (cela représente l'entité "Group").
+        /*$queryBuilder = $this->createQueryBuilder('g')
+
+            ->andWhere('g.name LIKE :name')
+            // Associe la valeur de :name à la variable $name fournie en tant qu argument.
+            // Notez l'utilisation de placeholders avec les deux pourcentages (%), ce qui
+            //signifie que le terme peut être n'importe où dans le titre.
+            ->setParameter('name', '%' . $name . '%')
+            // Ordonne les résultats par ordre alphabétique croissant sur la base du champ "title".
+            ->orderBy('p.title', 'ASC')
+            // Récupère la requête SQL construite jusqu'à présent.
+            ->getQuery();
+
+        // Exécute la requête et retourne les résultats.
+        return $queryBuilder->getResult();
+    }*/
+
 //    /**
 //     * @return Group[] Returns an array of Group objects
 //     */
