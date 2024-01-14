@@ -309,7 +309,6 @@ class Decision
     {
         if (!$this->groupes->contains($groupe)) {
             $this->groupes->add($groupe);
-            $groupe->addDecision($this);
         }
 
         return $this;
