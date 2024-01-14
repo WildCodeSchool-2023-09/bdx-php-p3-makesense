@@ -62,6 +62,19 @@
             <div class="decisionP">
                 <p>{{ decision.risk }}</p>
             </div>
+
+            <div>
+                <h2> Avis sur la décision <i class="fa-solid fa-chevron-down"></i></h2>
+            </div>
+            {% for opinion in decision.opinions %}
+                <div class="decisionP ">
+                    <p>{{ opinion.getAuthor().getFirstname }} - {{ opinion.getText() }}</p>
+                </div>
+            {% endfor %}
+
+            <div class="withMarginTop">
+                <a class="button" href="{{ path('new_opinion', {'id': decision.id}) }}"> Donner votre avis </a>
+            </div>
         </div>
         <div class="impacted-person">
         <div>
@@ -70,8 +83,8 @@
         {% for user in users %}
             <li>{{ user.firstname }}</li>
         {% endfor %}
-        <div>
-            <a href="{{ path('new_opinion', {'id': decision.id}) }}"> Donner votre avis </a>
+        <div class="withMarginTop">
+            <a class="button" href="{{ path('new_opinion', {'id': decision.id}) }}"> Donner votre avis </a>
         </div>
         </div>
     </div>
