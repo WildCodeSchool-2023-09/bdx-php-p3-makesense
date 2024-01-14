@@ -309,6 +309,7 @@ class Decision
     {
         if (!$this->groupes->contains($groupe)) {
             $this->groupes->add($groupe);
+            $groupe->addDecision($this);
         }
 
         return $this;
@@ -324,6 +325,7 @@ class Decision
     public function removeGroupe(Group $groupe): static
     {
         $this->groupes->removeElement($groupe);
+        $groupe->removeDecision($this);
 
         return $this;
     }
