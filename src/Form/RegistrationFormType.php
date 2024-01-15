@@ -16,6 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class RegistrationFormType extends AbstractType
 {
@@ -71,7 +72,11 @@ class RegistrationFormType extends AbstractType
             ->add('description', TextareaType::class, [
                 'attr' => ['placeholder' => 'Entrez votre description'],
             ])
-            ->add('photo', TextType::class)
+            ->add('photoFile', VichFileType::class, [
+                'required'      => false,
+                'allow_delete'  => true, // not mandatory, default is true
+                'download_uri' => true, // not mandatory, default is true
+            ])
             ->add('reseau', UrlType::class, [
                 'required' => false,
                 'attr' => ['placeholder' => 'Entrez l\'URL de votre réseau social'],
