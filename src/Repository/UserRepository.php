@@ -26,7 +26,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     }
 
     /**
-     * Used to upgrade (rehash) the user's password automatically over time.
+     * Used to upgrade (rehash) the admin's password automatically over time.
      */
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
     {
@@ -39,7 +39,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->getEntityManager()->flush();
     }
 
-    public function findLikeName(string $name): string
+    public function findLikeName(string $name): array
     {
         $queryBuilder = $this->createQueryBuilder('u')
             ->where('u.lastname LIKE :name')

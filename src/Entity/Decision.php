@@ -289,6 +289,14 @@ class Decision
         return $this;
     }
 
+    public function addUsers(User ...$users): static
+    {
+        foreach ($users as $user) {
+            $this->addUser($user);
+        }
+        return $this;
+    }
+
     /**
      * @return Collection<int, Group>
      */
@@ -316,6 +324,7 @@ class Decision
     public function removeGroupe(Group $groupe): static
     {
         $this->groupes->removeElement($groupe);
+        $groupe->removeDecision($this);
 
         return $this;
     }

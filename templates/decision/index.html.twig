@@ -3,20 +3,16 @@
 {% block title %}Decision index{% endblock %}
 
 {% block body %}
-    <h1>Decision index</h1>
+    <h1>Les décisions en cours</h1>
     <div class="decisionBox">
         {% for decision in decisions %}
             <a class="noTextDecoration" href="{{ path('app_decision_show', {'id': decision.id}) }}">
                 <div class="my-card">
                     <div class="my-card-body">
                         <h2 class="my-card-title"> {{ decision.title }}</h2>
-                        <p class="my-card-text"> {{ decision.description|split(' ')|slice(0, 20)|join(' ') ~ " ..." }} </p>
-                        <p>Créé par :
-                            {% for user in decision.users %}
-                                {{ user.firstname ~ ' ' ~ user.lastname }}
-                                 </p>
-                            {% endfor %}
-
+                        <p class="my-card-text"> {{ decision.description|split(' ')|slice(0, 20)|join(' ') ~ " ..." }} </p>{% for user in decision.users %}
+                        <p>{{ user.firstname }}</p>
+                        {% endfor %}
                     </div>
                 </div>
             </a>

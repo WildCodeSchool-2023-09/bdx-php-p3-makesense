@@ -22,7 +22,7 @@ class GroupRepository extends ServiceEntityRepository
     }
 
     public function findLikeName(string $name): array
-   {
+    {
         // Crée un objet QueryBuilder associé à l'entité "g" (cela représente l'entité "Group").
         $queryBuilder = $this->createQueryBuilder('g')
 
