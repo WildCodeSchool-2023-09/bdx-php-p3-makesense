@@ -3,7 +3,7 @@
 {% block title %}User{% endblock %}
 
 {% block body %}
-    <h1>User</h1>
+    <h1>COLLABORATEUR</h1>
 
     <table class="table">
         <tbody>
@@ -38,9 +38,8 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_user_index') }}">Revenir à la liste</a>
-
-    <a href="{{ path('app_user_edit', {'id': user.id}) }}">Modifier</a>
+    <button class="btn" onclick="window.location.href='{{ path('app_user_index')}}'">Revenir à la liste</button>
+    <button class="btn" onclick="window.location.href='{{ path('app_user_edit', {'id': user.id}) }}'">Modifier</button>
 
     {{ include('user/_delete_form.html.twig') }}
 {% endblock %}
