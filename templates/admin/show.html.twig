@@ -38,8 +38,8 @@
         </tbody>
     </table>
 
-    <button class="btn" onclick="window.location.href='{{ path('app_user_index')}}'">Revenir à la liste</button>
-    <button class="btn" onclick="window.location.href='{{ path('app_user_edit', {'id': user.id}) }}'">Modifier</button>
+    <button class="btn" onclick="window.location.href='{{ path('app_admin_index')}}'">Revenir à la liste</button>
+    <button class="btn" onclick="window.location.href='{{ path('app_admin_edit', {'id': user.id}) }}'">Modifier</button>
 
-    {{ include('user/_delete_form.html.twig') }}
+    {{ include('admin/_delete_form.html.twig') }}
 {% endblock %}
