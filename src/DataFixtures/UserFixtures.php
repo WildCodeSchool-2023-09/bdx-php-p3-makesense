@@ -30,7 +30,7 @@ class UserFixtures extends Fixture
                 'city' => 'New York',
                 'occupation' => 'Developer',
                 'description' => 'Passionate about coding.',
-                'photo' => 'john_doe.jpg',
+                /*'photo' => 'john_doe.jpg',*/
                 'reseau' => 'http://www.johndoe.com',
             ],
             [
@@ -43,7 +43,7 @@ class UserFixtures extends Fixture
                 'city' => 'San Francisco',
                 'occupation' => 'Designer',
                 'description' => 'Creative and artistic.',
-                'photo' => 'jane_doe.jpg',
+               /* 'photo' => 'jane_doe.jpg',*/
                 'reseau' => 'http://www.janedoe.com',
             ],
 
@@ -57,7 +57,7 @@ class UserFixtures extends Fixture
                 'city' => 'Las Vegas',
                 'occupation' => 'Developer',
                 'description' => 'Coding.',
-                'photo' => 'johan_doe.jpg',
+                /*'photo' => 'johan_doe.jpg',*/
                 'reseau' => 'http://www.johandoe.com',
             ],
         ];
@@ -73,7 +73,7 @@ class UserFixtures extends Fixture
             $user->setCity($userDataItem['city']);
             $user->setOccupation($userDataItem['occupation']);
             $user->setDescription($userDataItem['description']);
-            $user->setPhoto($userDataItem['photo']);
+           /* $user->setPhoto($userDataItem['photo']);*/
             $user->setReseau($userDataItem['reseau']);
             $this->addReference('user_' .  $userDataItem['email'], $user);
             $hashedPassword = $this->passwordHasher->hashPassword($user, $userDataItem['password']);

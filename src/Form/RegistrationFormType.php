@@ -16,13 +16,17 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class RegistrationFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email')
+        ->add('email', EmailType::class, [
+            'attr' => ['placeholder' => 'Entrez votre adresse e-mail'],
+        ])
+
             ->add('agreeTerms', CheckboxType::class, [
                                 'mapped' => false,
                 'constraints' => [
@@ -35,7 +39,9 @@ class RegistrationFormType extends AbstractType
                 // this is read and encoded in the controller
                 'mapped' => false,
                 /*'placeholder' => 'coucou',*/
-                'attr' => ['autocomplete' => 'new-password'],
+                'attr' => ['autocomplete' => 'new-password',
+                    'placeholder' => 'Entrez votre mot de passe',
+                    ],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Veuillez entrer un mot de passe',
@@ -48,15 +54,32 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('firstname', TextType::class)
-            ->add('lastname', TextType::class)
-            ->add('phoneNumber', TelType::class)
-            ->add('city', TextType::class)
-            ->add('occupation', TextType::class)
-            ->add('description', TextareaType::class)
-            ->add('photo', TextType::class)
+            ->add('firstname', TextType::class, [
+                'attr' => ['placeholder' => 'Entrez votre prénom'],
+            ])
+            ->add('lastname', TextType::class, [
+                'attr' => ['placeholder' => 'Entrez votre nom de famille'],
+            ])
+            ->add('phoneNumber', TelType::class, [
+                'attr' => ['placeholder' => 'Entrez votre numéro de téléphone'],
+            ])
+            ->add('city', TextType::class, [
+                'attr' => ['placeholder' => 'Entrez votre ville'],
+            ])
+            ->add('occupation', TextType::class, [
+                'attr' => ['placeholder' => 'Entrez votre profession'],
+            ])
+            ->add('description', TextareaType::class, [
+                'attr' => ['placeholder' => 'Entrez votre description'],
+            ])
+            ->add('photoFile', VichFileType::class, [
+                'required'      => false,
+                'allow_delete'  => true, // not mandatory, default is true
+                'download_uri' => true, // not mandatory, default is true
+            ])
             ->add('reseau', UrlType::class, [
                 'required' => false,
+                'attr' => ['placeholder' => 'Entrez l\'URL de votre réseau social'],
             ])
         ;
     }

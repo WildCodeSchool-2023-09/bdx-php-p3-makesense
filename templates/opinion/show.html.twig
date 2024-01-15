@@ -3,9 +3,32 @@
 {% block title %}Opinion{% endblock %}
 
 {% block body %}
-    <h1>Opinion</h1>
+    <h1>Avis</h1>
 
-    <table class="table">
+<div class="flex">
+    <div class="my-card">
+        <div class="my-card-body">
+{#           <h2 class="my-card-title"> Avis de : {{ opinion.author }}</h2>#}
+            <h3>{{ opinion.decision.title }}</h3>
+            <p class="my-card-text">{{ opinion.text }}</p>
+            <p>{{ opinion.createdAt ? opinion.createdAt|date('Y-m-d H:i:s') : '' }}</p>
+            {% if opinion.author %}
+           <p>Auteur.e : {{ opinion.author.firstname }} {{ opinion.author.lastname }}</p>
+            {% endif %}
+            {{ include('opinion/_delete_form.html.twig') }}
+            <div>
+                <a href="{{ path('app_opinion_edit', {'id': opinion.id}) }}">edit</a>
+                <a href="{{ path('app_opinion_index') }}">back to list</a>
+            </div>
+
+        </div>
+
+
+{#
+        </div>
+    </div>
+
+    {#<table class="table">
         <tbody>
             <tr>
                 <th>Id</th>
@@ -20,11 +43,6 @@
                 <td>{{ opinion.createdAt ? opinion.createdAt|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
         </tbody>
-    </table>
+    </table>#}
 
-    <a href="{{ path('app_opinion_index') }}">back to list</a>
-
-    <a href="{{ path('app_opinion_edit', {'id': opinion.id}) }}">edit</a>
-
-    {{ include('opinion/_delete_form.html.twig') }}
 {% endblock %}

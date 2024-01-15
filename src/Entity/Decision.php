@@ -47,14 +47,26 @@ class Decision
     #[Assert\NotBlank(message: 'Le risque ne doit pas être vide')]
     private ?string $risk = null;
 
-    #[ORM\Column(type: Types::DATE_IMMUTABLE)]
+    /*#[ORM\Column(type: Types::DATE_IMMUTABLE)]
+    #[Assert\GreaterThan(
+        propertyPath: "deadlineOpinion",
+        message: "La date limite de la décision doit être antérieure à la date limite de l'avis."
+    )]
     private ?\DateTimeImmutable $deadlineDecision = null;
 
-    #[ORM\Column(type: Types::TIME_IMMUTABLE)]
+    #[ORM\Column(type: Types::DATE_IMMUTABLE)]
+    #[Assert\GreaterThan(
+        propertyPath: "deadlineDecision",
+        message: "La date limite du conflit doit être antérieure à la date limite de la décision."
+    )]
     private ?\DateTimeImmutable $deadlineConflict = null;
 
-    #[ORM\Column(type: Types::TIME_IMMUTABLE)]
-    private ?\DateTimeImmutable $deadlineFinal = null;
+    #[ORM\Column(type: Types::DATE_IMMUTABLE)]
+    #[Assert\GreaterThan(
+        propertyPath: "deadlineConflict",
+        message: "La date limite finale doit être antérieure à la date limite du conflit."
+    )]
+    private ?\DateTimeImmutable $deadlineFinal = null;*/
 
     #[ORM\OneToMany(mappedBy: 'decision', targetEntity: Opinion::class, orphanRemoval: true)]
     private Collection $opinions;
