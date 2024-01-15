@@ -1,0 +1,36 @@
+.profil {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.profil-bloc {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: $color-second;
+    box-shadow: $box-shadow;
+    width: 22.0625rem;
+    height: 16.0625rem;
+}
+
+.profil-bloc>img {
+    width: 9rem;
+    border-radius: 4.5rem;
+}
+
+modif-profil {
+    color: $color-text;
+    background-color: $color-button;
+    border: none;
+    border-radius: $border-radius-button;
+    padding: 0.6rem 1.8rem;
+    margin: $margin-little;
+    font-size: $size-h2;
+    font-family: $font-text;
+    box-shadow: $box-shadow;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+}

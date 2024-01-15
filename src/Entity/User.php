@@ -87,6 +87,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $photo = null;
     #[Vich\UploadableField(mapping: 'user_photo', fileNameProperty: 'photo')]
+    #[Assert\File(
+        maxSize: '4M',
+        mimeTypes: ['image/jpeg', 'image/png', 'image/webp'],
+    )]
     private ?File $photoFile = null;
 
     #[ORM\Column(length: 255, nullable: true)]
