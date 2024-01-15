@@ -6,7 +6,7 @@ services:
     ports:
       - "127.0.0.1:8000:80"
     environment:
-      DATABASE_URL: mysql://user:password@database:3306/symfony?serverVersion=8&charset=utf8mb4
+      DATABASE_URL: mysql://admin:password@database:3306/symfony?serverVersion=8&charset=utf8mb4
     depends_on:
       database:
         condition: service_healthy
@@ -23,7 +23,7 @@ services:
       - ./database-setup.sh:/docker-entrypoint-initdb.d/setup.sh
       - db-data:/var/lib/mysql
     environment:
-      MYSQL_USER: user
+      MYSQL_USER: admin
       MYSQL_PASSWORD: password
       # Password for root access
       MYSQL_ROOT_PASSWORD: rootpassword

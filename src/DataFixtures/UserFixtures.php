@@ -73,7 +73,7 @@ class UserFixtures extends Fixture
             $user->setCity($userDataItem['city']);
             $user->setOccupation($userDataItem['occupation']);
             $user->setDescription($userDataItem['description']);
-           /* $user->setPhoto($userDataItem['photo']);*/
+           /* $admin->setPhoto($userDataItem['photo']);*/
             $user->setReseau($userDataItem['reseau']);
             $this->addReference('user_' .  $userDataItem['email'], $user);
             $hashedPassword = $this->passwordHasher->hashPassword($user, $userDataItem['password']);

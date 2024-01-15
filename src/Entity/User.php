@@ -95,7 +95,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Favori::class)]
     private Collection $favoris;
 
-    #[ORM\ManyToMany(targetEntity: Decision::class, mappedBy: 'user')]
+    #[ORM\ManyToMany(targetEntity: Decision::class, mappedBy: 'admin')]
     private Collection $decision;
 
     #[ORM\ManyToMany(targetEntity: Group::class, inversedBy: 'users')]
@@ -137,7 +137,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * A visual identifier that represents this user.
+     * A visual identifier that represents this admin.
      *
      * @see UserInterface
      */
@@ -152,7 +152,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
+        // guarantee every admin at least has ROLE_USER
         $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
@@ -185,7 +185,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function eraseCredentials(): void
     {
-        // If you store any temporary, sensitive data on the user, clear it here
+        // If you store any temporary, sensitive data on the admin, clear it here
         // $this->plainPassword = null;
     }
 
