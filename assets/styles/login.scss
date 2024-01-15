@@ -1,29 +1,43 @@
-.my-card-log {
+.my-card-box {
     width: 100%;
-    max-width: 130rem;
+    max-width: 120rem;
     border-radius: $border-radius;
     background-color: $color-second;
     box-shadow: $box-shadow-total;
     color: $color-text;
-    display: flex;
-    justify-content: space-around;
-    padding: 5rem;
+    justify-content: space-between;
+    padding: 3rem;
     align-items: center;
-    text-align: center;
+
 }
 
-/*.my-card-log > input {
-    width: 100%;
-    display: flex;
+.bloc{
+    flex-direction: column;
+    padding: 5rem;
+    text-align: center;
 
-}*/
+}
 
 .txt {
     color: $color-text;
     display: flex;
-    //justify-content: space-evenly;
-    flex-direction: column;
-    border-radius: 30%;
+    justify-content: space-evenly;
+}
+
+#inputEmail.form-control {
+    border: none;
+    border-radius: 25px;
+    margin-top: 5px;
+    height: 1.5rem;
+    width: 100%;
+}
+
+#inputPassword.form-control {
+    border: none;
+    border-radius: 25px;
+    margin-top: 5px;
+    height: 1.5rem;
+    width: 85%;
 }
 
 .container {
@@ -45,14 +59,39 @@
     margin: 6%;
 }
 
-.bottom {
-    display: inline;
+.button {
+    display: flex;
+    margin-left: 40%;
+
 }
 
 @media screen and (max-width: 768px){
-.my-card-log{
+.my-card-box{
+    flex-direction: column;
+    padding: 0.5rem;
+}
+.txt{
+    display: flex;
     flex-direction: column;
 }
+
+#inputPassword.form-control {
+    width: 100%;
+}
+
+.bloc{
+    padding: 1rem;
+}
+
+.log{
+    padding: 0.5rem;
+}
+
+    .button {
+        display: flex;
+        margin-left: 27%;
+
+    }
 }
 
 

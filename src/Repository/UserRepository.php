@@ -39,7 +39,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->getEntityManager()->flush();
     }
 
-    public function findLikeName(string $name): string
+    public function findLikeName(string $name): array
     {
         $queryBuilder = $this->createQueryBuilder('u')
             ->where('u.lastname LIKE :name')

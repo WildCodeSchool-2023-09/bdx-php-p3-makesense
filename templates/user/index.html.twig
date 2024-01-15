@@ -7,9 +7,7 @@
 <div class="search">
     {{ form_start(form) }}
     {{ form_widget(form) }}
-    <div class="input">
-        <button>Recherche</button>
-    </div>
+        <button class="input">Recherche</button>
     {{ form_end(form) }}
 </div>
     <table class="table">
@@ -36,8 +34,8 @@
                 <td>{{ user.city }}</td>
                 <td>{{ user.occupation }}</td>
                 <td>
-                    <a href="{{ path('app_user_show', {'id': user.id}) }}">voir</a>
-                    <a href="{{ path('app_user_edit', {'id': user.id}) }}">modifier</a>
+                    <button class="btn" onclick="window.location.href='{{ path('app_user_show', {'id': user.id}) }}'">Voir</button>
+                    <button class="btn" onclick="window.location.href='{{ path('app_user_edit', {'id': user.id}) }}'">Modifier</button>
                 </td>
             </tr>
         {% else %}
@@ -48,5 +46,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_user_new') }}">Créer</a>
+{#    <a href="{{ path('app_user_new') }}">Créer</a>#}
 {% endblock %}
