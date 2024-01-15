@@ -25,8 +25,7 @@ class GroupController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $search = $form->getData() ['search'];
-            $groups = $groupRepository->findBy(['name' => $search]);
-            //$groups = $groupRepository->findLikeName($search);
+            $groups = $groupRepository->findLikeName($search);
         } else {
             $groups = $groupRepository->findAll();
         }
