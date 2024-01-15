@@ -26,9 +26,17 @@ $font-text: "Raleway, Arial, sans-serif";
     font-family: $font-text;
 }
 
+
 body {
     margin-top: 4rem;
 }
+
+h1 {
+    font-size: $size-h1;
+    font-family: $font-text;
+    color: $color-text;
+}
+
 .button-big {
     color: $color-text;
     background-color: $color-button;
@@ -55,6 +63,7 @@ body {
     box-shadow: $box-shadow;
     font-weight: bold;
     cursor: pointer;
+    text-decoration: none;
 }
 
 .onglet-use {
@@ -89,7 +98,6 @@ body {
     border-radius: $border-radius;
     background-color: $color-first;
     box-shadow: $box-shadow-total;
-
 }
 
 .my-card-body {
@@ -119,7 +127,7 @@ body {
     border: 2px solid #3E8A9F;
     border-radius: $border-radius-button;
     padding: 0.6rem 1.8rem;
-    margin: $margin-little;
+    margin: 0.5rem;
     font-size: $size-little;
     font-family: $font-text;
     box-shadow: $box-shadow;
@@ -133,7 +141,7 @@ body {
     border: 2px solid #C1E94E;
     border-radius: $border-radius-button;
     padding: 0.6rem 1.8rem;
-    margin: $margin-little;
+    margin: 0.5rem;
     font-size: $size-little;
     font-family: $font-text;
     box-shadow: $box-shadow;
@@ -147,7 +155,7 @@ body {
     border: 2px solid #BEB700;
     border-radius: $border-radius-button;
     padding: 0.6rem 1.8rem;
-    margin: $margin-little;
+    margin: 0.5rem;
     font-size: $size-little;
     font-family: $font-text;
     box-shadow: $box-shadow;
@@ -161,7 +169,7 @@ body {
     border: 2px solid #D6A936;
     border-radius: $border-radius-button;
     padding: 0.6rem 1.8rem;
-    margin: $margin-little;
+    margin: 0.5rem;
     font-size: $size-little;
     font-family: $font-text;
     box-shadow: $box-shadow;
@@ -175,7 +183,7 @@ body {
     border: 2px solid #FF1616;
     border-radius: $border-radius-button;
     padding: 0.6rem 1.8rem;
-    margin: $margin-little;
+    margin: 0.5rem;
     font-size: $size-little;
     font-family: $font-text;
     box-shadow: $box-shadow;
@@ -236,8 +244,6 @@ body {
     display: flex;
 }
 
-
-
 .square-container-column {
     display: flex;
     border-radius: $border-radius;
@@ -269,5 +275,17 @@ body {
     box-shadow: $box-shadow;
 }
 
+.decisionP {
+    max-width: 100%;
+    width: auto;
+    margin: 0.5rem;
+    padding: 2rem;
+    border-radius: $border-radius;
+    background-color: $color-first;
+    box-shadow: $box-shadow-total;
+}
 
+.withMarginTop {
+    margin-top: 1rem;
+}
 

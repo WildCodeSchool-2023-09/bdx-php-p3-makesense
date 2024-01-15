@@ -1,4 +1,57 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+
+<div class="">
+    {{ form_row(form.title) }}
+</div>
+
+<div class="">
+    {{ form_row(form.description) }}
+</div>
+
+<div class="">
+    {{ form_row(form.impact) }}
+</div>
+
+<div class="">
+    {{ form_row(form.context) }}
+</div>
+
+<div class="">
+    {{ form_row(form.benefits) }}
+</div>
+
+<div class="">
+    {{ form_row(form.risk) }}
+</div>
+
+<div class="">
+    {{ form_row(form.startingDate) }}
+</div>
+
+<div class="">
+    {{ form_row(form.deadlineOpinion) }}
+</div>
+
+<div class="">
+    {{ form_row(form.deadlineDecision) }}
+</div>
+
+<div class="">
+    {{ form_row(form.deadlineConflict) }}
+</div>
+
+<div class="">
+    {{ form_row(form.deadlineFinal) }}
+</div>
+
+<div class="">
+    {{ form_label(form.users) }}
+    {{ form_errors(form.users) }}
+    {{ form_widget(form.users) }}
+</div>
+
+<div class="">
+    <button class="button">{{ button_label|default('Save') }}</button>
+</div>
+
 {{ form_end(form) }}
