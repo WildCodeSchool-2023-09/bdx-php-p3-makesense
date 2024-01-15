@@ -32,7 +32,7 @@ class OpinionController extends AbstractController
             throw $this->createAccessDeniedException('Utilisateur non connecté.');
         }
         // Vérifiez si l'utilisateur a une décision sur laquelle il peut faire une opinion
-        //$decision = $user->getDecision();
+        //$decision = $admin->getDecision();
 
         //if (!$decision) {
         //    throw $this->createAccessDeniedException('L\'utilisateur n\'a pas de décision autorisée.');
@@ -46,7 +46,7 @@ class OpinionController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $opinion->setAuthor($user);
             // Associer l'auteur à l'opinion
-            //$opinion->setAuthor($user);
+            //$opinion->setAuthor($admin);
             $entityManager->persist($opinion);
             $entityManager->flush();
 

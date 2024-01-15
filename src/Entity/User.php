@@ -12,10 +12,13 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'Ce email existe déjà')]
 #[UniqueEntity(fields: ['phoneNumber'], message: 'Ce numéro de téléphone existe déjà')]
+#[Vich\Uploadable]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -81,9 +84,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotBlank(message: 'La description ne doit pas être vide')]
     private ?string $description = null;
 
-    #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: 'La Photo ne doit pas être vide')]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $photo = null;
+    #[Vich\UploadableField(mapping: 'user_photo', fileNameProperty: 'photo')]
+    private ?File $photoFile = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $reseau = null;
@@ -91,7 +95,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Favori::class)]
     private Collection $favoris;
 
-    #[ORM\ManyToMany(targetEntity: Decision::class, mappedBy: 'user')]
+    #[ORM\ManyToMany(targetEntity: Decision::class, mappedBy: 'admin')]
     private Collection $decision;
 
     #[ORM\ManyToMany(targetEntity: Group::class, inversedBy: 'users')]
@@ -133,7 +137,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * A visual identifier that represents this user.
+     * A visual identifier that represents this admin.
      *
      * @see UserInterface
      */
@@ -148,7 +152,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
+        // guarantee every admin at least has ROLE_USER
         $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
@@ -181,7 +185,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function eraseCredentials(): void
     {
-        // If you store any temporary, sensitive data on the user, clear it here
+        // If you store any temporary, sensitive data on the admin, clear it here
         // $this->plainPassword = null;
     }
 
@@ -267,6 +271,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->photo = $photo;
 
         return $this;
+    }
+
+    public function setPhotoFile(?File $photoFile = null): User
+    {
+        $this->photoFile = $photoFile;
+        return $this;
+    }
+
+    public function getPhotoFile(): ?File
+    {
+        return $this->photoFile;
     }
 
     public function getReseau(): ?string
