@@ -59,11 +59,24 @@
     margin: 6%;
 }
 
-/*.button {
-    display: flex;
-    margin-left: 40%;
 
-}*/
+.my-button {
+    color: $color-text;
+    background-color: $color-button;
+    border: none;
+    border-radius: $border-radius-button;
+    padding: 0.6rem 1.8rem;
+    margin: $margin-little;
+    font-size: $size-h2;
+    font-family: $font-text;
+    box-shadow: $box-shadow;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+    display: flex;
+    margin-left: 41%;
+
+}
 
 @media screen and (max-width: 768px){
 .my-card-box{
@@ -87,7 +100,7 @@
     padding: 0.5rem;
 }
 
-    .button {
+.my-button {
         display: flex;
         margin-left: 27%;
 

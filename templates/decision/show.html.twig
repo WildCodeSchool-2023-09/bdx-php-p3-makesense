@@ -68,7 +68,12 @@
             </div>
             {% for opinion in decision.opinions %}
                 <div class="decisionP ">
-                    <p>{{ opinion.getAuthor().getFirstname }} - {{ opinion.getText() }}</p>
+{#                    <p>{{ opinion.getAuthor().getFirstname }} - {{ opinion.getText() }}</p>#}
+                   <p>{{ opinion.text }}</p>
+                    <p>{{ opinion.createdAt ? opinion.createdAt|date('Y-m-d H:i:s') : '' }}</p>
+                    {% if opinion.author %}
+                        <p> {{ opinion.author.firstname }} {{ opinion.author.lastname }}</p>
+                    {% endif %}
                 </div>
             {% endfor %}
 
@@ -105,5 +110,8 @@
         <a href="{{ path('app_decision_index') }}">Retour à la liste</a>
         <a href="{{ path('app_decision_edit', {'id': decision.id}) }}">Modifier</a>
         {{ include('decision/_delete_form.html.twig') }}
+    </div>
+
+
     </div>
 {% endblock %}

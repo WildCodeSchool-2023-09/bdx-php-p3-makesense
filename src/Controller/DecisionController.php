@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Entity\Opinion;
 use App\Form\DecisionType;
 use App\Form\OpinionType;
+use App\Repository\OpinionRepository;
 use App\Repository\DecisionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -65,18 +66,21 @@ class DecisionController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_decision_show', methods: ['GET'])]
-    public function show(Decision $decision): Response
+    public function show(Decision $decision, OpinionRepository $opinionRepository): Response
     {
         $users = $decision->getUsers();
         $usersExpert = $decision->getUserExpert();
         $groupes = $decision->getGroupes();
+        //$opinions = $decision->getOpinions();
+        // Charger les commentaires associés à l'épisode
+        $opinions = $opinionRepository->findBy(['decision' => $decision], ['createdAt' => 'ASC']);
 
         return $this->render('decision/show.html.twig', [
             'decision' => $decision,
             'users' => $users,
             'userExpert' => $usersExpert,
-            'groupes' => $groupes
-
+            'groupes' => $groupes,
+            'opinions' => $opinions
         ]);
     }
 
@@ -129,9 +133,10 @@ class DecisionController extends AbstractController
             $entityManager->persist($opinion);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_opinion_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_decision_show', [
+                'id' => $decision->getId(),
+            ], Response::HTTP_SEE_OTHER);
         }
-
         return $this->render('opinion/new.html.twig', [
             'opinion' => $opinion,
             'form' => $form,
