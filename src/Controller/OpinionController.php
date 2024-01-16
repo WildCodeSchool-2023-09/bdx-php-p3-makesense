@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Decision;
 use App\Entity\Opinion;
 use App\Form\OpinionType;
 use App\Repository\OpinionRepository;
@@ -23,7 +24,7 @@ class OpinionController extends AbstractController
     }
 
     #[Route('/new', name: 'app_opinion_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, Decision $decision): Response
     {
         $opinion = new Opinion();
         // Vérifie si l'utilisateur est connecté
@@ -50,7 +51,8 @@ class OpinionController extends AbstractController
             $entityManager->persist($opinion);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_opinion_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_decision_show', ['decisionId' => $decision->getId(),
+                ], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('opinion/new.html.twig', [
