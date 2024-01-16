@@ -21,6 +21,8 @@ use Symfony\Component\HttpFoundation\File\File;
 #[Vich\Uploadable]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+    use UserProfilTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -72,13 +74,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     )]
     private ?string $phoneNumber = null;
 
-    #[ORM\Column(length: 50)]
-    #[Assert\NotBlank(message: 'La ville ne doit pas être vide')]
-    private ?string $city = null;
-
-    #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: 'La profession ne doit pas être vide')]
-    private ?string $occupation = null;
 
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank(message: 'La description ne doit pas être vide')]
@@ -89,8 +84,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Vich\UploadableField(mapping: 'user_photo', fileNameProperty: 'photo')]
     private ?File $photoFile = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $reseau = null;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Favori::class)]
     private Collection $favoris;
@@ -110,6 +103,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Opinion::class)]
     private Collection $opinions;
 
+    #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Decision::class)]
+    private Collection $decisionOwner;
+
     public function __construct()
     {
         $this->favoris = new ArrayCollection();
@@ -117,6 +113,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->memberGroup = new ArrayCollection();
         $this->decisions = new ArrayCollection();
         $this->opinions = new ArrayCollection();
+        $this->decisionOwner = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -225,30 +222,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getCity(): ?string
-    {
-        return $this->city;
-    }
-
-    public function setCity(string $city): static
-    {
-        $this->city = $city;
-
-        return $this;
-    }
-
-    public function getOccupation(): ?string
-    {
-        return $this->occupation;
-    }
-
-    public function setOccupation(string $occupation): static
-    {
-        $this->occupation = $occupation;
-
-        return $this;
-    }
-
     public function getDescription(): ?string
     {
         return $this->description;
@@ -284,18 +257,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->photoFile;
     }
 
-    public function getReseau(): ?string
-    {
-        return $this->reseau;
-    }
-
-    public function setReseau(?string $reseau): static
-    {
-        $this->reseau = $reseau;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, Favori>
      */
@@ -329,10 +290,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @return Collection<int, Decision>
      */
-    public function getDecision(): Collection
+/*    public function getDecision(): Collection
     {
         return $this->decision;
-    }
+    }*/
 
 /*    public function addDecision(Decision $decision): static
     {
@@ -424,6 +385,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($opinion->getAuthor() === $this) {
                 $opinion->setAuthor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Decision>
+     */
+    public function getDecisionOwner(): Collection
+    {
+        return $this->decisionOwner;
+    }
+
+    public function addDecisionOwner(Decision $decisionOwner): static
+    {
+        if (!$this->decisionOwner->contains($decisionOwner)) {
+            $this->decisionOwner->add($decisionOwner);
+            $decisionOwner->setOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDecisionOwner(Decision $decisionOwner): static
+    {
+        if ($this->decisionOwner->removeElement($decisionOwner)) {
+            // set the owning side to null (unless already changed)
+            if ($decisionOwner->getOwner() === $this) {
+                $decisionOwner->setOwner(null);
             }
         }
 

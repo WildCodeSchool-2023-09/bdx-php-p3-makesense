@@ -18,7 +18,7 @@ use Doctrine\Common\Collections\Collection;
 
 class DecisionType extends AbstractType
 {
-    public function __construct(private UserRepository $userRepository, private GroupRepository $groupRepository)
+    public function __construct(private UserRepository $userRepository/*, private GroupRepository $groupRepository*/)
     {
     }
 
@@ -52,7 +52,7 @@ class DecisionType extends AbstractType
                 }
             ))
 
-            ->add('groups', ChoiceType::class, [
+           /* ->add('groups', ChoiceType::class, [
                 'label' => 'Choix des groupes',
                 'choice_label' => 'name',
                 'multiple' => true,
@@ -70,7 +70,7 @@ class DecisionType extends AbstractType
                 function ($groupsAsArray) {
                     return new ArrayCollection($groupsAsArray);
                 }
-            ));
+            ))*/;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
