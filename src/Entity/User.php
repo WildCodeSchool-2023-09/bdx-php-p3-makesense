@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\File\File;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'Ce email existe déjà')]
-#[UniqueEntity(fields: ['phoneNumber'], message: 'Ce numéro de téléphone existe déjà')]
 #[Vich\Uploadable]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -66,19 +65,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     )]
     private ?string $firstname = null;
 
-    #[ORM\Column]
-    #[Assert\NotBlank(message: 'Le numéro de téléphone ne doit pas être vide')]
-    #[Assert\Regex(
-        pattern: '/^\d{10}$/',
-        message: 'Le numéro de téléphone doit être composé de 10 chiffres'
-    )]
-    private ?string $phoneNumber = null;
-
-
-    #[ORM\Column(type: Types::TEXT)]
-    #[Assert\NotBlank(message: 'La description ne doit pas être vide')]
-    private ?string $description = null;
-
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $photo = null;
     #[Vich\UploadableField(mapping: 'user_photo', fileNameProperty: 'photo')]
@@ -106,6 +92,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Decision::class)]
     private Collection $decisionOwner;
 
+    #[ORM\ManyToMany(targetEntity: Decision::class, mappedBy: 'userExpert')]
+//    #[ORM\JoinTable(name : 'decision_expert')]
+    private Collection $expertDecision;
+
     public function __construct()
     {
         $this->favoris = new ArrayCollection();
@@ -114,6 +104,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->decisions = new ArrayCollection();
         $this->opinions = new ArrayCollection();
         $this->decisionOwner = new ArrayCollection();
+        $this->expertDecision = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -210,29 +201,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getPhoneNumber(): ?string
-    {
-        return $this->phoneNumber;
-    }
-
-    public function setPhoneNumber(string $phoneNumber): static
-    {
-        $this->phoneNumber = $phoneNumber;
-
-        return $this;
-    }
-
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(string $description): static
-    {
-        $this->description = $description;
-
-        return $this;
-    }
 
     public function getPhoto(): ?string
     {
@@ -416,6 +384,33 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             if ($decisionOwner->getOwner() === $this) {
                 $decisionOwner->setOwner(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Decision>
+     */
+    public function getExpertDecision(): Collection
+    {
+        return $this->expertDecision;
+    }
+
+    public function addExpertDecision(Decision $expertDecision): static
+    {
+        if (!$this->expertDecision->contains($expertDecision)) {
+            $this->expertDecision->add($expertDecision);
+            $expertDecision->addUserExpert($this);
+        }
+
+        return $this;
+    }
+
+    public function removeExpertDecision(Decision $expertDecision): static
+    {
+        if ($this->expertDecision->removeElement($expertDecision)) {
+            $expertDecision->removeUserExpert($this);
         }
 
         return $this;

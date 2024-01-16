@@ -59,12 +59,17 @@ class Decision
     #[ORM\ManyToMany(targetEntity: Group::class, inversedBy: 'decisions')]
     private ?Collection $groupes;
 
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'expertDecision')]
+    #[ORM\JoinTable(name : 'decision_expert')]
+    private Collection $userExpert;
+
     public function __construct()
     {
         $this->opinions = new ArrayCollection();
         $this->favoris = new ArrayCollection();
         $this->users = new ArrayCollection();
         $this->groupes = new ArrayCollection();
+        $this->userExpert = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -273,6 +278,30 @@ class Decision
     {
         $this->groupes->removeElement($groupe);
         $groupe->removeDecision($this);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUserExpert(): Collection
+    {
+        return $this->userExpert;
+    }
+
+    public function addUserExpert(User $userExpert): static
+    {
+        if (!$this->userExpert->contains($userExpert)) {
+            $this->userExpert->add($userExpert);
+        }
+
+        return $this;
+    }
+
+    public function removeUserExpert(User $userExpert): static
+    {
+        $this->userExpert->removeElement($userExpert);
 
         return $this;
     }

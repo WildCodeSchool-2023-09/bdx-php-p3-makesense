@@ -68,10 +68,14 @@ class DecisionController extends AbstractController
     public function show(Decision $decision): Response
     {
         $users = $decision->getUsers();
+        $usersExpert = $decision->getUserExpert();
+        $groupes = $decision->getGroupes();
 
         return $this->render('decision/show.html.twig', [
             'decision' => $decision,
             'users' => $users,
+            'userExpert' => $usersExpert,
+            'groupes' => $groupes
 
         ]);
     }
