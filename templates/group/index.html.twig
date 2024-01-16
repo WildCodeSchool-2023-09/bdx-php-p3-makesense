@@ -5,6 +5,11 @@
 {% block body %}
     <h1>Group index</h1>
 
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button type="submit">Search</button>
+    {{ form_end(form) }}
+
     <table class="table">
         <thead>
             <tr>

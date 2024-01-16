@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Group;
 use App\Form\GroupType;
+use App\Form\SearchGroupType;
 use App\Repository\GroupRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,11 +15,23 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/group')]
 class GroupController extends AbstractController
 {
-    #[Route('/', name: 'app_group_index', methods: ['GET'])]
-    public function index(GroupRepository $groupRepository): Response
+    #[Route('/', name: 'app_group_index', methods: ['GET', 'POST'])]
+    public function index(GroupRepository $groupRepository, Request $request): Response
     {
+        $form = $this->createForm(SearchGroupType::class);
+        $form->handleRequest($request);
+
+        $groups = [];
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $search = $form->getData() ['search'];
+            $groups = $groupRepository->findLikeName($search);
+        } else {
+            $groups = $groupRepository->findAll();
+        }
         return $this->render('group/index.html.twig', [
-            'groups' => $groupRepository->findAll(),
+            'groups' => $groups,// $groupRepository->findAll(),
+            'form' => $form->createView(),
         ]);
     }
 
