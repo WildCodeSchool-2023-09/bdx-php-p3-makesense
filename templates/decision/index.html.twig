@@ -10,21 +10,17 @@
                 <div class="my-card">
                     <div class="my-card-body">
                         <h2 class="my-card-title"> {{ decision.title }}</h2>
-                        <p class="my-card-text"> {{ decision.description|split(' ')|slice(0, 20)|join(' ') ~ " ..." }} </p>{% for user in decision.users %}
-                        <p>{{ user.firstname }}</p>
-                        {% endfor %}
+                        <p class="my-card-text"> {{ decision.description|split(' ')|slice(0, 20)|join(' ') ~ " ..." }} </p>
+                        <p>Par {{ decision.owner.firstname }}</p>
                     </div>
                 </div>
             </a>
-
         {% else %}
             Aucune décision
         {% endfor %}
     </div>
-    <a href="{{ path('app_decision_new') }}">
-        <button class="button">
-            Créer une nouvelle décision
-        </button>
+    <a href="{{ path('app_decision_new') }}" class="button">
+        Créer une nouvelle décision
     </a>
 {% endblock %}
 {# <a href="{{ path('app_decision_show', {'id': decision.id}) }}">show</a>

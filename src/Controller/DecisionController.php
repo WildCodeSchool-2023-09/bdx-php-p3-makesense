@@ -22,15 +22,31 @@ class DecisionController extends AbstractController
     #[Route('/', name: 'app_decision_index', methods: ['GET'])]
     public function index(DecisionRepository $decisionRepository): Response
     {
+        $decisions = $decisionRepository->findAll();
+        foreach ($decisions as $decision) {
+            $user = $decision->getOwner();
+
+            if ($user === null) {
+                // Gère le cas où l'utilisateur est null (peut-être un problème dans la fixture)
+                // Tu peux ignorer cette décision ou effectuer une action spécifique
+            } else {
+            }
+        }
         return $this->render('decision/index.html.twig', [
             'decisions' => $decisionRepository->findAll(),
         ]);
     }
 
     #[Route('/new', name: 'app_decision_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, Security $security): Response
     {
         $decision = new Decision();
+        $user = $security->getUser();
+
+        if (!$user) {
+            throw $this->createAccessDeniedException('Utilisateur non connecté.');
+        }
+        $decision->setOwner($user);
 
         $form = $this->createForm(DecisionType::class, $decision);
         $form->handleRequest($request);
@@ -53,6 +69,8 @@ class DecisionController extends AbstractController
     public function show(Decision $decision, OpinionRepository $opinionRepository): Response
     {
         $users = $decision->getUsers();
+        $usersExpert = $decision->getUserExpert();
+        $groupes = $decision->getGroupes();
         //$opinions = $decision->getOpinions();
         // Charger les commentaires associés à l'épisode
         $opinions = $opinionRepository->findBy(['decision' => $decision], ['createdAt' => 'ASC']);
@@ -60,8 +78,9 @@ class DecisionController extends AbstractController
         return $this->render('decision/show.html.twig', [
             'decision' => $decision,
             'users' => $users,
-            'opinions' => $opinions,
-
+            'userExpert' => $usersExpert,
+            'groupes' => $groupes,
+            'opinions' => $opinions
         ]);
     }
 

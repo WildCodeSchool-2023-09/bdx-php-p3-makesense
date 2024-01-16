@@ -17,10 +17,11 @@ use Symfony\Component\HttpFoundation\File\File;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'Ce email existe déjà')]
-#[UniqueEntity(fields: ['phoneNumber'], message: 'Ce numéro de téléphone existe déjà')]
 #[Vich\Uploadable]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+    use UserProfilTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -64,33 +65,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     )]
     private ?string $firstname = null;
 
-    #[ORM\Column]
-    #[Assert\NotBlank(message: 'Le numéro de téléphone ne doit pas être vide')]
-    #[Assert\Regex(
-        pattern: '/^\d{10}$/',
-        message: 'Le numéro de téléphone doit être composé de 10 chiffres'
-    )]
-    private ?string $phoneNumber = null;
-
-    #[ORM\Column(length: 50)]
-    #[Assert\NotBlank(message: 'La ville ne doit pas être vide')]
-    private ?string $city = null;
-
-    #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: 'La profession ne doit pas être vide')]
-    private ?string $occupation = null;
-
-    #[ORM\Column(type: Types::TEXT)]
-    #[Assert\NotBlank(message: 'La description ne doit pas être vide')]
-    private ?string $description = null;
-
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $photo = null;
     #[Vich\UploadableField(mapping: 'user_photo', fileNameProperty: 'photo')]
     private ?File $photoFile = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $reseau = null;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Favori::class)]
     private Collection $favoris;
@@ -110,6 +89,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Opinion::class)]
     private Collection $opinions;
 
+    #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Decision::class)]
+    private Collection $decisionOwner;
+
+    #[ORM\ManyToMany(targetEntity: Decision::class, mappedBy: 'userExpert')]
+//    #[ORM\JoinTable(name : 'decision_expert')]
+    private Collection $expertDecision;
+
     public function __construct()
     {
         $this->favoris = new ArrayCollection();
@@ -117,6 +103,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->memberGroup = new ArrayCollection();
         $this->decisions = new ArrayCollection();
         $this->opinions = new ArrayCollection();
+        $this->decisionOwner = new ArrayCollection();
+        $this->expertDecision = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -213,53 +201,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getPhoneNumber(): ?string
-    {
-        return $this->phoneNumber;
-    }
-
-    public function setPhoneNumber(string $phoneNumber): static
-    {
-        $this->phoneNumber = $phoneNumber;
-
-        return $this;
-    }
-
-    public function getCity(): ?string
-    {
-        return $this->city;
-    }
-
-    public function setCity(string $city): static
-    {
-        $this->city = $city;
-
-        return $this;
-    }
-
-    public function getOccupation(): ?string
-    {
-        return $this->occupation;
-    }
-
-    public function setOccupation(string $occupation): static
-    {
-        $this->occupation = $occupation;
-
-        return $this;
-    }
-
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(string $description): static
-    {
-        $this->description = $description;
-
-        return $this;
-    }
 
     public function getPhoto(): ?string
     {
@@ -282,18 +223,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getPhotoFile(): ?File
     {
         return $this->photoFile;
-    }
-
-    public function getReseau(): ?string
-    {
-        return $this->reseau;
-    }
-
-    public function setReseau(?string $reseau): static
-    {
-        $this->reseau = $reseau;
-
-        return $this;
     }
 
     /**
@@ -330,11 +259,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @param Decision $decision
      * @return User
      */
-   /* public function getDecision(): Collection
-    {
-        return $this->decision;
-    }*/
-
     /*public function addDecision(Decision $decision): static
     {
         if (!$this->decisions->contains($decision)) {
@@ -425,6 +349,63 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             if ($opinion->getAuthor() === $this) {
                 $opinion->setAuthor(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Decision>
+     */
+    public function getDecisionOwner(): Collection
+    {
+        return $this->decisionOwner;
+    }
+
+    public function addDecisionOwner(Decision $decisionOwner): static
+    {
+        if (!$this->decisionOwner->contains($decisionOwner)) {
+            $this->decisionOwner->add($decisionOwner);
+            $decisionOwner->setOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDecisionOwner(Decision $decisionOwner): static
+    {
+        if ($this->decisionOwner->removeElement($decisionOwner)) {
+            // set the owning side to null (unless already changed)
+            if ($decisionOwner->getOwner() === $this) {
+                $decisionOwner->setOwner(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Decision>
+     */
+    public function getExpertDecision(): Collection
+    {
+        return $this->expertDecision;
+    }
+
+    public function addExpertDecision(Decision $expertDecision): static
+    {
+        if (!$this->expertDecision->contains($expertDecision)) {
+            $this->expertDecision->add($expertDecision);
+            $expertDecision->addUserExpert($this);
+        }
+
+        return $this;
+    }
+
+    public function removeExpertDecision(Decision $expertDecision): static
+    {
+        if ($this->expertDecision->removeElement($expertDecision)) {
+            $expertDecision->removeUserExpert($this);
         }
 
         return $this;

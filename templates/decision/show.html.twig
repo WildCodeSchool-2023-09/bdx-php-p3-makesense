@@ -88,6 +88,18 @@
         {% for user in users %}
             <li>{{ user.firstname }}</li>
         {% endfor %}
+            <div>
+                <h2> Les personne experte</h2>
+            </div>
+            {% for user in userExpert %}
+                <li>{{ user.firstname }}</li>
+            {% endfor %}
+            <div>
+                <h2> Les groupes impactés</h2>
+            </div>
+            {% for group in groupes %}
+                <li>{{ group.name }}</li>
+            {% endfor %}
         <div class="withMarginTop">
             <a class="button" href="{{ path('new_opinion', {'id': decision.id}) }}"> Donner votre avis </a>
         </div>
