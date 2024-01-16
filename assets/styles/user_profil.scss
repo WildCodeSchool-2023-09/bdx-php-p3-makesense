@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    flex-wrap: wrap;
 }
 
 .profil-bloc {
@@ -13,6 +14,8 @@
     box-shadow: $box-shadow;
     width: 22.0625rem;
     height: 16.0625rem;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .profil-bloc>img {
