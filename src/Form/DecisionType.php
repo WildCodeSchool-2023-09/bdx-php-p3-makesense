@@ -14,6 +14,7 @@ use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use App\Form\ClassForType\CollectionArrayTransform;
 use Doctrine\Common\Collections\Collection;
 
 class DecisionType extends AbstractType
@@ -41,36 +42,25 @@ class DecisionType extends AbstractType
                 'choice_label' => 'email',
                 'multiple' => true,
                 'expanded' => true,
-                'choices' => $this->userRepository->findAll(),
+                'choices' => $this->userRepository->findAll()
             ])
-            ->get('users')->addModelTransformer(new CallbackTransformer(
-                function (Collection $usersAsCollection): array {
-                    return $usersAsCollection->toArray();
-                },
-                function (array $usersAsArray): Collection {
-                    return new ArrayCollection($usersAsArray);
-                }
-            ))
-
-            ->add('groups', ChoiceType::class, [
+            ->add('userExpert', ChoiceType::class, [
+                'choice_label' => 'email',
+                'expanded' => true,
+                'multiple' => true,
+                'choices' => $this->userRepository->findAll()
+            ])
+            ->add('groupes', ChoiceType::class, [
                 'label' => 'Choix des groupes',
                 'choice_label' => 'name',
                 'multiple' => true,
                 'expanded' => true,
                 'choices' => $this->groupRepository->findAll(),
             ])
-            ->get('groups')->addModelTransformer(new CallbackTransformer(
-                function ($groupsAsCollection) {
-                    if ($groupsAsCollection instanceof Collection) {
-                        return $groupsAsCollection->toArray();
-                    }
-
-                    return [];
-                },
-                function ($groupsAsArray) {
-                    return new ArrayCollection($groupsAsArray);
-                }
-            ));
+        ;
+            $builder->get('users')->addModelTransformer(new CollectionArrayTransform());
+            $builder->get('userExpert')->addModelTransformer(new CollectionArrayTransform());
+            $builder->get('groupes')->addModelTransformer(new CollectionArrayTransform());
     }
 
     public function configureOptions(OptionsResolver $resolver): void

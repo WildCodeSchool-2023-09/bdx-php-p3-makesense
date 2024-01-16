@@ -29,6 +29,7 @@ class DecisionFixtures extends Fixture implements DependentFixtureInterface
             $decision->setDeadlineFinal(new DateTimeImmutable(false));
             $this->addReference('decision_' . $i, $decision);
             $decision->addGroupe($this->getReference("groupe"));
+            $decision->setOwner($this->getReference('user_johan.doe@example.com'));
 
             $manager->persist($decision);
         }
