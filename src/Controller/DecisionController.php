@@ -124,7 +124,7 @@ class DecisionController extends AbstractController
         }
 
         // Vérifie si l'utilisateur fait partie des utilisateurs concernés par la décision
-        if (!$decision->getUsers()->contains($user)) {
+        if (!$decision->getUsers()->contains($user) && !$this->isGranted('ROLE_ADMIN')) {
             throw $this->createAccessDeniedException('Vous n\'êtes pas autorisé à
             ajouter un avis pour cette décision.');
         }
