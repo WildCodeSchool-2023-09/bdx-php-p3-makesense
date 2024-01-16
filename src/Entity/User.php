@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -92,6 +93,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         mimeTypes: ['image/jpeg', 'image/png', 'image/webp'],
     )]
     private ?File $photoFile = null;
+
+/*    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?DatetimeInterface $updatedAt = null;*/
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $reseau = null;
@@ -264,6 +268,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+/*    public function getUpdatedAt(): ?DatetimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?DatetimeInterface $updatedAt): void
+    {
+        $this->updatedAt = $updatedAt;
+    }*/
 
     public function getPhoto(): ?string
     {
@@ -280,6 +293,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPhotoFile(?File $photoFile = null): User
     {
         $this->photoFile = $photoFile;
+        /*if ($photoFile) {
+            $this->updatedAt = new DateTime('now');
+        }*/
         return $this;
     }
 
