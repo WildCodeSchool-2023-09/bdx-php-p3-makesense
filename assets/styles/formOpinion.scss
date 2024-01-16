@@ -1,0 +1,47 @@
+
+.my-card-box {
+    width: 70%;
+    max-width: 120rem;
+    border-radius: $border-radius;
+    background-color: $color-second;
+    box-shadow: $box-shadow-total;
+    color: $color-text;
+    justify-content: space-between;
+    padding: 3rem;
+    align-items: center;
+    display: flex;
+
+}
+
+.bloc{
+    flex-direction: column;
+    padding: 1rem;
+    text-align: left;
+   // width: 90rem;
+
+}
+
+/*@media only screen and (max-width: 600px){
+    .bloc{
+        width: 17rem;
+    }
+    */
+label.required{
+    flex-direction: column;
+}
+
+textarea#opinion_text {
+    padding-bottom: 30px;
+    width: 30rem;
+}
+@media only screen and (max-width: 600px){
+    textarea#opinion_text{
+        width: 17rem;
+    }
+}
+
+form[name="opinion"] button.btn {
+    margin-top: 1rem;
+}
+
+
