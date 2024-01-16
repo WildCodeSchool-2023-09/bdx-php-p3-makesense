@@ -95,9 +95,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Favori::class)]
     private Collection $favoris;
 
-    #[ORM\ManyToMany(targetEntity: Decision::class, mappedBy: 'admin')]
+/*    #[ORM\ManyToMany(targetEntity: Decision::class, mappedBy: 'admin')]
     private Collection $decision;
-
+*/
     #[ORM\ManyToMany(targetEntity: Group::class, inversedBy: 'users')]
     private Collection $memberGroup;
 
@@ -113,7 +113,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct()
     {
         $this->favoris = new ArrayCollection();
-        $this->decision = new ArrayCollection();
+       // $this->decisions = new ArrayCollection();
         $this->memberGroup = new ArrayCollection();
         $this->decisions = new ArrayCollection();
         $this->opinions = new ArrayCollection();
@@ -266,7 +266,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->photo;
     }
 
-    public function setPhoto(string $photo): static
+    public function setPhoto(?string $photo): static
     {
         $this->photo = $photo;
 
@@ -327,34 +327,34 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, Decision>
+     * @param Decision $decision
+     * @return User
      */
-    public function getDecision(): Collection
+   /* public function getDecision(): Collection
     {
         return $this->decision;
-    }
+    }*/
 
-/*    public function addDecision(Decision $decision): static
+    /*public function addDecision(Decision $decision): static
     {
-        if (!$this->decision->contains($decision)) {
-            $this->decision->add($decision);
-            $decision->getUsers($this);
+        if (!$this->decisions->contains($decision)) {
+            $this->decisions->add($decision);
+            //$decision->getAuthor($this);
         }
-
-        return $this;
-    }
-
-    public function removeDecision(Decision $decision): static
-    {
-        if ($this->decision->removeElement($decision)) {
-            // set the owning side to null (unless already changed)
-            if ($decision->getUsers() === $this) {
-                $decision->getUsers(null);
-            }
-        }
-
         return $this;
     }*/
+    /*
+        public function removeDecision(Decision $decision): static
+        {
+            if ($this->decision->removeElement($decision)) {
+                // set the owning side to null (unless already changed)
+                if ($decision->getUsers() === $this) {
+                    $decision->getUsers(null);
+                }
+            }
+
+            return $this;
+        }*/
 
     /**
      * @return Collection<int, Group>
@@ -395,10 +395,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @return Collection<int, Decision>
      */
-    public function getDecisions(): Collection
+   /* public function getDecisions(): Collection
     {
         return $this->decisions;
-    }
+    }*/
 
     /**
      * @return Collection<int, Opinion>
