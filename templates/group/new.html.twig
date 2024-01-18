@@ -3,9 +3,10 @@
 {% block title %}New Group{% endblock %}
 
 {% block body %}
-    <h1>Create new Group</h1>
+    <h1>Créer un groupe</h1>
 
     {{ include('group/_form.html.twig') }}
 
-    <a href="{{ path('app_group_index') }}">back to list</a>
+{#    <a href="{{ path('app_group_index') }}">back to list</a>#}
+    <button class="btn" onclick="window.location.href='{{ path('app_group_index')}}'">Retour à la liste</button>
 {% endblock %}

@@ -2,10 +2,16 @@
 
 
             {{ form_start(form) }}
-            {{ form_widget(form) }}
+            <div class="container">
+                <div class="card-new-group">
+                    <div class="block-group">
 
+                        {{ form_row(form.name, {label: 'Nom du groupe'}) }}
+                    </div>
+                    <div>
             <button type="submit" class="btn">valider</button>
+                    </div>
             {{ form_end(form) }}
-
-
+                </div>
+            </div>
 

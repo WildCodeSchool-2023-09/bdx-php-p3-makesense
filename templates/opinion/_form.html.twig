@@ -1,15 +1,16 @@
 
-    {{ form_start(form) }}
-<div class="container">
-    <div class="my-card-boxe">
-{#       <div class="txt">#}
-          <div class="bloce">
+<div class="form-background-opinion">
+{{ form_start(form) }}
 
-                {{ form_row(form.text, {label: 'Ecrivez ici :'}) }}
-          </div>
-    <button type="submit" class="btn">valider</button>
+    <div class="formTextOpinion">
+                {{ form_row(form.text, {
+                    label: 'Ecrivez ici :'}) }}
+        <button type="submit" class="button opinion">valider</button>
+    </div>
+
+{#    <button type="submit" class="btn">valider</button>#}
+
     {{ form_end(form) }}
 
-{#            </div>#}
-     </div>
 </div>
+

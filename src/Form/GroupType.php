@@ -32,6 +32,7 @@ class GroupType extends AbstractType
                 'expanded' => true,
                 'choices' => $this->userRepository->findAll()
 
+
             ])
             ->get('users')->addModelTransformer(new CallbackTransformer(
                 function (Collection $usersAsCollection): array {
