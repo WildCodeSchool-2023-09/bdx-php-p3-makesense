@@ -1,6 +1,6 @@
 
-.card-new-group {
-    width: 90%;
+.form-background-group {
+    width: 73%;
     max-width: 150rem;
     border-radius: $border-radius;
     background-color: $color-second;
@@ -9,19 +9,49 @@
     justify-content: space-between;
     padding: 3rem;
     align-items: center;
+    font-weight: bold;
+    margin: auto;
+    //display: flex;
+
+}
+.formTextGroup > div {
     display: flex;
-
-}
-
-.block-group{
     flex-direction: column;
-    padding: 1rem;
-    text-align: left;
-    // width: 90rem;
+}
+
+input[name="group[name]"]{
+    width: 25rem;
 
 }
 
+.formTextGroup > div > label.required {
+    padding-top: 2rem;
+}
 
+form[name="group"] button.createGroup {
+    //margin: 0;
+    align-self: flex-end;
+    margin-bottom: -12rem;
+    margin-left: 1rem;
+    margin-top: 5rem;
+}
+
+@media only screen and (max-width: 600px) {
+
+    input[name="group[name]"] {
+        width: 13rem;
+    }
+    h1.groupTitle {
+        margin-top: 6rem;
+        margin-bottom: 1rem;
+    }
+
+    form[name=group] button.createGroup {
+        margin-top: 3.5rem;
+        margin-right: 4rem;
+    }
+}
+/*
 
 label.required{
     flex-direction: column;
@@ -31,15 +61,7 @@ textarea#opinion_text {
     padding-bottom: 30px;
     width: 30rem;
 }
-@media only screen and (max-width: 600px){
-    textarea#opinion_text{
-        width: 17rem;
-    }
-}
-
-button.btn {
-    margin-top: 1rem;
-    text-align: right;
-}
 
 
+
+*/
