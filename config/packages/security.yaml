@@ -45,6 +45,7 @@ security:
          - { path: ^/decision, roles: ROLE_USER }
          - { path: ^/decision, roles: ROLE_MEMBER }
          - { path: ^/decision, roles: ROLE_ADMIN }
+#         
 
 when@test:
     security:
