@@ -13,7 +13,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\UX\AutoCompleteType\AutoCompleteType;
 
 class GroupType extends AbstractType
 {
