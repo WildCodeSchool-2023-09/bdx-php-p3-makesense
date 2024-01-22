@@ -123,6 +123,12 @@ class DecisionController extends AbstractController
             throw $this->createAccessDeniedException('Utilisateur non connecté.');
         }
 
+        // Vérifie si l'utilisateur fait partie des utilisateurs concernés par la décision
+        if (!$decision->getUsers()->contains($user) && !$this->isGranted('ROLE_ADMIN')) {
+            throw $this->createAccessDeniedException('Vous n\'êtes pas autorisé à
+            ajouter un avis pour cette décision.');
+        }
+
         $form = $this->createForm(OpinionType::class, $opinion);
         $form->handleRequest($request);
 
@@ -133,13 +139,15 @@ class DecisionController extends AbstractController
             $entityManager->persist($opinion);
             $entityManager->flush();
 
+            $this->addFlash('success', 'Avis ajouté avec succès.');
+
             return $this->redirectToRoute('app_decision_show', [
                 'id' => $decision->getId(),
             ], Response::HTTP_SEE_OTHER);
         }
         return $this->render('opinion/new.html.twig', [
-            'opinion' => $opinion,
-            'form' => $form,
+            'decision' => $decision,
+            'form' => $form->createView(),
         ]);
     }
 }
