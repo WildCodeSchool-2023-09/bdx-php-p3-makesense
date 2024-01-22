@@ -2,10 +2,17 @@
 
 
             {{ form_start(form) }}
-            {{ form_widget(form) }}
-
-            <button class="btn">{{ button_label|default('valider') }}</button>
+            <div class="form-background-group">
+                <div class="formTextGroup">
+                        {{ form_row(form.name, {
+                            label: 'Nom du groupe'}) }}
+                    {{ form_row(form.users, {
+                        label: 'Choix des membres du groupe'
+                    }) }}
+                    <div>
+            <button type="submit" class="button createGroup">valider</button>
+                    </div>
             {{ form_end(form) }}
-
-
+                </div>
+            </div>
 
