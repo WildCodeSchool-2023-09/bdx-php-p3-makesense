@@ -10,7 +10,7 @@
                 <div class="my-card">
                     <div class="my-card-body">
                         <h2 class="my-card-title"> {{ decision.title }}</h2>
-                        <p class="my-card-text"> {{ decision.description|split(' ')|slice(0, 20)|join(' ') ~ " ..." }} </p>
+                        <p class="my-card-text">{% autoescape false %} {{ decision.description|raw |split(' ')|slice(0, 20)|join(' ') ~ " ..." }}{% endautoescape %} </p>
                         <p>Par {{ decision.owner.firstname }}</p>
                     </div>
                 </div>

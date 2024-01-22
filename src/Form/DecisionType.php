@@ -8,6 +8,7 @@ use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Repository\GroupRepository;
 use Doctrine\Common\Collections\ArrayCollection;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
@@ -27,11 +28,11 @@ class DecisionType extends AbstractType
     {
         $builder
             ->add('title')
-            ->add('description')
-            ->add('impact')
-            ->add('context')
-            ->add('benefits')
-            ->add('risk')
+            ->add('description', CKEditorType::class)
+            ->add('impact', CKEditorType::class)
+            ->add('context', CKEditorType::class)
+            ->add('benefits', CKEditorType::class)
+            ->add('risk', CKEditorType::class)
             ->add('startingDate')
             ->add('deadlineOpinion')
             ->add('deadlineDecision')
