@@ -42,20 +42,20 @@ class DecisionType extends AbstractType
                 'label' => "Les personnes impactées",
                 'choice_label' => 'email',
                 'multiple' => true,
-                'expanded' => true,
+                'autocomplete' => true,
                 'choices' => $this->userRepository->findAll()
             ])
             ->add('userExpert', ChoiceType::class, [
                 'choice_label' => 'email',
-                'expanded' => true,
+                'autocomplete' => true,
                 'multiple' => true,
                 'choices' => $this->userRepository->findAll()
             ])
             ->add('groupes', ChoiceType::class, [
                 'label' => 'Choix des groupes',
                 'choice_label' => 'name',
+                'autocomplete' => true,
                 'multiple' => true,
-                'expanded' => true,
                 'choices' => $this->groupRepository->findAll(),
             ])
         ;
