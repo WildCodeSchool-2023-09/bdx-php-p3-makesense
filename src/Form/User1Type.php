@@ -9,6 +9,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class User1Type extends AbstractType
 {
@@ -16,32 +17,18 @@ class User1Type extends AbstractType
     {
         $builder
             ->add('email')
-            ->add('roles')
-            ->add('password')
             ->add('lastname')
             ->add('firstname')
             ->add('phoneNumber')
             ->add('city')
             ->add('occupation')
             ->add('description')
-            ->add('photo')
+            ->add('photoFile', VichFileType::class, [
+                'required'      => false,
+                'allow_delete'  => false, // not mandatory, default is true
+                'download_uri' => false, // not mandatory, default is true
+            ])
             ->add('reseau')
-            ->add('isVerified')
-            ->add('decision', EntityType::class, [
-                'class' => Decision::class,
-                'choice_label' => 'id',
-                'multiple' => true,
-            ])
-            ->add('memberGroup', EntityType::class, [
-                'class' => Group::class,
-                'choice_label' => 'id',
-                'multiple' => true,
-            ])
-            ->add('decisions', EntityType::class, [
-                'class' => Decision::class,
-                'choice_label' => 'id',
-                'multiple' => true,
-            ])
         ;
     }
 
