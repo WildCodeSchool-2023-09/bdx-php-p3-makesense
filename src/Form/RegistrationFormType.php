@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\User;
+use App\Entity\Picture;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -38,7 +39,6 @@ class RegistrationFormType extends AbstractType
                                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'mapped' => false,
-                /*'placeholder' => 'coucou',*/
                 'attr' => ['autocomplete' => 'new-password',
                     'placeholder' => 'Entrez votre mot de passe',
                     ],

@@ -37,7 +37,7 @@ form[name="search_group"] > button.submit{
 form[name="search_group"] > button.submit:hover{
     box-shadow: 0 3px 8px #0003;
 }
-.table_reponsive{
+.table_responsive{
     font-family: $font-text;
     max-width: 56rem;
     border: 2px solid white;
@@ -52,11 +52,11 @@ form[name="search_group"] > button.submit:hover{
 
 table{
     width: 80%;
-    white-space: nowrap;
+    //white-space: nowrap;
 
 }
 
-table.table_reponsive>thead>tr>th{
+table.table_responsive>thead>tr>th{
     background-color: white;
 }
 /*
@@ -79,7 +79,7 @@ table td{
     padding-left: 1rem;
 }
 
-table.table_reponsive th{
+table.table_responsive th{
     border-radius: 0rem 3.1rem;
 }
 table td{
@@ -134,4 +134,19 @@ span.action_btn>a:hover{
 
 .linkCreateGroupe > p > a:hover{
     background-color: rgba(25, 108, 132, 0.30);
+}
+
+@media only screen and (max-width: 600px){
+    form[name="search_group"] > button.submit{
+        margin-top: 0.5rem;
+        margin-right: 2rem;
+        margin-bottom: 0.5rem;}
+
+    h1.searchGroup{
+        margin-top: 6rem;
+    }
+
+    div.linkCreateGroupe{
+        margin-left: 0.5rem;
+    }
 }

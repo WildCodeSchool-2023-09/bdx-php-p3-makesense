@@ -3,17 +3,20 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use DateTimeInterface;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use phpDocumentor\Reflection\Type;
+use Exception;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-use Symfony\Component\HttpFoundation\File\File;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'Ce email existe déjà')]
@@ -36,55 +39,33 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     )]
     private ?string $email = null;
 
-    #[ORM\Column]
-    private array $roles = [];
-
     /**
      * @var string The hashed password
      */
     #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\Column(length: 100)]
-    #[Assert\NotBlank(message: 'Le Nom ne doit pas être vide')]
-    #[Assert\Length(
-        min: 2,
-        max: 100,
-        minMessage: 'Votre Nom doit comporter au moins {{ limit }} caractères',
-        maxMessage: 'Votre Nom ne peut pas contenir plus de {{ limit }} caractères',
-    )]
-    private ?string $lastname = null;
-
-    #[ORM\Column(length: 100)]
-    #[Assert\NotBlank(message: 'Le prénom  ne doit pas être vide')]
-    #[Assert\Length(
-        min: 2,
-        max: 100,
-        minMessage: 'Votre prénom doit comporter au moins {{ limit }} caractères',
-        maxMessage: 'Votre prénom ne peut pas contenir plus de {{ limit }} caractères',
-    )]
-    private ?string $firstname = null;
-
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $photo = null;
+
     #[Vich\UploadableField(mapping: 'user_photo', fileNameProperty: 'photo')]
+    #[Assert\File(
+        maxSize: '4M',
+        mimeTypes: ['image/jpeg', 'image/png', 'image/webp'],
+    )]
     private ?File $photoFile = null;
 
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?DatetimeInterface $updatedAt = null;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Favori::class)]
     private Collection $favoris;
 
-/*    #[ORM\ManyToMany(targetEntity: Decision::class, mappedBy: 'admin')]
-    private Collection $decision;
-*/
     #[ORM\ManyToMany(targetEntity: Group::class, inversedBy: 'users')]
     private Collection $memberGroup;
 
     #[ORM\Column(type: 'boolean')]
     private bool $isVerified = false;
-
-    #[ORM\ManyToMany(targetEntity: Decision::class, mappedBy: 'users')]
-    private Collection $decisions;
 
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Opinion::class)]
     private Collection $opinions;
@@ -99,9 +80,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct()
     {
         $this->favoris = new ArrayCollection();
-       // $this->decisions = new ArrayCollection();
         $this->memberGroup = new ArrayCollection();
-        $this->decisions = new ArrayCollection();
         $this->opinions = new ArrayCollection();
         $this->decisionOwner = new ArrayCollection();
         $this->expertDecision = new ArrayCollection();
@@ -135,25 +114,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @see UserInterface
-     */
-    public function getRoles(): array
-    {
-        $roles = $this->roles;
-        // guarantee every admin at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
-
-        return array_unique($roles);
-    }
-
-    public function setRoles(array $roles): static
-    {
-        $this->roles = $roles;
-
-        return $this;
-    }
-
-    /**
      * @see PasswordAuthenticatedUserInterface
      */
     public function getPassword(): string
@@ -175,54 +135,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the admin, clear it here
         // $this->plainPassword = null;
-    }
-
-    public function getLastname(): ?string
-    {
-        return $this->lastname;
-    }
-
-    public function setLastname(string $lastname): static
-    {
-        $this->lastname = $lastname;
-
-        return $this;
-    }
-
-    public function getFirstname(): ?string
-    {
-        return $this->firstname;
-    }
-
-    public function setFirstname(string $firstname): static
-    {
-        $this->firstname = $firstname;
-
-        return $this;
-    }
-
-
-    public function getPhoto(): ?string
-    {
-        return $this->photo;
-    }
-
-    public function setPhoto(?string $photo): static
-    {
-        $this->photo = $photo;
-
-        return $this;
-    }
-
-    public function setPhotoFile(?File $photoFile = null): User
-    {
-        $this->photoFile = $photoFile;
-        return $this;
-    }
-
-    public function getPhotoFile(): ?File
-    {
-        return $this->photoFile;
     }
 
     /**
@@ -254,31 +166,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
-    /**
-     * @param Decision $decision
-     * @return User
-     */
-    /*public function addDecision(Decision $decision): static
-    {
-        if (!$this->decisions->contains($decision)) {
-            $this->decisions->add($decision);
-            //$decision->getAuthor($this);
-        }
-        return $this;
-    }*/
-    /*
-        public function removeDecision(Decision $decision): static
-        {
-            if ($this->decision->removeElement($decision)) {
-                // set the owning side to null (unless already changed)
-                if ($decision->getUsers() === $this) {
-                    $decision->getUsers(null);
-                }
-            }
-
-            return $this;
-        }*/
 
     /**
      * @return Collection<int, Group>
@@ -317,14 +204,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, Decision>
-     */
-   /* public function getDecisions(): Collection
-    {
-        return $this->decisions;
-    }*/
-
-    /**
      * @return Collection<int, Opinion>
      */
     public function getOpinions(): Collection
@@ -354,6 +233,81 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function getUpdatedAt(): ?DatetimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?DatetimeInterface $updatedAt): void
+    {
+        $this->updatedAt = $updatedAt;
+    }
+
+    public function getPhoto(): ?string
+    {
+        return $this->photo;
+    }
+
+    public function setPhoto(?string $photo): static
+    {
+        $this->photo = $photo;
+
+        return $this;
+    }
+
+    public function setPhotoFile(?File $photoFile = null): User
+    {
+        $this->photoFile = $photoFile;
+        if ($this->photoFile instanceof UploadedFile) {
+            $this->updatedAt = new DateTime('now');
+        }
+        return $this;
+    }
+
+    public function getPhotoFile(): ?File
+    {
+        return $this->photoFile;
+    }
+
+    // Resolution message erreur : Serialization of 'Symfony\Component\HttpFoundation\File\UploadedFile' is not allowed
+
+// Ce message d'erreur indique que la sérialisation de cet objet n'est pas autorisée.
+// La sérialisation est le processus de conversion d'un objet en une représentation de chaîne de caractères,
+// généralement dans le but de stocker cet objet dans une base de données,
+// de le transmettre via un réseau ou de le sauvegarder d'une manière ou d'une autre.
+    public function __serialize(): array
+    {
+        return [
+            'id' => $this->id,
+            'email' => $this->email,
+            'roles' => $this->roles,
+            'password' => $this->password,
+            'firstname' => $this->firstname,
+            'lastname' => $this->lastname,
+            'phoneNumber' => $this->phoneNumber,
+            'city' => $this->city,
+            'occupation' => $this->occupation,
+            'description' => $this->description,
+            'reseau' => $this->reseau,
+            'photo' => $this->photo,
+        ];
+    }
+
+    public function __unserialize(array $data): void
+    {
+        $this->id = $data['id'] ?? null;
+        $this->email = $data['email'] ?? null;
+        $this->roles = $data['roles'] ?? [];
+        $this->password = $data['password'] ?? null;
+        $this->firstname = $data['firstname'] ?? null;
+        $this->lastname = $data['lastname'] ?? null;
+        $this->phoneNumber = $data['phoneNumber'] ?? null;
+        $this->city = $data['city'] ?? null;
+        $this->occupation = $data['occupation'] ?? null;
+        $this->description = $data['description'] ?? null;
+        $this->reseau = $data['reseau'] ?? null;
+        $this->photo = $data['photo'] ?? null;
+    }
     /**
      * @return Collection<int, Decision>
      */

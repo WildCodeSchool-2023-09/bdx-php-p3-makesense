@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Decision;
 use App\Entity\Opinion;
 use App\Entity\User;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -15,7 +16,7 @@ class OpinionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('text')
+            ->add('text', CKEditorType::class)
             /*->add('createdAt')
             /*->add('decision', EntityType::class, [
                 'class' => Decision::class,

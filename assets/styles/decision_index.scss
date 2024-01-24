@@ -64,12 +64,38 @@
     align-content: center;
     flex-wrap: wrap;
 }
+.square-container-column-new {
+    display: flex;
+    border-radius: $border-radius;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: $color-second;
+    width: 90%; /* Utilisez 100% au lieu de 90% */
+    margin: 1rem auto;
+    padding: 0 2rem;
+    font-family: $font-text;
+    color: $color-text;
+    font-weight: bold;
+    box-shadow: $box-shadow;
+    box-sizing: border-box; /* Inclure le padding dans la largeur totale */
+}
 
 .date_active{
     background-color: #9fa9b7;
     border-radius: $border-radius;
 }
 
+
+.card-new-title {
+    display: flex;
+    justify-content: center;
+    margin: 2rem 0;
+}
+
+.date-box {
+    margin: 2rem 0;
+}
 
 
 @media screen and (min-width: 768px) {
