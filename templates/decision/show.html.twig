@@ -83,13 +83,13 @@
         </div>
         <div class="impacted-person">
         <div>
-            <h2> Les personne impactées</h2>
+            <h2> Les personnes impactées</h2>
         </div>
         {% for user in users %}
             <li>{{ user.firstname }}</li>
         {% endfor %}
             <div>
-                <h2> Les personne experte</h2>
+                <h2> Les personnes expertes</h2>
             </div>
             {% for user in userExpert %}
                 <li>{{ user.firstname }}</li>
@@ -107,11 +107,8 @@
     </div>
 
     <div>
-        <a href="{{ path('app_decision_index') }}">Retour à la liste</a>
-        <a href="{{ path('app_decision_edit', {'id': decision.id}) }}">Modifier</a>
+        <a class="button" href="{{ path('app_decision_index') }}">Retour à la liste</a>
+        <a class="button" href="{{ path('app_decision_edit', {'id': decision.id}) }}">Modifier</a>
         {{ include('decision/_delete_form.html.twig') }}
-    </div>
-
-
     </div>
 {% endblock %}
