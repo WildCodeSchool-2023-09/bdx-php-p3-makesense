@@ -36,31 +36,31 @@
                 <h2> Descritpion <i class="fa-solid fa-chevron-down"></i></h2>
             </div>
             <div class="decisionP">
-                <p>{{ decision.description }} </p>
+                <p>{{ decision.description|raw }} </p>
             </div>
             <div>
                 <h2> Impact sur l’organisation <i class="fa-solid fa-chevron-down"></i></h2>
             </div>
             <div class="decisionP">
-                <p>{{ decision.impact }}</p>
+                <p>{{ decision.impact|raw }}</p>
             </div>
             <div>
                 <h2> Situation actuelle <i class="fa-solid fa-chevron-down"></i></h2>
             </div>
             <div class="decisionP">
-                <p>{{ decision.context }}</p>
+                <p>{{ decision.context|raw }}</p>
             </div>
             <div>
                 <h2> Les bénéfices <i class="fa-solid fa-chevron-down"></i></h2>
             </div>
             <div class="decisionP">
-                <p>{{ decision.benefits }}</p>
+                <p>{{ decision.benefits|raw }}</p>
             </div>
             <div>
                 <h2> Les risques <i class="fa-solid fa-chevron-down"></i></h2>
             </div>
             <div class="decisionP">
-                <p>{{ decision.risk }}</p>
+                <p>{{ decision.risk|raw }}</p>
             </div>
 
             <div>
@@ -68,7 +68,12 @@
             </div>
             {% for opinion in decision.opinions %}
                 <div class="decisionP ">
-                    <p>{{ opinion.getAuthor().getFirstname }} - {{ opinion.getText() }}</p>
+{#                    <p>{{ opinion.getAuthor().getFirstname }} - {{ opinion.getText() }}</p>#}
+                   <p>{{ opinion.text }}</p>
+                    <p>{{ opinion.createdAt ? opinion.createdAt|date('Y-m-d H:i:s') : '' }}</p>
+                    {% if opinion.author %}
+                        <p> {{ opinion.author.firstname }} {{ opinion.author.lastname }}</p>
+                    {% endif %}
                 </div>
             {% endfor %}
 
@@ -83,6 +88,18 @@
         {% for user in users %}
             <li>{{ user.firstname }}</li>
         {% endfor %}
+            <div>
+                <h2> Les personne experte</h2>
+            </div>
+            {% for user in userExpert %}
+                <li>{{ user.firstname }}</li>
+            {% endfor %}
+            <div>
+                <h2> Les groupes impactés</h2>
+            </div>
+            {% for group in groupes %}
+                <li>{{ group.name }}</li>
+            {% endfor %}
         <div class="withMarginTop">
             <a class="button" href="{{ path('new_opinion', {'id': decision.id}) }}"> Donner votre avis </a>
         </div>
@@ -93,5 +110,8 @@
         <a href="{{ path('app_decision_index') }}">Retour à la liste</a>
         <a href="{{ path('app_decision_edit', {'id': decision.id}) }}">Modifier</a>
         {{ include('decision/_delete_form.html.twig') }}
+    </div>
+
+
     </div>
 {% endblock %}

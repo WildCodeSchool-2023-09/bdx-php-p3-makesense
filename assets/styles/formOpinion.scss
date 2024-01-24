@@ -1,0 +1,66 @@
+
+
+.form-background-opinion {
+    width: 43%;
+    max-width: 120rem;
+    border-radius: $border-radius;
+    background-color: $color-second;
+    box-shadow: $box-shadow-total;
+    color: $color-text;
+    padding: 3rem;
+    margin:auto;
+    font-weight: bold;
+
+}
+
+.formTextOpinion > div {
+    display: flex;
+    flex-direction: column;
+}
+.formTextOpinion{
+    display:flex;
+    padding: 1rem;
+    text-align: left;
+
+}
+
+form[name="opinion"] button.opinion {
+    //margin: 0;
+    align-self: flex-end;
+    margin-bottom: -12rem;
+    margin-left: 1rem;
+}
+
+form[name="opinion"]{
+    display:flex;
+}
+
+
+label.required{
+    flex-direction: column;
+    padding-bottom: 0.5rem;
+}
+
+textarea#opinion_text {
+    padding-bottom: 30px;
+    width: 25rem;
+}
+@media only screen and (max-width: 600px){
+    textarea#opinion_text{
+        width: 8rem;
+
+    }
+    form[name="opinion"] button.opinion {
+        margin-left: -2rem;
+        margin-bottom: -12rem;
+    }
+
+    h1.opinionTitle {
+        margin-top:7rem;
+        margin-bottom: 3rem;
+    }
+}
+
+
+
+

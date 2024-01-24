@@ -26,13 +26,12 @@ class GroupType extends AbstractType
             ->add('name')
             ->add('users', ChoiceType::class, [
                 'label' => "Choix de l'utilisateur",
-//    'class' => User::class,
                 'choice_label' => 'email',
                 'multiple' => true,
-                'expanded' => true,
-                'choices' => $this->userRepository->findAll()
+                'autocomplete' => true,
+                'choices' => $this->userRepository->findAll(),
+                ])
 
-            ])
             ->get('users')->addModelTransformer(new CallbackTransformer(
                 function (Collection $usersAsCollection): array {
                     return $usersAsCollection->toArray();

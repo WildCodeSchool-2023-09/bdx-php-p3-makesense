@@ -20,10 +20,11 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'Ce email existe déjà')]
-#[UniqueEntity(fields: ['phoneNumber'], message: 'Ce numéro de téléphone existe déjà')]
 #[Vich\Uploadable]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+    use UserProfilTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -38,60 +39,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     )]
     private ?string $email = null;
 
-    #[ORM\Column]
-    private array $roles = [];
-
     /**
      * @var string The hashed password
      */
     #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\Column(length: 100)]
-    #[Assert\NotBlank(message: 'Le Nom ne doit pas être vide')]
-    #[Assert\Length(
-        min: 2,
-        max: 100,
-        minMessage: 'Votre Nom doit comporter au moins {{ limit }} caractères',
-        maxMessage: 'Votre Nom ne peut pas contenir plus de {{ limit }} caractères',
-    )]
-    private ?string $lastname = null;
-
-    #[ORM\Column(length: 100)]
-    #[Assert\NotBlank(message: 'Le prénom  ne doit pas être vide')]
-    #[Assert\Length(
-        min: 2,
-        max: 100,
-        minMessage: 'Votre prénom doit comporter au moins {{ limit }} caractères',
-        maxMessage: 'Votre prénom ne peut pas contenir plus de {{ limit }} caractères',
-    )]
-    private ?string $firstname = null;
-
-    #[ORM\Column]
-    #[Assert\NotBlank(message: 'Le numéro de téléphone ne doit pas être vide')]
-    #[Assert\Regex(
-        pattern: '/^\d{10}$/',
-        message: 'Le numéro de téléphone doit être composé de 10 chiffres'
-    )]
-    private ?string $phoneNumber = null;
-
-    #[ORM\Column(length: 50)]
-    #[Assert\NotBlank(message: 'La ville ne doit pas être vide')]
-    private ?string $city = null;
-
-    #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: 'La profession ne doit pas être vide')]
-    private ?string $occupation = null;
-
-    #[ORM\Column(type: Types::TEXT)]
-    #[Assert\NotBlank(message: 'La description ne doit pas être vide')]
-    private ?string $description = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $reseau = null;
-
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $photo = null;
+
     #[Vich\UploadableField(mapping: 'user_photo', fileNameProperty: 'photo')]
     #[Assert\File(
         maxSize: '4M',
@@ -105,27 +61,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Favori::class)]
     private Collection $favoris;
 
-/*    #[ORM\ManyToMany(targetEntity: Decision::class, mappedBy: 'admin')]
-    private Collection $decision;
-*/
     #[ORM\ManyToMany(targetEntity: Group::class, inversedBy: 'users')]
     private Collection $memberGroup;
 
     #[ORM\Column(type: 'boolean')]
     private bool $isVerified = false;
 
-    #[ORM\ManyToMany(targetEntity: Decision::class, mappedBy: 'users')]
-    private Collection $decisions;
-
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Opinion::class)]
     private Collection $opinions;
+
+    #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Decision::class)]
+    private Collection $decisionOwner;
+
+    #[ORM\ManyToMany(targetEntity: Decision::class, mappedBy: 'userExpert')]
+//    #[ORM\JoinTable(name : 'decision_expert')]
+    private Collection $expertDecision;
 
     public function __construct()
     {
         $this->favoris = new ArrayCollection();
         $this->memberGroup = new ArrayCollection();
-        $this->decisions = new ArrayCollection();
         $this->opinions = new ArrayCollection();
+        $this->decisionOwner = new ArrayCollection();
+        $this->expertDecision = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -156,25 +114,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @see UserInterface
-     */
-    public function getRoles(): array
-    {
-        $roles = $this->roles;
-        // guarantee every admin at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
-
-        return array_unique($roles);
-    }
-
-    public function setRoles(array $roles): static
-    {
-        $this->roles = $roles;
-
-        return $this;
-    }
-
-    /**
      * @see PasswordAuthenticatedUserInterface
      */
     public function getPassword(): string
@@ -196,90 +135,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the admin, clear it here
         // $this->plainPassword = null;
-    }
-
-    public function getLastname(): ?string
-    {
-        return $this->lastname;
-    }
-
-    public function setLastname(string $lastname): static
-    {
-        $this->lastname = $lastname;
-
-        return $this;
-    }
-
-    public function getFirstname(): ?string
-    {
-        return $this->firstname;
-    }
-
-    public function setFirstname(string $firstname): static
-    {
-        $this->firstname = $firstname;
-
-        return $this;
-    }
-
-    public function getPhoneNumber(): ?string
-    {
-        return $this->phoneNumber;
-    }
-
-    public function setPhoneNumber(string $phoneNumber): static
-    {
-        $this->phoneNumber = $phoneNumber;
-
-        return $this;
-    }
-
-    public function getCity(): ?string
-    {
-        return $this->city;
-    }
-
-    public function setCity(string $city): static
-    {
-        $this->city = $city;
-
-        return $this;
-    }
-
-    public function getOccupation(): ?string
-    {
-        return $this->occupation;
-    }
-
-    public function setOccupation(string $occupation): static
-    {
-        $this->occupation = $occupation;
-
-        return $this;
-    }
-
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(string $description): static
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    public function getReseau(): ?string
-    {
-        return $this->reseau;
-    }
-
-    public function setReseau(?string $reseau): static
-    {
-        $this->reseau = $reseau;
-
-        return $this;
     }
 
     /**
@@ -309,35 +164,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             }
         }
 
-        return $this;
-    }
-
-    /**
-     * @param Decision $decision
-     * @return User
-     */
-   /* public function getDecision(): Collection
-    {
-        return $this->decision;
-    }*/
-
-    public function addDecision(Decision $decision): static
-    {
-        if (!$this->decisions->contains($decision)) {
-            $this->decisions->add($decision);
-            //$decision->getAuthor($this);
-        }
-        return $this;
-    }
-
-    public function removeDecision(Decision $decision): static
-    {
-        if ($this->decisions->removeElement($decision)) {
-            // set the owning side to null (unless already changed)
-            if ($decision->getUsers() === $this) {
-                $decision->getUsers(null);
-            }
-        }
         return $this;
     }
 
@@ -378,14 +204,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, Decision>
-     */
-    public function getDecisions(): Collection
-    {
-        return $this->decisions;
-    }
-
-    /**
      * @return Collection<int, Opinion>
      */
     public function getOpinions(): Collection
@@ -413,6 +231,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         return $this;
+    }
+
+    public function getUpdatedAt(): ?DatetimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?DatetimeInterface $updatedAt): void
+    {
+        $this->updatedAt = $updatedAt;
     }
 
     public function getPhoto(): ?string
@@ -479,5 +307,61 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->description = $data['description'] ?? null;
         $this->reseau = $data['reseau'] ?? null;
         $this->photo = $data['photo'] ?? null;
+    }
+    /**
+     * @return Collection<int, Decision>
+     */
+    public function getDecisionOwner(): Collection
+    {
+        return $this->decisionOwner;
+    }
+
+    public function addDecisionOwner(Decision $decisionOwner): static
+    {
+        if (!$this->decisionOwner->contains($decisionOwner)) {
+            $this->decisionOwner->add($decisionOwner);
+            $decisionOwner->setOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDecisionOwner(Decision $decisionOwner): static
+    {
+        if ($this->decisionOwner->removeElement($decisionOwner)) {
+            // set the owning side to null (unless already changed)
+            if ($decisionOwner->getOwner() === $this) {
+                $decisionOwner->setOwner(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Decision>
+     */
+    public function getExpertDecision(): Collection
+    {
+        return $this->expertDecision;
+    }
+
+    public function addExpertDecision(Decision $expertDecision): static
+    {
+        if (!$this->expertDecision->contains($expertDecision)) {
+            $this->expertDecision->add($expertDecision);
+            $expertDecision->addUserExpert($this);
+        }
+
+        return $this;
+    }
+
+    public function removeExpertDecision(Decision $expertDecision): static
+    {
+        if ($this->expertDecision->removeElement($expertDecision)) {
+            $expertDecision->removeUserExpert($this);
+        }
+
+        return $this;
     }
 }
