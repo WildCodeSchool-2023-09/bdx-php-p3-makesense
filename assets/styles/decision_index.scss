@@ -97,6 +97,14 @@
     margin: 2rem 0;
 }
 
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin: 3rem;
+    flex-wrap: wrap;
+}
+
+
 
 @media screen and (min-width: 768px) {
     .square-container-column-decision {
@@ -124,7 +132,6 @@
         align-self: start; /* Aligne Les personnes impactées en haut de sa cellule */
     }
 }
-
 
 
 
