@@ -9,7 +9,9 @@ use App\Form\DecisionType;
 use App\Form\OpinionType;
 use App\Repository\OpinionRepository;
 use App\Repository\DecisionRepository;
+use App\Service\DecisionDateService;
 use Doctrine\ORM\EntityManagerInterface;
+use PHPStan\Symfony\Service;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,6 +21,13 @@ use Symfony\Component\Security\Core\Security;
 #[Route('/decision')]
 class DecisionController extends AbstractController
 {
+    private DecisionDateService $decisionDateService;
+
+    public function __construct(DecisionDateService $decisionDateService)
+    {
+        $this->decisionDateService = $decisionDateService;
+    }
+
     #[Route('/', name: 'app_decision_index', methods: ['GET'])]
     public function index(DecisionRepository $decisionRepository): Response
     {
@@ -74,13 +83,15 @@ class DecisionController extends AbstractController
         //$opinions = $decision->getOpinions();
         // Charger les commentaires associés à l'épisode
         $opinions = $opinionRepository->findBy(['decision' => $decision], ['createdAt' => 'ASC']);
+        $step = $this->decisionDateService ->getCurrentStep($decision);
 
         return $this->render('decision/show.html.twig', [
             'decision' => $decision,
             'users' => $users,
             'userExpert' => $usersExpert,
             'groupes' => $groupes,
-            'opinions' => $opinions
+            'opinions' => $opinions,
+            'current_step' => $step
         ]);
     }
 
@@ -112,42 +123,75 @@ class DecisionController extends AbstractController
 
         return $this->redirectToRoute('app_decision_index', [], Response::HTTP_SEE_OTHER);
     }
-
     #[Route('/{id}/opinion/new', name: 'new_opinion', methods: ['GET', 'POST'])]
-    public function newOpinion(Request $request, Decision $decision, EntityManagerInterface $entityManager): Response
-    {
+    public function newOpinion(
+        Request $request,
+        Decision $decision,
+        EntityManagerInterface $entityManager
+    ): Response {
         $opinion = new Opinion();
-        // Vérifie si l'utilisateur est connecté
         $user = $this->getUser();
-        if (!$user) {
-            throw $this->createAccessDeniedException('Utilisateur non connecté.');
-        }
 
-        // Vérifie si l'utilisateur fait partie des utilisateurs concernés par la décision
-        if (!$decision->getUsers()->contains($user) && !$this->isGranted('ROLE_ADMIN')) {
-            throw $this->createAccessDeniedException('Vous n\'êtes pas autorisé à
-            ajouter un avis pour cette décision.');
-        }
+        $this->checkUserAuthorization($decision, $user);
+        $step = $this->decisionDateService->getCurrentStep($decision);
+
+        $this->checkOpinionInterval($decision);
 
         $form = $this->createForm(OpinionType::class, $opinion);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $opinion->setAuthor($user);
-            //Associe la décision à l'opinion
-            $opinion->setDecision($decision);
-            $entityManager->persist($opinion);
-            $entityManager->flush();
+            $this->persistOpinion($opinion, $user, $decision, $entityManager);
 
             $this->addFlash('success', 'Avis ajouté avec succès.');
 
-            return $this->redirectToRoute('app_decision_show', [
-                'id' => $decision->getId(),
-            ], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_decision_show', ['id' => $decision->getId()], Response::HTTP_SEE_OTHER);
         }
+
         return $this->render('opinion/new.html.twig', [
             'decision' => $decision,
+            'current_step' => $step,
             'form' => $form->createView(),
         ]);
+    }
+
+    private function checkUserAuthorization(Decision $decision, ?User $user): void
+    {
+        if (!$user) {
+            throw $this->createAccessDeniedException('Utilisateur non connecté.');
+        }
+
+        if (
+            !$decision->getUsers()->contains($user) &&
+            !$decision->getUserExpert()->contains($user) &&
+            !$decision->getGroupes()->isEmpty() &&
+            !$this->isGranted('ROLE_ADMIN')
+        ) {
+            throw $this->createAccessDeniedException('Vous n\'êtes pas autorisé à ajouter
+            un avis pour cette décision.');
+        }
+    }
+
+    private function checkOpinionInterval(Decision $decision): void
+    {
+        if (
+            !($this->decisionDateService->isInOpinionInterval($decision, 2)
+            || $this->decisionDateService->isInOpinionInterval($decision, 4))
+        ) {
+            throw $this->createAccessDeniedException('Vous ne pouvez ajouter un avis que
+            pendant les intervalles des étapes 2 et 4.');
+        }
+    }
+
+    private function persistOpinion(
+        Opinion $opinion,
+        User $user,
+        Decision $decision,
+        EntityManagerInterface $entityManager
+    ): void {
+        $opinion->setAuthor($user);
+        $opinion->setDecision($decision);
+        $entityManager->persist($opinion);
+        $entityManager->flush();
     }
 }
