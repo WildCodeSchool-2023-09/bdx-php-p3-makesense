@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
+use App\Service\FullEmailService;
 
 #[Route('/decision')]
 class DecisionController extends AbstractController
@@ -47,8 +48,12 @@ class DecisionController extends AbstractController
     }
 
     #[Route('/new', name: 'app_decision_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, Security $security): Response
-    {
+    public function new(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        Security $security,
+        FullEmailService $emailService
+    ): Response {
         $decision = new Decision();
         $user = $security->getUser();
 
@@ -64,6 +69,15 @@ class DecisionController extends AbstractController
             $decision->setStatus(true);
             $entityManager->persist($decision);
             $entityManager->flush();
+
+            // Récupérez les utilisateurs sélectionnés dans le formulaire
+            $users = $form->get('users')->getData();
+
+            // Envoyez un e-mail à tous les utilisateurs sélectionnés
+            $subject = 'Nouvelle décision créée';
+            $content = 'Une nouvelle décision a été créée.';
+
+            $emailService->sendEmailsToUsers($users, $subject, $content);
 
             return $this->redirectToRoute('app_decision_index', [], Response::HTTP_SEE_OTHER);
         }
