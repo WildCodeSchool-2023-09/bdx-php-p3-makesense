@@ -1,0 +1,51 @@
+.navbar-left ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: $color-nav;
+    color: $color-text;
+    padding-bottom: 0.5rem;
+    padding-top: 0.5rem;
+    box-shadow: $box-shadow;
+    border-radius: 0 0 1rem 1rem;
+}
+
+
+.navbar-left ul li {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+.navbar-left ul li a {
+    text-decoration: none;
+    color: $color-text;
+    font-size: $size-p;
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+    margin-right: 1rem;
+}
+
+.profile-image {
+    width: 2rem;
+    height:2rem;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.burger-menu {
+    font-size: 20px;
+    cursor: pointer;
+}

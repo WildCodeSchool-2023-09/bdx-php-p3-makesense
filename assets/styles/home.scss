@@ -1,0 +1,45 @@
+.my-card-home {
+    width: 100%;
+    max-width: 120rem;
+    border-radius: $border-radius;
+    background-color: $color-first;
+    box-shadow: $box-shadow-total;
+}
+
+.flex-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5%;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-around;
+    text-decoration: none;
+}
+
+.buttons a {
+    display: flex;
+    justify-content: space-around;
+    text-decoration: none;
+}
+
+.imageContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10rem;
+}
+
+.photoStaff {
+    border-radius: $border-radius;
+    width: 80%;
+}
+
+@media screen and (max-width: 768px) {
+    .buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+}
