@@ -46,6 +46,7 @@ class DecisionType extends AbstractType
                 'choices' => $this->userRepository->findAll()
             ])
             ->add('userExpert', ChoiceType::class, [
+                'label' => 'Les personnes expertes',
                 'choice_label' => 'email',
                 'autocomplete' => true,
                 'multiple' => true,
