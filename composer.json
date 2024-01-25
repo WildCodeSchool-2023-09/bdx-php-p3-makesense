@@ -93,7 +93,8 @@
             "ckeditor:install": "symfony-cmd"
         },
         "post-install-cmd": [
-            "@auto-scripts"
+            "@auto-scripts",
+            "php bin/console assets:install public"
         ],
         "post-update-cmd": [
             "@auto-scripts"
