@@ -57,6 +57,7 @@ class DecisionType extends AbstractType
                 'choice_label' => 'name',
                 'autocomplete' => true,
                 'multiple' => true,
+                'required' => false,
                 'choices' => $this->groupRepository->findAll(),
             ])
         ;

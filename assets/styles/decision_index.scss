@@ -97,6 +97,25 @@
     margin: 2rem 0;
 }
 
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin: 2%;
+    width: 90%;
+    padding: 2%;
+}
+
+.textForHover {
+
+}
+
+.textForHover:hover {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    cursor: pointer;
+}
+
+
 
 @media screen and (min-width: 768px) {
     .square-container-column-decision {
@@ -124,7 +143,6 @@
         align-self: start; /* Aligne Les personnes impactées en haut de sa cellule */
     }
 }
-
 
 
 
