@@ -53,31 +53,34 @@
             <div>
                 <h2> Descritpion <i class="fa-solid fa-chevron-down"></i></h2>
             </div>
-            <div class="decisionP">
-                <p>{{ decision.description|raw }} </p>
+            <div class="decisionP" id="descriptionContent" style="display: none;">
+                <p>{{ decision.description|raw }}</p>
             </div>
             <div>
                 <h2> Impact sur l’organisation <i class="fa-solid fa-chevron-down"></i></h2>
             </div>
-            <div class="decisionP">
+            <div class="decisionP" id="impactContent" style="display: none;">
                 <p>{{ decision.impact|raw }}</p>
             </div>
+
             <div>
                 <h2> Situation actuelle <i class="fa-solid fa-chevron-down"></i></h2>
             </div>
-            <div class="decisionP">
+            <div class="decisionP" id="situationContent" style="display: none;">
                 <p>{{ decision.context|raw }}</p>
             </div>
+
             <div>
                 <h2> Les bénéfices <i class="fa-solid fa-chevron-down"></i></h2>
             </div>
-            <div class="decisionP">
+            <div class="decisionP" id="benefitsContent" style="display: none;">
                 <p>{{ decision.benefits|raw }}</p>
             </div>
+
             <div>
                 <h2> Les risques <i class="fa-solid fa-chevron-down"></i></h2>
             </div>
-            <div class="decisionP">
+            <div class="decisionP" id="risksContent" style="display: none;">
                 <p>{{ decision.risk|raw }}</p>
             </div>
 
@@ -85,9 +88,8 @@
                 <h2> Avis sur la décision <i class="fa-solid fa-chevron-down"></i></h2>
             </div>
             {% for opinion in decision.opinions %}
-                <div class="decisionP ">
-{#                    <p>{{ opinion.getAuthor().getFirstname }} - {{ opinion.getText() }}</p>#}
-                   <p>{{ opinion.text }}</p>
+                <div class="decisionP" id="opinionContent{{ loop.index }}" style="display: none;">
+                    <p>{{ opinion.text }}</p>
                     <p>{{ opinion.createdAt ? opinion.createdAt|date('Y-m-d H:i:s') : '' }}</p>
                     {% if opinion.author %}
                         <p> {{ opinion.author.firstname }} {{ opinion.author.lastname }}</p>
@@ -153,4 +155,68 @@
 
 
     </div>
+
+    <script>
+        function toggleDescription() {
+            var descriptionContent = document.getElementById('descriptionContent');
+            toggleSection(descriptionContent);
+        }
+
+        function toggleImpact() {
+            var impactContent = document.getElementById('impactContent');
+            toggleSection(impactContent);
+        }
+
+        function toggleSituation() {
+            var situationContent = document.getElementById('situationContent');
+            toggleSection(situationContent);
+        }
+
+        function toggleBenefits() {
+            var benefitsContent = document.getElementById('benefitsContent');
+            toggleSection(benefitsContent);
+        }
+
+        function toggleRisks() {
+            var risksContent = document.getElementById('risksContent');
+            toggleSection(risksContent);
+        }
+
+        function toggleOpinion(index) {
+            var opinionContent = document.getElementById('opinionContent' + index);
+            toggleSection(opinionContent);
+        }
+
+        function toggleSection(section) {
+            if (section.style.display === 'none' || section.style.display === '') {
+                section.style.display = 'block';
+            } else {
+                section.style.display = 'none';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var descriptionTitles = document.querySelectorAll('.other-container h2');
+
+            descriptionTitles.forEach(function(title) {
+                if (title.textContent.includes('Descritpion')) {
+                    title.addEventListener('click', toggleDescription);
+                } else if (title.textContent.includes('Impact sur l’organisation')) {
+                    title.addEventListener('click', toggleImpact);
+                } else if (title.textContent.includes('Situation actuelle')) {
+                    title.addEventListener('click', toggleSituation);
+                } else if (title.textContent.includes('Les bénéfices')) {
+                    title.addEventListener('click', toggleBenefits);
+                } else if (title.textContent.includes('Les risques')) {
+                    title.addEventListener('click', toggleRisks);
+                } else if (title.textContent.includes('Avis sur la décision')) {
+                    var index = parseInt(title.id.split('_')[1]);
+                    title.addEventListener('click', function() { toggleOpinion(index); });
+                }
+            });
+        });
+    </script>
+
 {% endblock %}
+
+
