@@ -13,9 +13,10 @@
 
     <div class="navbar-right">
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-
             <p><a class="connection" href="{{ path('app_logout') }}">Me déconnecter</a></p>
-            <i class="fa-solid fa-user profil-menu"></i>
+            <a href="{{ path('app_user_show', {'id': app.user.id}) }}">
+            <i class="fa-solid fa-user burger-menu"></i>
+            </a>
         {% else %}
 
             <p><a class="connection" href="{{ path('app_login') }}">Me connecter</a></p>

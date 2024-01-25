@@ -81,6 +81,11 @@
     box-sizing: border-box; /* Inclure le padding dans la largeur totale */
 }
 
+.date_active{
+    background-color: #9fa9b7;
+    border-radius: $border-radius;
+}
+
 
 .card-new-title {
     display: flex;
