@@ -51,33 +51,36 @@
         <div class="other-container">
            <h1> {{ decision.title }} </h1>
             <div>
-                <h2> Descritpion <i class="fa-solid fa-chevron-down"></i></h2>
+                <h2 class="textForHover"> Descritpion <i class="fa-solid fa-chevron-down"></i></h2>
             </div>
-            <div class="decisionP">
-                <p>{{ decision.description|raw }} </p>
+            <div class="decisionP" id="descriptionContent" style="display: none;">
+                <p>{{ decision.description|raw }}</p>
             </div>
             <div>
-                <h2> Impact sur l’organisation <i class="fa-solid fa-chevron-down"></i></h2>
+                <h2 class="textForHover"> Impact sur l’organisation <i class="fa-solid fa-chevron-down"></i></h2>
             </div>
-            <div class="decisionP">
+            <div class="decisionP" id="impactContent" style="display: none;">
                 <p>{{ decision.impact|raw }}</p>
             </div>
+
             <div>
-                <h2> Situation actuelle <i class="fa-solid fa-chevron-down"></i></h2>
+                <h2 class="textForHover"> Situation actuelle <i class="fa-solid fa-chevron-down"></i></h2>
             </div>
-            <div class="decisionP">
+            <div class="decisionP" id="situationContent" style="display: none;">
                 <p>{{ decision.context|raw }}</p>
             </div>
+
             <div>
-                <h2> Les bénéfices <i class="fa-solid fa-chevron-down"></i></h2>
+                <h2 class="textForHover"> Les bénéfices <i class="fa-solid fa-chevron-down"></i></h2>
             </div>
-            <div class="decisionP">
+            <div class="decisionP" id="benefitsContent" style="display: none;">
                 <p>{{ decision.benefits|raw }}</p>
             </div>
+
             <div>
-                <h2> Les risques <i class="fa-solid fa-chevron-down"></i></h2>
+                <h2 class="textForHover"> Les risques <i class="fa-solid fa-chevron-down"></i></h2>
             </div>
-            <div class="decisionP">
+            <div class="decisionP" id="risksContent" style="display: none;">
                 <p>{{ decision.risk|raw }}</p>
             </div>
 
@@ -85,9 +88,8 @@
                 <h2> Avis sur la décision <i class="fa-solid fa-chevron-down"></i></h2>
             </div>
             {% for opinion in decision.opinions %}
-                <div class="decisionP ">
-{#                    <p>{{ opinion.getAuthor().getFirstname }} - {{ opinion.getText() }}</p>#}
-                   <p>{{ opinion.text }}</p>
+                <div class="decisionP" id="opinionContent{{ loop.index }}">
+                    <p>{{ opinion.text }}</p>
                     <p>{{ opinion.createdAt ? opinion.createdAt|date('Y-m-d H:i:s') : '' }}</p>
                     {% if opinion.author %}
                         <p> {{ opinion.author.firstname }} {{ opinion.author.lastname }}</p>
@@ -144,6 +146,7 @@
             {% endif %}
         </div>
     </div>
+<div class="button-container">
        <div class="button"> <a  href="{{ path('app_decision_index') }}">Retour à la liste</a></div>
     {% if decision.owner == app.user %}
     <div class="button">
@@ -154,6 +157,15 @@
     {% if decision.owner == app.user or is_granted('ROLE_ADMIN') %}
         {{ include('decision/_delete_form.html.twig') }}
     {% endif %}
-
+</div>
 {% endblock %}
+
+
+
+
+
+
+
+
+
 

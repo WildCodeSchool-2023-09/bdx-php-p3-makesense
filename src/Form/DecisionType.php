@@ -13,6 +13,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use App\Form\ClassForType\CollectionArrayTransform;
@@ -33,11 +34,21 @@ class DecisionType extends AbstractType
             ->add('context', CKEditorType::class)
             ->add('benefits', CKEditorType::class)
             ->add('risk', CKEditorType::class)
-            ->add('startingDate')
-            ->add('deadlineOpinion')
-            ->add('deadlineDecision')
-            ->add('deadlineConflict')
-            ->add('deadlineFinal')
+            ->add('startingDate', DateType::class, [
+                'widget' => 'single_text',
+            ])
+            ->add('deadlineOpinion', DateType::class, [
+                'widget' => 'single_text',
+            ])
+            ->add('deadlineDecision', DateType::class, [
+                'widget' => 'single_text',
+            ])
+            ->add('deadlineConflict', DateType::class, [
+                'widget' => 'single_text',
+            ])
+            ->add('deadlineFinal', DateType::class, [
+                'widget' => 'single_text',
+            ])
             ->add('users', ChoiceType::class, [
                 'label' => "Les personnes impactées",
                 'choice_label' => 'email',
@@ -57,6 +68,7 @@ class DecisionType extends AbstractType
                 'choice_label' => 'name',
                 'autocomplete' => true,
                 'multiple' => true,
+                'required' => false,
                 'choices' => $this->groupRepository->findAll(),
             ])
         ;

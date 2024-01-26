@@ -11,6 +11,8 @@ use Doctrine\Migrations\AbstractMigration;
  * Auto-generated Migration: Please modify to your needs!
  */
 final class Version20240125161335 extends AbstractMigration
+
+
 {
     public function getDescription(): string
     {
@@ -20,7 +22,7 @@ final class Version20240125161335 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('CREATE TABLE decision (id INT AUTO_INCREMENT NOT NULL, owner_id INT DEFAULT NULL, title VARCHAR(255) NOT NULL, status TINYINT(1) NOT NULL, description LONGTEXT NOT NULL, impact LONGTEXT NOT NULL, context LONGTEXT NOT NULL, benefits LONGTEXT NOT NULL, risk LONGTEXT NOT NULL, starting_date DATE NOT NULL COMMENT \'(DC2Type:date_immutable)\', deadline_opinion DATE NOT NULL COMMENT \'(DC2Type:date_immutable)\', deadline_decision DATE NOT NULL COMMENT \'(DC2Type:date_immutable)\', deadline_conflict DATE NOT NULL COMMENT \'(DC2Type:date_immutable)\', deadline_final DATE NOT NULL COMMENT \'(DC2Type:date_immutable)\', INDEX IDX_84ACBE487E3C61F9 (owner_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE decision (id INT AUTO_INCREMENT NOT NULL, owner_id INT DEFAULT NULL, title VARCHAR(51) NOT NULL, status TINYINT(1) NOT NULL, description LONGTEXT NOT NULL, impact LONGTEXT NOT NULL, context LONGTEXT NOT NULL, benefits LONGTEXT NOT NULL, risk LONGTEXT NOT NULL, starting_date DATE NOT NULL COMMENT \'(DC2Type:date_immutable)\', deadline_opinion DATE NOT NULL COMMENT \'(DC2Type:date_immutable)\', deadline_decision DATE NOT NULL COMMENT \'(DC2Type:date_immutable)\', deadline_conflict DATE NOT NULL COMMENT \'(DC2Type:date_immutable)\', deadline_final DATE NOT NULL COMMENT \'(DC2Type:date_immutable)\', INDEX IDX_84ACBE487E3C61F9 (owner_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE decision_user (decision_id INT NOT NULL, user_id INT NOT NULL, INDEX IDX_CA157538BDEE7539 (decision_id), INDEX IDX_CA157538A76ED395 (user_id), PRIMARY KEY(decision_id, user_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE decision_group (decision_id INT NOT NULL, group_id INT NOT NULL, INDEX IDX_4A8583CCBDEE7539 (decision_id), INDEX IDX_4A8583CCFE54D947 (group_id), PRIMARY KEY(decision_id, group_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE decision_expert (decision_id INT NOT NULL, user_id INT NOT NULL, INDEX IDX_36E06E21BDEE7539 (decision_id), INDEX IDX_36E06E21A76ED395 (user_id), PRIMARY KEY(decision_id, user_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
