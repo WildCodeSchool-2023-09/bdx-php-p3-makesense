@@ -21,6 +21,19 @@ class DecisionRepository extends ServiceEntityRepository
         parent::__construct($registry, Decision::class);
     }
 
+    /**
+     * Retourne toutes les décisions triées par ordre décroissant de la date de début.
+     *
+     * @return Decision[]
+     */
+    public function findAllOrderedByDeadlineDecisionDesc(): array
+    {
+        return $this->createQueryBuilder('d')
+            ->orderBy('d.deadlineDecision', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
 //    /**
 //     * @return Decision[] Returns an array of Decision objects
 //     */
