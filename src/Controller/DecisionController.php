@@ -99,6 +99,22 @@ class DecisionController extends AbstractController
         ]);
     }
 
+    #[Route('/my_decisions', name: 'my_decisions', methods: ['GET'])]
+    public function myDecisions(DecisionRepository $decisionRepository): Response
+    {
+        $user = $this->getUser();
+
+        if (!$user) {
+            throw $this->createAccessDeniedException('Utilisateur non connecté.');
+        }
+
+        $decisions = $decisionRepository->findDecisionsForUser($user);
+
+        return $this->render('decision/my_decisions.html.twig', [
+            'decisions' => $decisions,
+        ]);
+    }
+
     #[Route('/{id}', name: 'app_decision_show', methods: ['GET'])]
     public function show(Decision $decision, OpinionRepository $opinionRepository): Response
     {
