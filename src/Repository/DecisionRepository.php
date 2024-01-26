@@ -22,11 +22,24 @@ class DecisionRepository extends ServiceEntityRepository
         parent::__construct($registry, Decision::class);
     }
 
+
     public function findDecisionsForUser(User $user): array
     {
         return $this->createQueryBuilder('d')
             ->andWhere('d.owner = :user OR :user MEMBER OF d.users OR :user MEMBER OF d.userExpert')
             ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult();
+    }
+    /**
+     * Retourne toutes les décisions triées par ordre décroissant de la date de début.
+     *
+     * @return Decision[]
+     */
+    public function findAllOrderedByDeadlineDecisionDesc(): array
+    {
+        return $this->createQueryBuilder('d')
+            ->orderBy('d.deadlineDecision', 'DESC')
             ->getQuery()
             ->getResult();
     }

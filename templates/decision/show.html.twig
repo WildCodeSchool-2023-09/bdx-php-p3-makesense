@@ -146,13 +146,26 @@
             {% endif %}
         </div>
     </div>
-
-    <div class="button-container">
-    <a class="button" href="{{ path('app_decision_index') }}">Retour à la liste</a>
-    <a class="button" href="{{ path('app_decision_edit', {'id': decision.id}) }}">Modifier</a>
-        {{ include('decision/_delete_form.html.twig') }}
+<div class="button-container">
+       <div class="button"> <a  href="{{ path('app_decision_index') }}">Retour à la liste</a></div>
+    {% if decision.owner == app.user %}
+    <div class="button">
+        <a href="{{ path('app_decision_edit', {'id': decision.id}) }}">Modifier</a>
     </div>
+    {% endif %}
 
+    {% if decision.owner == app.user or is_granted('ROLE_ADMIN') %}
+        {{ include('decision/_delete_form.html.twig') }}
+    {% endif %}
+</div>
 {% endblock %}
+
+
+
+
+
+
+
+
 
 
