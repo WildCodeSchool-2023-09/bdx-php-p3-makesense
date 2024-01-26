@@ -32,7 +32,8 @@ class DecisionController extends AbstractController
     #[Route('/', name: 'app_decision_index', methods: ['GET'])]
     public function index(DecisionRepository $decisionRepository): Response
     {
-        $decisions = $decisionRepository->findAll();
+        //Filtre les décisions par odre d'arriver
+        $decisions = $decisionRepository->findAllOrderedByDeadlineDecisionDesc();
         foreach ($decisions as $decision) {
             $user = $decision->getOwner();
 
@@ -43,7 +44,7 @@ class DecisionController extends AbstractController
             }
         }
         return $this->render('decision/index.html.twig', [
-            'decisions' => $decisionRepository->findAll(),
+            'decisions' => $decisions,
         ]);
     }
 
@@ -106,7 +107,8 @@ class DecisionController extends AbstractController
         $groupes = $decision->getGroupes();
         //$opinions = $decision->getOpinions();
         // Charger les commentaires associés à l'épisode
-        $opinions = $opinionRepository->findBy(['decision' => $decision], ['createdAt' => 'ASC']);
+        //$opinions = $opinionRepository->findBy(['decision' => $decision], ['createdAt' => 'ASC']);
+        $opinions = $opinionRepository->findAllOrderedByCreatedAtDesc();
         $step = $this->decisionDateService ->getCurrentStep($decision);
 
         return $this->render('decision/show.html.twig', [
@@ -125,6 +127,10 @@ class DecisionController extends AbstractController
         $form = $this->createForm(DecisionType::class, $decision);
         $form->handleRequest($request);
 
+        if (!$this->isEdit($decision)) {
+            throw $this->createAccessDeniedException('Vous n\'êtes pas autorisé à effectuer cette action.');
+        }
+
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
@@ -140,6 +146,10 @@ class DecisionController extends AbstractController
     #[Route('/{id}', name: 'app_decision_delete', methods: ['POST'])]
     public function delete(Request $request, Decision $decision, EntityManagerInterface $entityManager): Response
     {
+        if (!$this->isDelete($decision)) {
+            throw $this->createAccessDeniedException('Vous n\'êtes pas autorisé à effectuer cette action.');
+        }
+
         if ($this->isCsrfTokenValid('delete' . $decision->getId(), $request->request->get('_token'))) {
             $entityManager->remove($decision);
             $entityManager->flush();
@@ -217,5 +227,27 @@ class DecisionController extends AbstractController
         $opinion->setDecision($decision);
         $entityManager->persist($opinion);
         $entityManager->flush();
+    }
+
+    private function isEdit(Decision $decision): bool
+    {
+        $user = $this->getUser();
+
+        if (!$user) {
+            return false;
+        }
+
+        return $decision->getOwner() === $user;
+    }
+
+    private function isDelete(Decision $decision): bool
+    {
+        $user = $this->getUser();
+
+        if (!$user) {
+            return false;
+        }
+
+        return $decision->getOwner() === $user || $this->isGranted('ROLE_ADMIN');
     }
 }

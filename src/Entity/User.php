@@ -168,6 +168,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
+<<<<<<< Updated upstream
+=======
+     * @param Decision $decision
+     * @return User
+     */
+
+
+    /**
+>>>>>>> Stashed changes
      * @return Collection<int, Group>
      */
     public function getMemberGroup(): Collection
@@ -204,6 +213,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
+<<<<<<< Updated upstream
+=======
+     * @return Collection<int, Decision>
+     */
+
+
+    /**
+>>>>>>> Stashed changes
      * @return Collection<int, Opinion>
      */
     public function getOpinions(): Collection

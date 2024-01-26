@@ -16,7 +16,7 @@ class OpinionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('text', CKEditorType::class)
+            ->add('text')
             /*->add('createdAt')
             /*->add('decision', EntityType::class, [
                 'class' => Decision::class,
