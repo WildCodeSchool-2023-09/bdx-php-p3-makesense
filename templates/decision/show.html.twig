@@ -7,7 +7,7 @@
     <div class="square-container-column-decision">
         <div class="dates-container">
             <div>
-            <h2>Dates à retenir</h2>
+                <h2>Dates à retenir</h2>
             </div>
             <div class="date-child
                 {% if current_step is defined and current_step == 1 %}
@@ -49,7 +49,7 @@
             </div>
         </div>
         <div class="other-container">
-           <h1> {{ decision.title }} </h1>
+            <h1> {{ decision.title }} </h1>
             <div>
                 <h2 class="textForHover"> Descritpion <i class="fa-solid fa-chevron-down"></i></h2>
             </div>
@@ -112,12 +112,19 @@
             {% endif %}
         </div>
         <div class="impacted-person">
-        <div>
-            <h2> Les personnes impactées</h2>
-        </div>
-        {% for user in users %}
-            <li>{{ user.firstname }}</li>
-        {% endfor %}
+            <div>
+                <h2> Les personnes impactées</h2>
+            </div>
+            <div class="decision-user-list">
+                {% for user in users %}
+                    <div class="decision-user-list-user">
+                    <p>{{ user.firstname }}</p>
+                    <a href="{{ path('app_user_show', {id: user.id}) }}">
+                        <img src="{{ asset('uploads/images/photo/' ~ user.photo ) }}">
+                    </a>
+                    </div>
+                {% endfor %}
+            </div>
             <div>
                 <h2> Les personnes expertes</h2>
             </div>
@@ -146,18 +153,18 @@
             {% endif %}
         </div>
     </div>
-<div class="button-container">
-       <div class="button"> <a  href="{{ path('app_decision_index') }}">Retour à la liste</a></div>
-    {% if decision.owner == app.user %}
-    <div class="button">
-        <a href="{{ path('app_decision_edit', {'id': decision.id}) }}">Modifier</a>
-    </div>
-    {% endif %}
+    <div class="button-container">
+        <div class="button"> <a  href="{{ path('app_decision_index') }}">Retour à la liste</a></div>
+        {% if decision.owner == app.user %}
+            <div class="button">
+                <a href="{{ path('app_decision_edit', {'id': decision.id}) }}">Modifier</a>
+            </div>
+        {% endif %}
 
-    {% if decision.owner == app.user or is_granted('ROLE_ADMIN') %}
-        {{ include('decision/_delete_form.html.twig') }}
-    {% endif %}
-</div>
+        {% if decision.owner == app.user or is_granted('ROLE_ADMIN') %}
+            {{ include('decision/_delete_form.html.twig') }}
+        {% endif %}
+    </div>
 {% endblock %}
 
 
