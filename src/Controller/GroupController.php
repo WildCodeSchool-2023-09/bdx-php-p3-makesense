@@ -11,15 +11,21 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 #[Route('/group')]
 class GroupController extends AbstractController
 {
     #[Route('/', name: 'app_group_index', methods: ['GET', 'POST'])]
-    public function index(GroupRepository $groupRepository, Request $request): Response
+    public function index(GroupRepository $groupRepository, Request $request, Security $security): Response
     {
         $form = $this->createForm(SearchGroupType::class);
         $form->handleRequest($request);
+        $user = $security->getUser();
+        // Vérifiez si l'utilisateur est connecté
+        if (!$user) {
+            throw $this->createAccessDeniedException('Utilisateur non connecté.');
+        }
 
         $groups = [];
 
