@@ -10,6 +10,7 @@ use App\Form\OpinionType;
 use App\Repository\OpinionRepository;
 use App\Repository\DecisionRepository;
 use App\Service\DecisionDateService;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPStan\Symfony\Service;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -92,24 +93,33 @@ class DecisionController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_decision_show', methods: ['GET'])]
-    public function show(Decision $decision, OpinionRepository $opinionRepository): Response
-    {
+    public function show(
+        Decision $decision,
+        OpinionRepository $opinionRepository,
+        DecisionDateService $decisionDateService
+    ): Response {
         $users = $decision->getUsers();
         $usersExpert = $decision->getUserExpert();
         $groupes = $decision->getGroupes();
         //$opinions = $decision->getOpinions();
         // Charger les commentaires associés à l'épisode
         //$opinions = $opinionRepository->findBy(['decision' => $decision], ['createdAt' => 'ASC']);
-        $opinions = $opinionRepository->findAllOrderedByCreatedAtDesc();
+        //$opinions = $opinionRepository->findAllOrderedByCreatedAtDesc();
         $step = $this->decisionDateService ->getCurrentStep($decision);
+        $opinionsCurrentStep = $decisionDateService->getCurrentStepOpinions($decision, $opinionRepository);
+
+        $previousStepOpinions = $decisionDateService->getPreviousStepOpinions($decision, $opinionRepository, $step);
 
         return $this->render('decision/show.html.twig', [
             'decision' => $decision,
             'users' => $users,
             'userExpert' => $usersExpert,
             'groupes' => $groupes,
-            'opinions' => $opinions,
-            'current_step' => $step
+            //'opinions' => $opinionRepository->findAllOrderedByCreatedAtDesc(), // Peut-être à supprimer ?
+            'current_step' => $step,
+            'currentStepOpinions' => $opinionsCurrentStep,
+            'previousStepOpinions' => $previousStepOpinions,
+
         ]);
     }
 
@@ -200,12 +210,20 @@ class DecisionController extends AbstractController
 
     private function checkOpinionInterval(Decision $decision): void
     {
-        if (
-            !($this->decisionDateService->isInOpinionInterval($decision, 2)
-            || $this->decisionDateService->isInOpinionInterval($decision, 4))
-        ) {
-            throw $this->createAccessDeniedException('Vous ne pouvez ajouter un avis que
+        $user = $this->getUser();
+        if (!$user) {
+            return;
+        }
+
+        if (!$this->isEdit($decision) && !$this->isDelete($decision)) {
+            // Vérifie si l'utilisateur n'est ni l'owner/le créateur ni un administrateur
+            if (
+                !($this->decisionDateService->isInOpinionInterval($decision, 2)
+                    || $this->decisionDateService->isInOpinionInterval($decision, 4))
+            ) {
+                throw $this->createAccessDeniedException('Vous ne pouvez ajouter un avis que
             pendant les intervalles des étapes 2 et 4.');
+            }
         }
     }
 
