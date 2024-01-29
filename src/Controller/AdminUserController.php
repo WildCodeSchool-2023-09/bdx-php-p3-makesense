@@ -22,7 +22,7 @@ class AdminUserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $search = $form->getData()['search'];
+            $search = $form->getData()['Recherche'];
             $users = $userRepository->findLikeName($search);
         } else {
             $users = $userRepository->findAll();
