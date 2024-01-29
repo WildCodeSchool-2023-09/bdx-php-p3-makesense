@@ -261,7 +261,9 @@ class DecisionController extends AbstractController
                 !($isOwner && !($this->decisionDateService->isInOpinionInterval($decision, 2)
                     || $this->decisionDateService->isInOpinionInterval($decision, 4)))
             ) {
-                throw $this->createAccessDeniedException('Vous ne pouvez ajouter un avis que pendant les intervalles des étapes 2 et 4.');
+                throw $this->createAccessDeniedException(
+                    'Vous ne pouvez ajouter un avis que pendant les intervalles des étapes 2 et 4.'
+                );
             }
         }
     }
