@@ -87,15 +87,20 @@
             <div>
                 <h2> Avis sur la décision <i class="fa-solid fa-chevron-down"></i></h2>
             </div>
-            {% for opinion in decision.opinions %}
-                <div class="decisionP" id="opinionContent{{ loop.index }}">
-                    <p>{{ opinion.text }}</p>
-                    <p>{{ opinion.createdAt ? opinion.createdAt|date('Y-m-d H:i:s') : '' }}</p>
-                    {% if opinion.author %}
-                        <p> {{ opinion.author.firstname }} {{ opinion.author.lastname }}</p>
-                    {% endif %}
-                </div>
-            {% endfor %}
+          {% for opinion in decision.opinions %}
+              {% if opinion in currentStepOpinions or opinion in previousStepOpinions %}
+                  {#{% if decision.opinion == decision.owner %}
+                      owner_active
+                  {% endif %}">#}
+                  <div class="decisionP" id="opinionContent{{ loop.index }}">
+                      <p>{{ opinion.text }}</p>
+                      <p>{{ opinion.createdAt ? opinion.createdAt|date('Y-m-d H:i:s') : '' }}</p>
+                      {% if opinion.author %}
+                          <p>{{ opinion.author.firstname }} {{ opinion.author.lastname }}</p>
+                      {% endif %}
+                  </div>
+              {% endif %}
+          {% endfor %}
 
             {% if current_step == 3 or current_step == 5 %}
                 {% if app.user == decision.owner %}
