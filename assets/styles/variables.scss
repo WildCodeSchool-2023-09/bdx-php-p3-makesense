@@ -23,18 +23,21 @@ $font-text: "Raleway, Arial, sans-serif";
 * {
     margin: 0;
     padding: 0;
-    font-family: $font-text;
+    font-family: 'Raleway', sans-serif;
+}
+
+:root {
+    font-family: 'Raleway', sans-serif;
 }
 
 
 body {
     padding-top: 2rem;
-    margin-top: 4rem;
+    margin-top: 2rem;
 }
 
 h1 {
     font-size: $size-h1;
-    font-family: $font-text;
     color: $color-text;
 }
 
@@ -65,6 +68,11 @@ h1 {
     font-weight: bold;
     cursor: pointer;
     text-decoration: none;
+}
+
+.button a {
+    text-decoration: none;
+    color: $color-text;
 }
 
 .onglet-use {
@@ -102,7 +110,7 @@ h1 {
 }
 
 .my-card-body {
-    padding: 1.2rem;
+    padding: 1.5rem;
 }
 
 .my-card-title {
@@ -119,6 +127,7 @@ h1 {
     font-size: $size-p;
     color: $color-text;
     font-weight: bold;
+    text-decoration: none;
 }
 
 .decision-starting {
@@ -129,7 +138,7 @@ h1 {
     border-radius: $border-radius-button;
     padding: 0.6rem 1.8rem;
     margin: 0.5rem;
-    font-size: $size-little;
+/*    font-size: $size-little;*/
     font-family: $font-text;
     box-shadow: $box-shadow;
     font-weight: bold;
@@ -143,7 +152,7 @@ h1 {
     border-radius: $border-radius-button;
     padding: 0.6rem 1.8rem;
     margin: 0.5rem;
-    font-size: $size-little;
+/*    font-size: $size-little;*/
     font-family: $font-text;
     box-shadow: $box-shadow;
     font-weight: bold;
@@ -157,7 +166,7 @@ h1 {
     border-radius: $border-radius-button;
     padding: 0.6rem 1.8rem;
     margin: 0.5rem;
-    font-size: $size-little;
+ /*   font-size: $size-little;*/
     font-family: $font-text;
     box-shadow: $box-shadow;
     font-weight: bold;
@@ -171,7 +180,7 @@ h1 {
     border-radius: $border-radius-button;
     padding: 0.6rem 1.8rem;
     margin: 0.5rem;
-    font-size: $size-little;
+/*    font-size: $size-little;*/
     font-family: $font-text;
     box-shadow: $box-shadow;
     font-weight: bold;
@@ -185,7 +194,7 @@ h1 {
     border-radius: $border-radius-button;
     padding: 0.6rem 1.8rem;
     margin: 0.5rem;
-    font-size: $size-little;
+/*    font-size: $size-little;*/
     font-family: $font-text;
     box-shadow: $box-shadow;
     font-weight: bold;
@@ -288,4 +297,9 @@ h1 {
 
 .withMarginTop {
     margin-top: 1rem;
+}
+
+.decisionBox a {
+    text-decoration: none;
+    color: $color-text;
 }

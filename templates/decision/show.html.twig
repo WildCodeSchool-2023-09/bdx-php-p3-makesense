@@ -7,13 +7,13 @@
     <div class="square-container-column-decision">
         <div class="dates-container">
             <div>
-            <h2>Dates à retenir</h2>
+                <h2>Dates à retenir</h2>
             </div>
             <div class="date-child
                 {% if current_step is defined and current_step == 1 %}
                     date_active
                 {% endif %}">
-                <p>{{ decision.startingDate ? decision.startingDate|date('Y-m-d') : '' }}</p>
+                <p>Commencée le : {{ decision.startingDate ? decision.startingDate|date('Y-m-d') : '' }}</p>
                 <p class="decision-starting">Prise de décision commencée</p>
             </div>
 
@@ -21,7 +21,7 @@
                 {% if current_step is defined and current_step == 2 %}
                    date_active
                 {% endif %}">
-                <p>{{ decision.deadlineOpinion ? decision.deadlineOpinion|date('Y-m-d') : '' }} </p>
+                <p>Échéance le {{ decision.deadlineOpinion ? decision.deadlineOpinion|date('Y-m-d') : '' }} </p>
                 <p class="give-opinion">Donner son avis</p>
             </div>
 
@@ -29,7 +29,7 @@
                 {% if current_step is defined and current_step == 3 %}
                     date_active
                 {% endif %}">
-                <p>{{ decision.deadlineDecision ? decision.deadlineDecision|date('Y-m-d') : '' }}</p>
+                <p>Échéance le {{ decision.deadlineDecision ? decision.deadlineDecision|date('Y-m-d') : '' }}</p>
                 <p class="decision-taken">Première décision prise</p>
             </div>
 
@@ -37,19 +37,19 @@
                 {% if current_step is defined and current_step == 4 %}
                    date_active
                 {% endif %}">
-                <p>{{ decision.deadlineConflict ? decision.deadlineConflict|date('Y-m-d') : '' }}</p>
-                <p class="conflict">Rentrer en conflit:</p>
+                <p>Échéance le {{ decision.deadlineConflict ? decision.deadlineConflict|date('Y-m-d') : '' }}</p>
+                <p class="conflict">Rentrer en conflit</p>
             </div>
             <div class="date-child
                 {% if current_step is defined and current_step == 5 %}
                      date_active
                 {% endif %}">
-                <p> {{ decision.deadlineFinal ? decision.deadlineFinal|date('Y-m-d') : '' }}</p>
+                <p>Échéance le  {{ decision.deadlineFinal ? decision.deadlineFinal|date('Y-m-d') : '' }}</p>
                 <p class="decision-ending">Décision définitive</p>
             </div>
         </div>
         <div class="other-container">
-           <h1> {{ decision.title }} </h1>
+            <h1> {{ decision.title }} </h1>
             <div>
                 <h2 class="textForHover"> Descritpion <i class="fa-solid fa-chevron-down"></i></h2>
             </div>
@@ -87,15 +87,20 @@
             <div>
                 <h2> Avis sur la décision <i class="fa-solid fa-chevron-down"></i></h2>
             </div>
-            {% for opinion in decision.opinions %}
-                <div class="decisionP" id="opinionContent{{ loop.index }}">
-                    <p>{{ opinion.text }}</p>
-                    <p>{{ opinion.createdAt ? opinion.createdAt|date('Y-m-d H:i:s') : '' }}</p>
-                    {% if opinion.author %}
-                        <p> {{ opinion.author.firstname }} {{ opinion.author.lastname }}</p>
-                    {% endif %}
-                </div>
-            {% endfor %}
+          {% for opinion in decision.opinions %}
+              {% if opinion in currentStepOpinions or opinion in previousStepOpinions %}
+                  {#{% if decision.opinion == decision.owner %}
+                      owner_active
+                  {% endif %}">#}
+                  <div class="decisionP" id="opinionContent{{ loop.index }}">
+                      <p>{{ opinion.text }}</p>
+                      <p>{{ opinion.createdAt ? opinion.createdAt|date('Y-m-d H:i:s') : '' }}</p>
+                      {% if opinion.author %}
+                          <p>{{ opinion.author.firstname }} {{ opinion.author.lastname }}</p>
+                      {% endif %}
+                  </div>
+              {% endif %}
+          {% endfor %}
 
             {% if current_step == 3 or current_step == 5 %}
                 {% if app.user == decision.owner %}
@@ -112,12 +117,19 @@
             {% endif %}
         </div>
         <div class="impacted-person">
-        <div>
-            <h2> Les personnes impactées</h2>
-        </div>
-        {% for user in users %}
-            <li>{{ user.firstname }}</li>
-        {% endfor %}
+            <div>
+                <h2> Les personnes impactées</h2>
+            </div>
+            <div class="decision-user-list">
+                {% for user in users %}
+                    <div class="decision-user-list-user">
+                    <p>{{ user.firstname }}</p>
+                    <a href="{{ path('app_user_profile_show', {id: user.id}) }}">
+                        <img src="{{ asset('uploads/images/photo/' ~ user.photo ) }}">
+                    </a>
+                    </div>
+                {% endfor %}
+            </div>
             <div>
                 <h2> Les personnes expertes</h2>
             </div>
@@ -131,7 +143,7 @@
                 <li>{{ group.name }}</li>
             {% endfor %}
 
-            {% if current_step == 3 or current_step == 5 %}
+{#            {% if current_step == 3 or current_step == 5 %}
                 {% if app.user == decision.owner %}
                     <div class="withMarginTop">
                         <a class="button" href="{{ path('new_opinion', {'id': decision.id}) }}"> Donner votre avis </a>
@@ -143,21 +155,21 @@
                         <a class="button" href="{{ path('new_opinion', {'id': decision.id}) }}"> Donner votre avis </a>
                     </div>
                 {% endif %}
-            {% endif %}
+            {% endif %}#}
         </div>
     </div>
-<div class="button-container">
-       <div class="button"> <a  href="{{ path('app_decision_index') }}">Retour à la liste</a></div>
-    {% if decision.owner == app.user %}
-    <div class="button">
-        <a href="{{ path('app_decision_edit', {'id': decision.id}) }}">Modifier</a>
-    </div>
-    {% endif %}
+    <div class="button-container">
+        <div class="button"> <a  href="{{ path('app_decision_index') }}">Retour à la liste</a></div>
+        {% if decision.owner == app.user %}
+            <div class="button">
+                <a href="{{ path('app_decision_edit', {'id': decision.id}) }}">Modifier</a>
+            </div>
+        {% endif %}
 
-    {% if decision.owner == app.user or is_granted('ROLE_ADMIN') %}
-        {{ include('decision/_delete_form.html.twig') }}
-    {% endif %}
-</div>
+        {% if decision.owner == app.user or is_granted('ROLE_ADMIN') %}
+            {{ include('decision/_delete_form.html.twig') }}
+        {% endif %}
+    </div>
 {% endblock %}
 
 
