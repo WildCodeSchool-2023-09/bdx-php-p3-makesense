@@ -23,7 +23,11 @@ $font-text: "Raleway, Arial, sans-serif";
 * {
     margin: 0;
     padding: 0;
-    font-family: $font-text;
+    font-family: 'Raleway', sans-serif;
+}
+
+:root {
+    font-family: 'Raleway', sans-serif;
 }
 
 
@@ -107,7 +111,7 @@ h1 {
 }
 
 .my-card-body {
-    padding: 1.2rem;
+    padding: 1.5rem;
 }
 
 .my-card-title {
@@ -124,6 +128,7 @@ h1 {
     font-size: $size-p;
     color: $color-text;
     font-weight: bold;
+    text-decoration: none;
 }
 
 .decision-starting {
@@ -293,4 +298,9 @@ h1 {
 
 .withMarginTop {
     margin-top: 1rem;
+}
+
+.decisionBox a {
+    text-decoration: none;
+    color: $color-text;
 }
