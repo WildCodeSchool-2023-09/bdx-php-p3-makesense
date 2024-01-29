@@ -13,7 +13,7 @@
                 {% if current_step is defined and current_step == 1 %}
                     date_active
                 {% endif %}">
-                <p>{{ decision.startingDate ? decision.startingDate|date('Y-m-d') : '' }}</p>
+                <p>Commencée le : {{ decision.startingDate ? decision.startingDate|date('Y-m-d') : '' }}</p>
                 <p class="decision-starting">Prise de décision commencée</p>
             </div>
 
@@ -21,7 +21,7 @@
                 {% if current_step is defined and current_step == 2 %}
                    date_active
                 {% endif %}">
-                <p>{{ decision.deadlineOpinion ? decision.deadlineOpinion|date('Y-m-d') : '' }} </p>
+                <p>Échéance le {{ decision.deadlineOpinion ? decision.deadlineOpinion|date('Y-m-d') : '' }} </p>
                 <p class="give-opinion">Donner son avis</p>
             </div>
 
@@ -29,7 +29,7 @@
                 {% if current_step is defined and current_step == 3 %}
                     date_active
                 {% endif %}">
-                <p>{{ decision.deadlineDecision ? decision.deadlineDecision|date('Y-m-d') : '' }}</p>
+                <p>Échéance le {{ decision.deadlineDecision ? decision.deadlineDecision|date('Y-m-d') : '' }}</p>
                 <p class="decision-taken">Première décision prise</p>
             </div>
 
@@ -37,14 +37,14 @@
                 {% if current_step is defined and current_step == 4 %}
                    date_active
                 {% endif %}">
-                <p>{{ decision.deadlineConflict ? decision.deadlineConflict|date('Y-m-d') : '' }}</p>
-                <p class="conflict">Rentrer en conflit:</p>
+                <p>Échéance le {{ decision.deadlineConflict ? decision.deadlineConflict|date('Y-m-d') : '' }}</p>
+                <p class="conflict">Rentrer en conflit</p>
             </div>
             <div class="date-child
                 {% if current_step is defined and current_step == 5 %}
                      date_active
                 {% endif %}">
-                <p> {{ decision.deadlineFinal ? decision.deadlineFinal|date('Y-m-d') : '' }}</p>
+                <p>Échéance le  {{ decision.deadlineFinal ? decision.deadlineFinal|date('Y-m-d') : '' }}</p>
                 <p class="decision-ending">Décision définitive</p>
             </div>
         </div>
@@ -143,7 +143,7 @@
                 <li>{{ group.name }}</li>
             {% endfor %}
 
-            {% if current_step == 3 or current_step == 5 %}
+{#            {% if current_step == 3 or current_step == 5 %}
                 {% if app.user == decision.owner %}
                     <div class="withMarginTop">
                         <a class="button" href="{{ path('new_opinion', {'id': decision.id}) }}"> Donner votre avis </a>
@@ -155,7 +155,7 @@
                         <a class="button" href="{{ path('new_opinion', {'id': decision.id}) }}"> Donner votre avis </a>
                     </div>
                 {% endif %}
-            {% endif %}
+            {% endif %}#}
         </div>
     </div>
     <div class="button-container">

@@ -252,15 +252,18 @@ class DecisionController extends AbstractController
         if (!$user) {
             return;
         }
+        // Vérifie si l'utilisateur est le créateur/propriétaire de la décision
+        $isOwner = $decision->getOwner() === $user;
 
         if (!$this->isEdit($decision) && !$this->isDelete($decision)) {
             // Vérifie si l'utilisateur n'est ni l'owner/le créateur ni un administrateur
             if (
-                !($this->decisionDateService->isInOpinionInterval($decision, 2)
-                    || $this->decisionDateService->isInOpinionInterval($decision, 4))
+                !($isOwner && !($this->decisionDateService->isInOpinionInterval($decision, 2)
+                    || $this->decisionDateService->isInOpinionInterval($decision, 4)))
             ) {
-                throw $this->createAccessDeniedException('Vous ne pouvez ajouter un avis que
-            pendant les intervalles des étapes 2 et 4.');
+                throw $this->createAccessDeniedException(
+                    'Vous ne pouvez ajouter un avis que pendant les intervalles des étapes 2 et 4.'
+                );
             }
         }
     }
