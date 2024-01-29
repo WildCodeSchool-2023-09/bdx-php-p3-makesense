@@ -91,6 +91,9 @@
     padding: 10px;
 }
 
+/*.owner_active{
+
+}*/
 
 .card-new-title {
     display: flex;
@@ -128,7 +131,7 @@
 
 
 
-@media screen and (min-width: 768px) {
+    @media screen and (min-width: 768px) {
     .square-container-column-decision {
         display: grid;
         grid-template-columns: 1fr 1fr; /* Deux colonnes égales en mode bureau */

@@ -10,12 +10,14 @@ use App\Form\OpinionType;
 use App\Repository\OpinionRepository;
 use App\Repository\DecisionRepository;
 use App\Service\DecisionDateService;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPStan\Symfony\Service;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Service\FullEmailService;
 use Symfony\Component\Security\Core\Security;
 
 #[Route('/decision')]
@@ -48,8 +50,12 @@ class DecisionController extends AbstractController
     }
 
     #[Route('/new', name: 'app_decision_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, Security $security): Response
-    {
+    public function new(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        Security $security,
+        FullEmailService $emailService
+    ): Response {
         $decision = new Decision();
         $user = $security->getUser();
 
@@ -65,6 +71,39 @@ class DecisionController extends AbstractController
             $decision->setStatus(true);
             $entityManager->persist($decision);
             $entityManager->flush();
+
+            // Récupérez les utilisateurs sélectionnés dans le formulaire
+            $users = $form->get('users')->getData();
+            $userExperts = $form->get('userExpert')->getData();
+            $groupes = $form->get('groupes')->getData();
+            // Initialiser un tableau pour stocker les adresses e-mail des membres du groupe
+            $groupMembersEmails = [];
+            // Parcourir les groupes pour récupérer les adresses e-mail des membres
+            foreach ($groupes as $groupe) {
+                $groupMembers = $groupe->getUsers();
+                foreach ($groupMembers as $groupMember) {
+                    if ($groupMember instanceof User) {
+                        $groupMembersEmails[] = $groupMember;
+                    }
+                }
+            }
+            // Convertissez les ArrayCollection en tableaux
+            $usersArray = $users->toArray();
+            $userExpertsArray = $userExperts->toArray();
+
+            // Combinez les adresses e-mail des groupes avec les autres utilisateurs
+            $allUsersEmails = array_merge($usersArray, $userExpertsArray, $groupMembersEmails);
+
+            // Envoyez un e-mail à tous les utilisateurs sélectionnés
+            $subject = 'Nouvelle décision créée';
+            $content = $this->renderView('mail/MailDecision.html.twig', [
+                'user' => $user,
+                'users' => $users,
+                'userExperts' => $userExperts,
+                'groupes' => $groupes,
+            ]);
+
+            $emailService->sendEmailsToUsers($allUsersEmails, $subject, $content);
 
             return $this->redirectToRoute('app_decision_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -92,24 +131,33 @@ class DecisionController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_decision_show', methods: ['GET'])]
-    public function show(Decision $decision, OpinionRepository $opinionRepository): Response
-    {
+    public function show(
+        Decision $decision,
+        OpinionRepository $opinionRepository,
+        DecisionDateService $decisionDateService
+    ): Response {
         $users = $decision->getUsers();
         $usersExpert = $decision->getUserExpert();
         $groupes = $decision->getGroupes();
         //$opinions = $decision->getOpinions();
         // Charger les commentaires associés à l'épisode
         //$opinions = $opinionRepository->findBy(['decision' => $decision], ['createdAt' => 'ASC']);
-        $opinions = $opinionRepository->findAllOrderedByCreatedAtDesc();
+        //$opinions = $opinionRepository->findAllOrderedByCreatedAtDesc();
         $step = $this->decisionDateService ->getCurrentStep($decision);
+        $opinionsCurrentStep = $decisionDateService->getCurrentStepOpinions($decision, $opinionRepository);
+
+        $previousStepOpinions = $decisionDateService->getPreviousStepOpinions($decision, $opinionRepository, $step);
 
         return $this->render('decision/show.html.twig', [
             'decision' => $decision,
             'users' => $users,
             'userExpert' => $usersExpert,
             'groupes' => $groupes,
-            'opinions' => $opinions,
-            'current_step' => $step
+            //'opinions' => $opinionRepository->findAllOrderedByCreatedAtDesc(), // Peut-être à supprimer ?
+            'current_step' => $step,
+            'currentStepOpinions' => $opinionsCurrentStep,
+            'previousStepOpinions' => $previousStepOpinions,
+
         ]);
     }
 
@@ -200,12 +248,20 @@ class DecisionController extends AbstractController
 
     private function checkOpinionInterval(Decision $decision): void
     {
-        if (
-            !($this->decisionDateService->isInOpinionInterval($decision, 2)
-            || $this->decisionDateService->isInOpinionInterval($decision, 4))
-        ) {
-            throw $this->createAccessDeniedException('Vous ne pouvez ajouter un avis que
+        $user = $this->getUser();
+        if (!$user) {
+            return;
+        }
+
+        if (!$this->isEdit($decision) && !$this->isDelete($decision)) {
+            // Vérifie si l'utilisateur n'est ni l'owner/le créateur ni un administrateur
+            if (
+                !($this->decisionDateService->isInOpinionInterval($decision, 2)
+                    || $this->decisionDateService->isInOpinionInterval($decision, 4))
+            ) {
+                throw $this->createAccessDeniedException('Vous ne pouvez ajouter un avis que
             pendant les intervalles des étapes 2 et 4.');
+            }
         }
     }
 
