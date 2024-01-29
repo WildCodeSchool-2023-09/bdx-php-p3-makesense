@@ -1,0 +1,149 @@
+h1 {
+    font-size: 2rem;
+    font-family: $font-text;
+    color: #0B3A44;
+    font-weight: bold;
+    text-align: center;
+    margin: 3%;
+}
+
+.search {
+    font-family: $font-text;
+    color: #0B3A44;
+    font-size: 1rem;
+    font-weight: bold;
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 10px;
+    border-radius: 0.37rem;
+}
+
+.input {
+    float: right;
+    margin-right: 5%;
+    margin-top: 8%;
+    padding: 0.5rem;
+    background-color: rgba(25, 108, 132, 0.30);
+    border-radius: 6.6rem;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #0B3A44;
+    border: none;
+    cursor: pointer;
+}
+
+.required {
+    margin-right: 1rem;
+    color: #0B3A44;
+}
+
+#search_user_Recherche {
+    border-radius: 0.37rem;
+    padding-top: 0.5rem;
+}
+
+.table {
+    font-family: $font-text;
+    color: #0B3A44;
+    width: 90rem;
+    border-collapse: collapse;
+    background-color: $color-first;
+    box-shadow: $box-shadow-total;
+    padding: 1rem;
+    margin: 5rem;
+}
+
+.table th,
+.table td {
+    padding: 8px;
+    line-height: 1.42857143;
+    border: 1px #ddd;
+}
+
+.table {
+    background-color: #9fa9b7;
+}
+
+.table th {
+    border-radius: 0rem 3.1rem;
+    background-color: white;
+}
+
+.table tbody > tr:nth-child(odd) > td,
+.table tbody > tr:nth-child(odd) > th {
+    background-color: #f9f9f9;
+}
+
+.tbody {
+    background-color: rgba(69, 124, 140, 0.3);
+    cursor: pointer;
+}
+
+.table tbody > tr:hover {
+    transition: transform .6s;
+}
+
+#user {
+    width: 600px;
+    margin: auto;
+    padding: 5rem;
+    color: #0B3A44;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    border-radius: $border-radius;
+    background-color: $color-second;
+    box-shadow: $box-shadow-total;
+}
+
+#user_lastname,
+#user_firstname,
+#user_email,
+#user_roles,
+#user_phoneNumber,
+#user_city,
+#user_occupation {
+    float: right;
+    color: #0B3A44;
+}
+
+.btn {
+    float: right;
+    margin-right: 8%;
+    margin-top: 8%;
+    padding: 0.5rem;
+    background-color: rgba(25, 108, 132, 0.30);
+    border-radius: 6.6rem;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #0B3A44;
+    border: none;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+    .table th,
+    .table td {
+        display: flex;
+        flex-direction: column;
+        padding: 0.3px;
+    }
+    .table th{
+        display: none;
+    }
+    .table {
+        width: 100%;
+        margin: 1rem 0;
+    }
+
+    #user_lastname,
+    #user_firstname,
+    #user_email,
+    #user_roles,
+    #user_phoneNumber,
+    #user_city,
+    #user_occupation {
+        float: none;
+        margin-right: 0;
+    }
+}

@@ -3,26 +3,41 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use DateTimeInterface;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Exception;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+#[UniqueEntity(fields: ['email'], message: 'Ce email existe déjà')]
+#[Vich\Uploadable]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+    use UserProfilTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[Assert\NotBlank(message: 'Le email ne doit pas être vide')]
+    #[Assert\Email(message: 'Le email {{ value }} n\'ai pas valide.')]
+    #[Assert\Length(
+        max: 100,
+        maxMessage: 'Le mail saisie {{ value }} est trop longue, elle ne devrait pas dépasser {{ limit }} caractères',
+    )]
     private ?string $email = null;
-
-    #[ORM\Column]
-    private array $roles = [];
 
     /**
      * @var string The hashed password
@@ -30,53 +45,45 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\Column(length: 100)]
-    private ?string $lastname = null;
-
-    #[ORM\Column(length: 100)]
-    private ?string $firstname = null;
-
-    #[ORM\Column]
-    private ?int $phoneNumber = null;
-
-    #[ORM\Column(length: 50)]
-    private ?string $city = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $occupation = null;
-
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $description = null;
-
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $photo = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $website = null;
+    #[Vich\UploadableField(mapping: 'user_photo', fileNameProperty: 'photo')]
+    #[Assert\File(
+        maxSize: '4M',
+        mimeTypes: ['image/jpeg', 'image/png', 'image/webp'],
+    )]
+    private ?File $photoFile = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $twitter = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $instagram = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $facebook = null;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?DatetimeInterface $updatedAt = null;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Favori::class)]
     private Collection $favoris;
 
-    #[ORM\ManyToMany(mappedBy: 'user', targetEntity: Decision::class)]
-    private Collection $decision;
-
     #[ORM\ManyToMany(targetEntity: Group::class, inversedBy: 'users')]
     private Collection $memberGroup;
+
+    #[ORM\Column(type: 'boolean')]
+    private bool $isVerified = false;
+
+    #[ORM\OneToMany(mappedBy: 'author', targetEntity: Opinion::class)]
+    private Collection $opinions;
+
+    #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Decision::class)]
+    private Collection $decisionOwner;
+
+    #[ORM\ManyToMany(targetEntity: Decision::class, mappedBy: 'userExpert')]
+//    #[ORM\JoinTable(name : 'decision_expert')]
+    private Collection $expertDecision;
 
     public function __construct()
     {
         $this->favoris = new ArrayCollection();
-        $this->decision = new ArrayCollection();
         $this->memberGroup = new ArrayCollection();
+        $this->opinions = new ArrayCollection();
+        $this->decisionOwner = new ArrayCollection();
+        $this->expertDecision = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -97,32 +104,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * A visual identifier that represents this user.
+     * A visual identifier that represents this admin.
      *
      * @see UserInterface
      */
     public function getUserIdentifier(): string
     {
         return (string) $this->email;
-    }
-
-    /**
-     * @see UserInterface
-     */
-    public function getRoles(): array
-    {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
-
-        return array_unique($roles);
-    }
-
-    public function setRoles(array $roles): static
-    {
-        $this->roles = $roles;
-
-        return $this;
     }
 
     /**
@@ -145,140 +133,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function eraseCredentials(): void
     {
-        // If you store any temporary, sensitive data on the user, clear it here
+        // If you store any temporary, sensitive data on the admin, clear it here
         // $this->plainPassword = null;
-    }
-
-    public function getLastname(): ?string
-    {
-        return $this->lastname;
-    }
-
-    public function setLastname(string $lastname): static
-    {
-        $this->lastname = $lastname;
-
-        return $this;
-    }
-
-    public function getFirstname(): ?string
-    {
-        return $this->firstname;
-    }
-
-    public function setFirstname(string $firstname): static
-    {
-        $this->firstname = $firstname;
-
-        return $this;
-    }
-
-    public function getPhoneNumber(): ?int
-    {
-        return $this->phoneNumber;
-    }
-
-    public function setPhoneNumber(int $phoneNumber): static
-    {
-        $this->phoneNumber = $phoneNumber;
-
-        return $this;
-    }
-
-    public function getCity(): ?string
-    {
-        return $this->city;
-    }
-
-    public function setCity(string $city): static
-    {
-        $this->city = $city;
-
-        return $this;
-    }
-
-    public function getOccupation(): ?string
-    {
-        return $this->occupation;
-    }
-
-    public function setOccupation(string $occupation): static
-    {
-        $this->occupation = $occupation;
-
-        return $this;
-    }
-
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(string $description): static
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    public function getPhoto(): ?string
-    {
-        return $this->photo;
-    }
-
-    public function setPhoto(string $photo): static
-    {
-        $this->photo = $photo;
-
-        return $this;
-    }
-
-    public function getWebsite(): ?string
-    {
-        return $this->website;
-    }
-
-    public function setWebsite(?string $website): static
-    {
-        $this->website = $website;
-
-        return $this;
-    }
-
-    public function getTwitter(): ?string
-    {
-        return $this->twitter;
-    }
-
-    public function setTwitter(?string $twitter): static
-    {
-        $this->twitter = $twitter;
-
-        return $this;
-    }
-
-    public function getInstagram(): ?string
-    {
-        return $this->instagram;
-    }
-
-    public function setInstagram(?string $instagram): static
-    {
-        $this->instagram = $instagram;
-
-        return $this;
-    }
-
-    public function getFacebook(): ?string
-    {
-        return $this->facebook;
-    }
-
-    public function setFacebook(?string $facebook): static
-    {
-        $this->facebook = $facebook;
-
-        return $this;
     }
 
     /**
@@ -312,36 +168,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, Decision>
+<<<<<<< Updated upstream
+=======
+     * @param Decision $decision
+     * @return User
      */
-    public function getDecision(): Collection
-    {
-        return $this->decision;
-    }
 
-    public function addDecision(Decision $decision): static
-    {
-        if (!$this->decision->contains($decision)) {
-            $this->decision->add($decision);
-            $decision->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeDecision(Decision $decision): static
-    {
-        if ($this->decision->removeElement($decision)) {
-            // set the owning side to null (unless already changed)
-            if ($decision->getUser() === $this) {
-                $decision->setUser(null);
-            }
-        }
-
-        return $this;
-    }
 
     /**
+>>>>>>> Stashed changes
      * @return Collection<int, Group>
      */
     public function getMemberGroup(): Collection
@@ -361,6 +196,188 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeMemberGroup(Group $memberGroup): static
     {
         $this->memberGroup->removeElement($memberGroup);
+
+        return $this;
+    }
+
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(bool $isVerified): static
+    {
+        $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    /**
+<<<<<<< Updated upstream
+=======
+     * @return Collection<int, Decision>
+     */
+
+
+    /**
+>>>>>>> Stashed changes
+     * @return Collection<int, Opinion>
+     */
+    public function getOpinions(): Collection
+    {
+        return $this->opinions;
+    }
+
+    public function addOpinion(Opinion $opinion): static
+    {
+        if (!$this->opinions->contains($opinion)) {
+            $this->opinions->add($opinion);
+            $opinion->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOpinion(Opinion $opinion): static
+    {
+        if ($this->opinions->removeElement($opinion)) {
+            // set the owning side to null (unless already changed)
+            if ($opinion->getAuthor() === $this) {
+                $opinion->setAuthor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?DatetimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?DatetimeInterface $updatedAt): void
+    {
+        $this->updatedAt = $updatedAt;
+    }
+
+    public function getPhoto(): ?string
+    {
+        return $this->photo;
+    }
+
+    public function setPhoto(?string $photo): static
+    {
+        $this->photo = $photo;
+
+        return $this;
+    }
+
+    public function setPhotoFile(?File $photoFile = null): User
+    {
+        $this->photoFile = $photoFile;
+        if ($this->photoFile instanceof UploadedFile) {
+            $this->updatedAt = new DateTime('now');
+        }
+        return $this;
+    }
+
+    public function getPhotoFile(): ?File
+    {
+        return $this->photoFile;
+    }
+
+    // Resolution message erreur : Serialization of 'Symfony\Component\HttpFoundation\File\UploadedFile' is not allowed
+
+// Ce message d'erreur indique que la sérialisation de cet objet n'est pas autorisée.
+// La sérialisation est le processus de conversion d'un objet en une représentation de chaîne de caractères,
+// généralement dans le but de stocker cet objet dans une base de données,
+// de le transmettre via un réseau ou de le sauvegarder d'une manière ou d'une autre.
+    public function __serialize(): array
+    {
+        return [
+            'id' => $this->id,
+            'email' => $this->email,
+            'roles' => $this->roles,
+            'password' => $this->password,
+            'firstname' => $this->firstname,
+            'lastname' => $this->lastname,
+            'phoneNumber' => $this->phoneNumber,
+            'city' => $this->city,
+            'occupation' => $this->occupation,
+            'description' => $this->description,
+            'reseau' => $this->reseau,
+            'photo' => $this->photo,
+        ];
+    }
+
+    public function __unserialize(array $data): void
+    {
+        $this->id = $data['id'] ?? null;
+        $this->email = $data['email'] ?? null;
+        $this->roles = $data['roles'] ?? [];
+        $this->password = $data['password'] ?? null;
+        $this->firstname = $data['firstname'] ?? null;
+        $this->lastname = $data['lastname'] ?? null;
+        $this->phoneNumber = $data['phoneNumber'] ?? null;
+        $this->city = $data['city'] ?? null;
+        $this->occupation = $data['occupation'] ?? null;
+        $this->description = $data['description'] ?? null;
+        $this->reseau = $data['reseau'] ?? null;
+        $this->photo = $data['photo'] ?? null;
+    }
+    /**
+     * @return Collection<int, Decision>
+     */
+    public function getDecisionOwner(): Collection
+    {
+        return $this->decisionOwner;
+    }
+
+    public function addDecisionOwner(Decision $decisionOwner): static
+    {
+        if (!$this->decisionOwner->contains($decisionOwner)) {
+            $this->decisionOwner->add($decisionOwner);
+            $decisionOwner->setOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDecisionOwner(Decision $decisionOwner): static
+    {
+        if ($this->decisionOwner->removeElement($decisionOwner)) {
+            // set the owning side to null (unless already changed)
+            if ($decisionOwner->getOwner() === $this) {
+                $decisionOwner->setOwner(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Decision>
+     */
+    public function getExpertDecision(): Collection
+    {
+        return $this->expertDecision;
+    }
+
+    public function addExpertDecision(Decision $expertDecision): static
+    {
+        if (!$this->expertDecision->contains($expertDecision)) {
+            $this->expertDecision->add($expertDecision);
+            $expertDecision->addUserExpert($this);
+        }
+
+        return $this;
+    }
+
+    public function removeExpertDecision(Decision $expertDecision): static
+    {
+        if ($this->expertDecision->removeElement($expertDecision)) {
+            $expertDecision->removeUserExpert($this);
+        }
 
         return $this;
     }

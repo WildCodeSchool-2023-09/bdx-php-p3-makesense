@@ -1,0 +1,31 @@
+body {
+    padding-top: 2rem;
+    margin-top: 4rem;
+}
+
+main{
+    min-height: 80vh; /* 100% de la hauteur de la vue */
+}
+
+.base_footer {
+    display: flex;
+    justify-content: flex-end;
+    background-color: $color-nav;
+    color: $color-text;
+    box-shadow: $box-shadow-total;
+    border-radius: 1rem 1rem 0 0;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+.base_footer img {
+    border-radius: $border-radius;
+    width: 8.25756rem;
+    height: 4.00144rem;
+    margin-right: 1rem;
+}
+
+footer {
+    margin-top: 3rem;
+}

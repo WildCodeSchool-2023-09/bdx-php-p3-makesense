@@ -26,31 +26,39 @@ class UserFixtures extends Fixture
                 'password' => 'tototata',
                 'lastname' => 'Doe',
                 'firstname' => 'John',
-                'phoneNumber' => 123456789,
+                'phoneNumber' => '123456789',
                 'city' => 'New York',
                 'occupation' => 'Developer',
                 'description' => 'Passionate about coding.',
-                'photo' => 'john_doe.jpg',
-                'website' => 'http://www.johndoe.com',
-                'twitter' => 'john_doe_twitter',
-                'instagram' => 'john_doe_instagram',
-                'facebook' => 'john_doe_facebook',
+                /*'photo' => 'john_doe.jpg',*/
+                'reseau' => 'http://www.johndoe.com',
             ],
             [
                 'email' => 'jane.doe@example.com',
-                'roles' => ['ROLE_USER'],
-                'password' => 'hashed_password_2',
+                'roles' => ['ROLE_MEMBER'],
+                'password' => 'taratata',
                 'lastname' => 'Doe',
                 'firstname' => 'Jane',
-                'phoneNumber' => 987654321,
+                'phoneNumber' => '987654321',
                 'city' => 'San Francisco',
                 'occupation' => 'Designer',
                 'description' => 'Creative and artistic.',
-                'photo' => 'jane_doe.jpg',
-                'website' => 'http://www.janedoe.com',
-                'twitter' => 'jane_doe_twitter',
-                'instagram' => 'jane_doe_instagram',
-                'facebook' => 'jane_doe_facebook',
+               /* 'photo' => 'jane_doe.jpg',*/
+                'reseau' => 'http://www.janedoe.com',
+            ],
+
+            [
+                'email' => 'johan.doe@example.com',
+                'roles' => ['ROLE_USER'],
+                'password' => 'azertyui',
+                'lastname' => 'Doe',
+                'firstname' => 'Johan',
+                'phoneNumber' => '897653412',
+                'city' => 'Las Vegas',
+                'occupation' => 'Developer',
+                'description' => 'Coding.',
+                /*'photo' => 'johan_doe.jpg',*/
+                'reseau' => 'http://www.johandoe.com',
             ],
         ];
         // Create User entities and persist them
@@ -65,11 +73,8 @@ class UserFixtures extends Fixture
             $user->setCity($userDataItem['city']);
             $user->setOccupation($userDataItem['occupation']);
             $user->setDescription($userDataItem['description']);
-            $user->setPhoto($userDataItem['photo']);
-            $user->setWebsite($userDataItem['website']);
-            $user->setTwitter($userDataItem['twitter']);
-            $user->setInstagram($userDataItem['instagram']);
-            $user->setFacebook($userDataItem['facebook']);
+           /* $admin->setPhoto($userDataItem['photo']);*/
+            $user->setReseau($userDataItem['reseau']);
             $this->addReference('user_' .  $userDataItem['email'], $user);
             $hashedPassword = $this->passwordHasher->hashPassword($user, $userDataItem['password']);
             $user->setPassword($hashedPassword);

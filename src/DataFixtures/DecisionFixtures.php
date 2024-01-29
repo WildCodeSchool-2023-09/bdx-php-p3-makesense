@@ -3,17 +3,19 @@
 namespace App\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use App\Entity\Decision;
 use Monolog\DateTimeImmutable;
 
-class DecisionFixtures extends Fixture
+class DecisionFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
         for ($i = 0; $i < 5; $i++) {
             $decision = new Decision();
             $decision->setTitle('Title' . $i);
+            $decision->addUser($this->getReference('user_johan.doe@example.com'));
             $decision->setStatus(true);
             $decision->setDescription('description' . $i);
             $decision->setImpact('impact' . $i);
@@ -26,9 +28,19 @@ class DecisionFixtures extends Fixture
             $decision->setDeadlineConflict(new DateTimeImmutable(false));
             $decision->setDeadlineFinal(new DateTimeImmutable(false));
             $this->addReference('decision_' . $i, $decision);
+            $decision->addGroupe($this->getReference("groupe"));
+            $decision->setOwner($this->getReference('user_johan.doe@example.com'));
 
             $manager->persist($decision);
         }
         $manager->flush();
+    }
+
+    public function getDependencies(): array
+    {
+        return [
+            UserFixtures::class,
+            GroupFixtures::class,
+        ];
     }
 }

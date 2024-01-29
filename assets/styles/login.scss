@@ -1,0 +1,107 @@
+.my-card-box {
+    width: 100%;
+    max-width: 90rem;
+    border-radius: $border-radius;
+    background-color: $color-second;
+    box-shadow: $box-shadow-total;
+    color: $color-text;
+    justify-content: space-between;
+    padding: 1rem;
+}
+
+.bloc{
+    flex-direction: column;
+    padding: 5rem;
+    text-align: center;
+}
+
+.txt {
+    color: $color-text;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#inputEmail.form-control {
+    border: none;
+    border-radius: 0.37rem;
+    padding-top: 0.5rem;
+    height: 1.5rem;
+    width: 100%;
+}
+
+#inputPassword.form-control {
+    border: none;
+    border-radius: 0.37rem;
+    padding-top: 0.5rem;
+    height: 1.5rem;
+    width: 85%;
+}
+
+.container {
+    display: flex;
+    //justify-content: center;
+    font-family: $font-text;
+    color: $color-text;
+    font-weight: bold;
+    //align-items: center;
+    margin: 2rem;
+    font-size: large;
+}
+
+.log {
+    font-size: 2.5rem;
+    font-family: $font-text;
+    font-weight: bold;
+    text-align: center;
+    margin: 0.3rem;
+}
+
+.bloc-button{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.my-button {
+    color: $color-text;
+    background-color: $color-button;
+    border: none;
+    border-radius: $border-radius-button;
+    padding: 0.6rem;
+    margin: $margin-little;
+    font-size: $size-h2;
+    font-family: $font-text;
+    box-shadow: $box-shadow;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+
+
+@media screen and (max-width: 768px){
+.my-card-box{
+    flex-direction: column;
+    padding: 0.5rem;
+}
+.txt{
+    display: flex;
+    flex-direction: column;
+}
+
+#inputPassword.form-control {
+    width: 100%;
+}
+
+.bloc{
+    padding: 1rem;
+}
+
+.log{
+    padding: 0.5rem;
+}
+}
+
+
+

@@ -1,0 +1,305 @@
+$color-text: #0B3A44;
+$color-background: #FFFFFF;
+$color-first: #FFFFFF;
+$color-second: #EEEEEE;
+$color-nav: #EEEEEE;
+$color-text-clic: #9B084F;
+$color-button: rgba(25, 108, 132, 0.30);
+$color-tab: #F3976B;
+$margin-little: 2rem;
+
+$border-radius-button: 6.25rem;
+$border-radius: 2rem;
+$box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+$box-shadow-total: 1px 1px 8px #555;
+
+$size-h1: 4rem;
+$size-h2: 1.25rem;
+$size-p: 1rem;
+$size-little: 0.8rem;
+
+$font-text: "Raleway, Arial, sans-serif";
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Raleway', sans-serif;
+}
+
+:root {
+    font-family: 'Raleway', sans-serif;
+}
+
+
+body {
+    padding-top: 2rem;
+    margin-top: 2rem;
+}
+
+h1 {
+    font-size: $size-h1;
+    color: $color-text;
+}
+
+.button-big {
+    color: $color-text;
+    background-color: $color-button;
+    border: none;
+    border-radius: $border-radius-button;
+    margin: $margin-little;
+    padding: 2% 5%;
+    font-size: 2.5rem;
+    font-family: $font-text;
+    box-shadow: $box-shadow;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.button {
+    color: $color-text;
+    background-color: $color-button;
+    border: none;
+    border-radius: $border-radius-button;
+    padding: 0.6rem 1.8rem;
+    margin: $margin-little;
+    font-size: $size-h2;
+    font-family: $font-text;
+    box-shadow: $box-shadow;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.button a {
+    text-decoration: none;
+    color: $color-text;
+}
+
+.onglet-use {
+    color: $color-text;
+    background-color: $color-tab;
+    border: none;
+    width: 3rem;
+    border-radius: 0rem 3.1rem;
+    margin: $margin-little;
+    padding: 0.6rem 5rem;
+    font-size: $size-h2;
+    font-family: $font-text;
+    font-weight: bold;
+}
+
+.onglet {
+    color: $color-text;
+    background-color: $color-second;
+    border: none;
+    width: 3rem;
+    border-radius: 0rem 3.1rem;
+    margin: $margin-little;
+    padding: 0.6rem 5rem;
+    font-size: $size-h2;
+    font-family: $font-text;
+    font-weight: bold;
+}
+
+.my-card {
+    width: 18rem;
+    margin: 2rem;
+    border-radius: $border-radius;
+    background-color: $color-first;
+    box-shadow: $box-shadow-total;
+}
+
+.my-card-body {
+    padding: 1.5rem;
+}
+
+.my-card-title {
+    color: $color-text;
+    font-size: $size-h2;
+    font-weight: bold;
+}
+
+.my-card-subtitle {
+    font-size: 1rem;
+}
+
+.my-card-text {
+    font-size: $size-p;
+    color: $color-text;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.decision-starting {
+    display: inline-block;
+    color: #3E8A9F;
+    background-color: #F2E8F3;
+    border: 2px solid #3E8A9F;
+    border-radius: $border-radius-button;
+    padding: 0.6rem 1.8rem;
+    margin: 0.5rem;
+/*    font-size: $size-little;*/
+    font-family: $font-text;
+    box-shadow: $box-shadow;
+    font-weight: bold;
+}
+
+.give-opinion {
+    display: inline-block;
+    color: #C1E94E;
+    background-color: #FAFEED;
+    border: 2px solid #C1E94E;
+    border-radius: $border-radius-button;
+    padding: 0.6rem 1.8rem;
+    margin: 0.5rem;
+/*    font-size: $size-little;*/
+    font-family: $font-text;
+    box-shadow: $box-shadow;
+    font-weight: bold;
+}
+
+.decision-taken {
+    display: inline-block;
+    color: #BEB700;
+    background-color: #FFFFF0;
+    border: 2px solid #BEB700;
+    border-radius: $border-radius-button;
+    padding: 0.6rem 1.8rem;
+    margin: 0.5rem;
+ /*   font-size: $size-little;*/
+    font-family: $font-text;
+    box-shadow: $box-shadow;
+    font-weight: bold;
+}
+
+.conflict {
+    display: inline-block;
+    color: #D6A936;
+    background-color: #FFFAEA;
+    border: 2px solid #D6A936;
+    border-radius: $border-radius-button;
+    padding: 0.6rem 1.8rem;
+    margin: 0.5rem;
+/*    font-size: $size-little;*/
+    font-family: $font-text;
+    box-shadow: $box-shadow;
+    font-weight: bold;
+}
+
+.decision-ending {
+    display: inline-block;
+    color: #FF1616;
+    background-color: #F3E8E8;
+    border: 2px solid #FF1616;
+    border-radius: $border-radius-button;
+    padding: 0.6rem 1.8rem;
+    margin: 0.5rem;
+/*    font-size: $size-little;*/
+    font-family: $font-text;
+    box-shadow: $box-shadow;
+    font-weight: bold;
+}
+
+.switch {
+    display: inline-block;
+    position: relative;
+    width: 4.3rem;
+    height: 2.5rem;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.switch input {
+    position: absolute;
+    top: -1.8rem;
+    left: -1.8rem;
+    width: 0;
+    height: 0;
+}
+
+
+.switch input + span {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #99b4df;
+    border-radius: 1.25rem;
+}
+
+.switch input:checked + span {
+    background: #346abf;
+}
+
+.switch input + span:before {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    left: 0.25rem;
+    width: 2rem;
+    height: 2rem;
+    background: white;
+    border-radius: 50%;
+    transform: translateY(-50%);
+    transition: all .5s;
+}
+
+.switch input:checked + span:before {
+    left: 2.125rem;
+}
+
+.flex {
+    display: flex;
+}
+
+.square-container-column {
+    display: flex;
+    border-radius: $border-radius;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: $color-second;
+    width: 90%;
+    margin: 1rem auto;
+    padding: 0 2rem;
+    font-family: $font-text;
+    color: $color-text;
+    font-weight: bold;
+    box-shadow: $box-shadow;
+}
+
+.square-container {
+    display: flex;
+    border-radius: $border-radius;
+    align-items: center;
+    justify-content: center;
+    background-color: $color-second;
+    width: 90%;
+    margin: 1rem auto;
+    padding: 0 2rem;
+    font-family: $font-text;
+    color: $color-text;
+    font-weight: bold;
+    box-shadow: $box-shadow;
+}
+
+.decisionP {
+    max-width: 100%;
+    width: auto;
+    margin: 0.5rem;
+    padding: 2rem;
+    border-radius: $border-radius;
+    background-color: $color-first;
+    box-shadow: $box-shadow-total;
+}
+
+.withMarginTop {
+    margin-top: 1rem;
+}
+
+.decisionBox a {
+    text-decoration: none;
+    color: $color-text;
+}

@@ -1,0 +1,32 @@
+.ts-wrapper.multi .ts-control [data-value] {
+font-size: 1.10rem;
+}
+
+.formTextGroup > div > label.required {
+    font-size: 1.25rem;
+}
+
+
+@media only screen and (max-width: 600px) {
+    button#btnBacktoList {
+        margin-top: 5rem;
+        margin-right: 7rem;
+
+    }
+
+    button#btnDelete.btn {
+        margin-top: 3rem;
+        margin-right: 3rem;
+    }
+
+    div.form-background-group {
+        padding-top: 0.5rem;
+    }
+    h1.EditGroup{
+        margin-top: 6rem;
+    }
+
+    button.button.createGroup {
+        margin-right: 5rem;
+    }
+}

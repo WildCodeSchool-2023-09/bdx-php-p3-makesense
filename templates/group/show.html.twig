@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Group{% endblock %}
+
+{% block body %}
+    <h1 class="selectedGroup">Groupe sélectionné</h1>
+
+    <table class="table_responsive">
+
+        <thead>
+            <tr class="headTitle">
+                <th>Nom du groupe</th>
+                <th>Les membres </th>
+                <th>Actions</th>
+{#                <td>{{ group.name }}</td>#}
+            </tr>
+        </thead>
+        <tbody>
+        <tr>
+{#            <th>Membres du groupe</th>#}
+            <td>{{ group.name }}</td>
+            <td>{% for user in group.users %}
+                    {{ user.firstname }} {{ user.lastname }} ;
+                {% endfor %}</td>
+            <td>
+                <span class="action_btn">
+                    <a href="{{ path('app_group_edit', {'id': group.id}) }}">modifier</a>
+            </td>
+
+        </tr>
+        </tbody>
+    </table>
+
+{#    <a href="{{ path('app_group_index') }}">back to list</a>#}
+    <div>
+       {% if is_granted("ROLE_ADMIN") %}
+            {{ include('group/_delete_form.html.twig') }}
+
+       {%endif%}}
+    </div>
+
+
+    <button class="btn" onclick="window.location.href='{{ path('app_group_index')}}'">Retour à la liste</button>
+
+
+{% endblock %}

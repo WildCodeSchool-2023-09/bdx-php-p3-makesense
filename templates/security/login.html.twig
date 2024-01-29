@@ -3,7 +3,7 @@
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
-<form method="post">
+<form method="post" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
     {% if error %}
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
@@ -13,19 +13,29 @@
             You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
         </div>
     {% endif %}
-
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputEmail">Email</label>
-    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-    <label for="inputPassword">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
-
+    <h1 class="log">Se connecter</h1>
+    <div class="container">
+        <div class="my-card-box">
+            <div class="txt">
+                <div class="bloc">
+                    <label for="inputEmail">Email</label>
+                    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+                </div>
+                <div class="bloc">
+                    <label for="inputPassword">Mot de passe</label>
+                    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+                </div>
+            </div>
     <input type="hidden" name="_csrf_token"
            value="{{ csrf_token('authenticate') }}"
     >
-
-    <button class="btn btn-lg btn-primary" type="submit">
-        Sign in
-    </button>
+          <div class="bloc-button">
+              <button class="button" type="submit">
+                Connexion
+              </button>
+              <a href="{{ path('app_register') }}" class="button">Inscription</a>
+              <a href="{{ path('app_forgot_password_request') }}" class="loginPasswordReset" >Mot de passe oublier</a>
+          </div>
+        </div>
 </form>
 {% endblock %}

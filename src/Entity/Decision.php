@@ -7,50 +7,50 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: DecisionRepository::class)]
 class Decision
 {
+    use DecisionDeadlines;
+    use DecisionUserTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 50)]
+    #[Assert\NotBlank(message: 'Le titre ne doit pas être vide')]
+    #[Assert\Length(
+        max: 50,
+        maxMessage: 'Le titre ne doit pas dépasser {{ limit }} caractères.'
+    )]
     private ?string $title = null;
 
     #[ORM\Column]
     private ?bool $status = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank(message: 'La description ne doit pas être vide')]
     private ?string $description = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank(message: 'L\'impact ne doit pas être vide')]
     private ?string $impact = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank(message: 'Le contexte ne doit pas être vide')]
     private ?string $context = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank(message: 'L\'avantages ne doit pas être vide')]
     private ?string $benefits = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank(message: 'Le risque ne doit pas être vide')]
     private ?string $risk = null;
-
-    #[ORM\Column]
-    private ?\DateTimeImmutable $startingDate = null;
-
-    #[ORM\Column]
-    private ?\DateTimeImmutable $deadlineOpinion = null;
-
-    #[ORM\Column(type: Types::DATE_IMMUTABLE)]
-    private ?\DateTimeImmutable $deadlineDecision = null;
-
-    #[ORM\Column(type: Types::TIME_IMMUTABLE)]
-    private ?\DateTimeImmutable $deadlineConflict = null;
-
-    #[ORM\Column(type: Types::TIME_IMMUTABLE)]
-    private ?\DateTimeImmutable $deadlineFinal = null;
 
     #[ORM\OneToMany(mappedBy: 'decision', targetEntity: Opinion::class, orphanRemoval: true)]
     private Collection $opinions;
@@ -58,19 +58,22 @@ class Decision
     #[ORM\OneToMany(mappedBy: 'decision', targetEntity: Favori::class, orphanRemoval: true)]
     private Collection $favoris;
 
-    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'decision')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?User $user = null;
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'decisions')]
+    private ?Collection $users;
+    #[ORM\ManyToMany(targetEntity: Group::class, inversedBy: 'decisions')]
+    private ?Collection $groupes;
 
-
-    #[ORM\ManyToMany(targetEntity: Group::class, mappedBy: 'decision')]
-    private Collection $memberGroups;
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'expertDecision')]
+    #[ORM\JoinTable(name : 'decision_expert')]
+    private Collection $userExpert;
 
     public function __construct()
     {
         $this->opinions = new ArrayCollection();
         $this->favoris = new ArrayCollection();
-        $this->memberGroups = new ArrayCollection();
+        $this->users = new ArrayCollection();
+        $this->groupes = new ArrayCollection();
+        $this->userExpert = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -158,30 +161,6 @@ class Decision
     public function setRisk(string $risk): static
     {
         $this->risk = $risk;
-
-        return $this;
-    }
-
-    public function getStartingDate(): ?\DateTimeImmutable
-    {
-        return $this->startingDate;
-    }
-
-    public function setStartingDate(\DateTimeImmutable $startingDate): static
-    {
-        $this->startingDate = $startingDate;
-
-        return $this;
-    }
-
-    public function getDeadlineOpinion(): ?\DateTimeImmutable
-    {
-        return $this->deadlineOpinion;
-    }
-
-    public function setDeadlineOpinion(\DateTimeImmutable $deadlineOpinion): static
-    {
-        $this->deadlineOpinion = $deadlineOpinion;
 
         return $this;
     }
@@ -282,41 +261,51 @@ class Decision
         return $this;
     }
 
-    public function getUser(): ?User
+    /**
+     * @return Collection<int, Group>
+     */
+    public function getGroupes(): Collection
     {
-        return $this->user;
+        return $this->groupes;
     }
 
-    public function setUser(?User $user): static
+    public function addGroupe(Group $groupe): static
     {
-        $this->user = $user;
+        if (!$this->groupes->contains($groupe)) {
+            $this->groupes->add($groupe);
+        }
+
+        return $this;
+    }
+
+    public function removeGroupe(Group $groupe): static
+    {
+        $this->groupes->removeElement($groupe);
+        $groupe->removeDecision($this);
 
         return $this;
     }
 
     /**
-     * @return Collection<int, Group>
+     * @return Collection<int, User>
      */
-    public function getMemberGroups(): Collection
+    public function getUserExpert(): Collection
     {
-        return $this->memberGroups;
+        return $this->userExpert;
     }
 
-    public function addMemberGroup(Group $memberGroup): static
+    public function addUserExpert(User $userExpert): static
     {
-        if (!$this->memberGroups->contains($memberGroup)) {
-            $this->memberGroups->add($memberGroup);
-            $memberGroup->addDecision($this);
+        if (!$this->userExpert->contains($userExpert)) {
+            $this->userExpert->add($userExpert);
         }
 
         return $this;
     }
 
-    public function removeMemberGroup(Group $memberGroup): static
+    public function removeUserExpert(User $userExpert): static
     {
-        if ($this->memberGroups->removeElement($memberGroup)) {
-            $memberGroup->removeDecision($this);
-        }
+        $this->userExpert->removeElement($userExpert);
 
         return $this;
     }

@@ -6,9 +6,12 @@ use App\Repository\GroupRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: GroupRepository::class)]
 #[ORM\Table(name: '`group`')]
+#[UniqueEntity(fields: ['name'], message: 'Ce Nom existe déjà')]
 class Group
 {
     #[ORM\Id]
@@ -17,18 +20,20 @@ class Group
     private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotBlank(message: 'Le Nom ne doit pas être vide')]
     private ?string $name = null;
 
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'memberGroup')]
     private Collection $users;
 
-    #[ORM\ManyToMany(targetEntity: Decision::class, inversedBy: 'memberGroups')]
-    private Collection $decision;
+    #[ORM\ManyToMany(targetEntity: Decision::class, mappedBy: 'groupes')]
+    private Collection $decisions;
+
 
     public function __construct()
     {
         $this->users = new ArrayCollection();
-        $this->decision = new ArrayCollection();
+        $this->decisions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -78,15 +83,16 @@ class Group
     /**
      * @return Collection<int, Decision>
      */
-    public function getDecision(): Collection
+    public function getDecisions(): Collection
     {
-        return $this->decision;
+        return $this->decisions;
     }
 
     public function addDecision(Decision $decision): static
     {
-        if (!$this->decision->contains($decision)) {
-            $this->decision->add($decision);
+        if (!$this->decisions->contains($decision)) {
+            $this->decisions->add($decision);
+            $decision->addGroupe($this);
         }
 
         return $this;
@@ -94,7 +100,9 @@ class Group
 
     public function removeDecision(Decision $decision): static
     {
-        $this->decision->removeElement($decision);
+        if ($this->decisions->removeElement($decision)) {
+            $decision->removeGroupe($this);
+        }
 
         return $this;
     }

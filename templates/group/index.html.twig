@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Group index{% endblock %}
+
+{% block body %}
+    <h1 class="selectGroup">Sélectionner un groupe</h1>
+
+        <div class="searchGroup">
+            {{ form_start(form) }}
+            {{ form_row(form.search, {
+                label: 'Nom du groupe recherché :'}) }}
+            <button class="submit">Valider</button>
+            {{ form_end(form) }}
+        </div>
+
+    <div class="linkCreateGroupe">
+        <p> Vous ne trouvez pas votre groupe idéal ? Créez votre propre groupe <a href="{{ path('app_group_new') }}">ICI</a> </p>
+        {#    <a href="{{ path('app_group_new') }}">créer votre groupe</a>#}
+    </div>
+
+    <table class="table_responsive">
+        <thead>
+            <tr>
+                {# <th>Id</th> #}
+                <th>Nom du groupe</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for group in groups %}
+            <tr>
+                {#  <td>{{ group.id }}</td>#}
+                <td>{{ group.name }}</td>
+                <td>
+                    <span class="action_btn">
+{#                        <a href="#">sélectionner</a>#}
+                        <a href="{{ path('app_group_show', {'id': group.id}) }}">voir</a>
+{#                        <a href="{{ path('app_group_edit', {'id': group.id}) }}">modifier</a>#}
+
+                    </span>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

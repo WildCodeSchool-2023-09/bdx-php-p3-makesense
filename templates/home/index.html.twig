@@ -3,13 +3,28 @@
 {% block title %}Home{% endblock %}
 
 {% block body %}
-    <div class="pink-stripe">
-        <h1>
-            Let's start coding&nbsp;&#129304;
-        </h1>
+    <div class="flex-container">
+        <div class="my-card-home">
+            <div class="my-card-body">
+                <div class="buttons">
+
+                    <a href="{{ path('app_login') }}" class="button-big">Connexion</a>
+                    <a href="{{ path('app_register') }}" class="button-big">Inscription</a>
+
+                </div>
+                <p class="my-card-text">Parce que le monde a besoin de tout le monde pour
+                    construire une société durable et inclusive, makesense fournit les armes
+                    pour passer à l’action. Citoyen·nes, entrepreneur·ses, salarié·es,
+                    choisissez votre combat et allez-y collectivement et joyeusement.</p>
+            </div>
+        </div>
     </div>
-    <div class="white-stripe">
-        <img src="{{ asset('build/images/logo-wild-code-school.svg') }}"
-             alt="">
+
+    <div class="imageContainer">
+        <img class="photoStaff" src="https://flexjob.fr/wp-content/uploads/2018/04/travailler-chez-makesense.jpg"
+             alt="Photo de l'équipe makesense">
     </div>
+
 {% endblock %}
+
+
