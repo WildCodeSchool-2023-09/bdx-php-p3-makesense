@@ -41,6 +41,13 @@ class UserController extends AbstractController
             'form' => $form,
         ]);
     }*/
+    #[Route('/profile/{id}', name: 'app_user_profile_show', methods: ['GET'])]
+    public function showUserProfile(User $user): Response
+    {
+        return $this->render('user/show.html.twig', [
+            'user' => $user,
+        ]);
+    }
 
     #[Route('/{id}', name: 'app_user_show', methods: ['GET'])]
     public function show(/*User $user*/): Response

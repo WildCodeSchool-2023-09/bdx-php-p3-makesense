@@ -148,5 +148,19 @@
     }
 }
 
+.decision-user-list {
+    display: flex;
+}
+
+.decision-user-list-user {
+    text-align: center;
+
+    & img {
+        width: 50px;
+        height: 50px;
+        border-radius: 100%;
+    }
+}
+
 
 
