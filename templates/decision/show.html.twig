@@ -89,6 +89,9 @@
             </div>
           {% for opinion in decision.opinions %}
               {% if opinion in currentStepOpinions or opinion in previousStepOpinions %}
+                  {#{% if decision.opinion == decision.owner %}
+                      owner_active
+                  {% endif %}">#}
                   <div class="decisionP" id="opinionContent{{ loop.index }}">
                       <p>{{ opinion.text }}</p>
                       <p>{{ opinion.createdAt ? opinion.createdAt|date('Y-m-d H:i:s') : '' }}</p>
