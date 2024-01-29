@@ -21,6 +21,19 @@ class OpinionRepository extends ServiceEntityRepository
         parent::__construct($registry, Opinion::class);
     }
 
+    /**
+     * Retourne toutes les opinions triées par ordre décroissant de la date de création.
+     *
+     * @return Opinion[]
+     */
+    public function findAllOrderedByCreatedAtDesc(): array
+    {
+        return $this->createQueryBuilder('o')
+            ->orderBy('o.createdAt', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
 //    /**
 //     * @return Opinion[] Returns an array of Opinion objects
 //     */

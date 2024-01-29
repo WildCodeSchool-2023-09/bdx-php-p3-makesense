@@ -35,12 +35,13 @@ h1 {
 .table {
     font-family: $font-text;
     color: #0B3A44;
-    margin-top: 20px;
+    margin-top: 4rem;
     width: 100%;
     border-collapse: collapse;
     border-radius: $border-radius;
     background-color: $color-first;
-    border: 1px #ddd;
+    box-shadow: $box-shadow-total;
+    padding: 1.2rem;
 }
 
 .table th,
@@ -65,14 +66,13 @@ tbody {
 }
 
 .table tbody > tr:hover {
-    transition: transform .4s;
+    transition: transform .6s;
 }
 
 #user{
     width: 600px;
     margin: auto;
     padding: 5rem;
-    border-radius: 5px;
     color: #0B3A44;
     font-weight: bold;
     display: flex;

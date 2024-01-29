@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes Décisions{% endblock %}
+
+{% block body %}
+    <h1>Mes Décisions</h1>
+
+    <div class="decisionBox">
+        {% for decision in decisions %}
+            <a class="noTextDecoration" href="{{ path('app_decision_show', {'id': decision.id}) }}">
+                <div class="my-card">
+                    <div class="my-card-body">
+                        <h2 class="my-card-title"> {{ decision.title }}</h2>
+                        <p class="my-card-text">{% autoescape false %} {{ decision.description|raw |split(' ')|slice(0, 20)|join(' ') ~ " ..." }}{% endautoescape %} </p>
+                        <p>Par {{ decision.owner.firstname }}</p>
+                        {# Ajoutez d'autres éléments de décision que vous souhaitez afficher #}
+                    </div>
+                </div>
+            </a>
+        {% else %}
+            <p>Aucune décision</p>
+        {% endfor %}
+    </div>
+{% endblock %}

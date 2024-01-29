@@ -1,22 +1,38 @@
 <nav class="navbar">
+    <div class="burger-menu-btn" aria-label="Menu">
+        <i class="fa-solid fa-bars"></i>
+    </div>
     <div class="navbar-left">
         <ul>
             <li> <i class="fa-solid fa-house"></i> <a href="{{ path('app_decision_index') }}">Parcourir les décisions</a></li>
-            <li> <i class="fa-regular fa-calendar-days"></i> <a href="{#{{ path('') }}#}">Mes décisions</a></li>
-            <li> <i class="fa-regular fa-face-smile"></i> <a href="{#{{ path('') }}#}">Notifications</a></li>
+            <li> <i class="fa-regular fa-calendar-days"></i> <a href="{{ path('my_decisions') }}">Mes décisions</a></li>
+            <li> <i class="fa-regular fa-face-smile"></i> <a href="{{ path('app_group_index') }}">Groupes</a></li>
             <li> <i class="fa-regular fa-square-plus"></i> <a href="{{ path('app_decision_new') }}">Créer une décision</a></li>
         </ul>
     </div>
 
     <div class="navbar-right">
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-            <p><a href="{{ path('app_logout') }}">Me déconnecter</a></p>
+            <p><a class="connection" href="{{ path('app_logout') }}">Me déconnecter</a></p>
             <a href="{{ path('app_user_show', {'id': app.user.id}) }}">
             <i class="fa-solid fa-user burger-menu"></i>
             </a>
         {% else %}
-            <p><a href="{{ path('app_login') }}">Me connecter</a></p>
+
+            <p><a class="connection" href="{{ path('app_login') }}">Me connecter</a></p>
             <i class="fa-solid fa-user burger-menu"></i>
         {% endif %}
     </div>
 </nav>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const burgerBtn = document.querySelector('.burger-menu-btn');
+        const navbarLeft = document.querySelector('.navbar-left');
+
+        burgerBtn.addEventListener('click', function () {
+            navbarLeft.classList.toggle('show'); // Ajoute ou retire la classe 'show' pour afficher ou cacher la navigation
+        });
+    });
+</script>
+

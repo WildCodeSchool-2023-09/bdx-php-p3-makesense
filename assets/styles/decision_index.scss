@@ -86,6 +86,9 @@
     border-radius: $border-radius;
 }
 
+/*.owner_active{
+
+}*/
 
 .card-new-title {
     display: flex;
@@ -97,8 +100,25 @@
     margin: 2rem 0;
 }
 
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin: 2%;
+    width: 90%;
+    padding: 2%;
+}
 
-@media screen and (min-width: 768px) {
+.textForHover {
+
+}
+
+.textForHover:hover {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    cursor: pointer;
+}
+
+    @media screen and (min-width: 768px) {
     .square-container-column-decision {
         display: grid;
         grid-template-columns: 1fr 1fr; /* Deux colonnes égales en mode bureau */
@@ -125,6 +145,19 @@
     }
 }
 
+.decision-user-list {
+    display: flex;
+}
+
+.decision-user-list-user {
+    text-align: center;
+
+    & img {
+        width: 50px;
+        height: 50px;
+        border-radius: 100%;
+    }
+}
 
 
 
