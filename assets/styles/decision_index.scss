@@ -5,7 +5,7 @@
 .decisionBox {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-evenly;
 }
 
 .decision-container {
@@ -116,8 +116,14 @@
 }
 
 .textForHover:hover {
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    text-shadow: 2px 2px 4px rgba(189, 185, 185, 0.8);
     cursor: pointer;
+}
+
+.other-container > h1 {
+    background: white;
+    border-radius: 0.55rem;
+    box-shadow: 1px 1px 8px #555;
 }
 
 
