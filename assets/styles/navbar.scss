@@ -2,7 +2,10 @@
     text-decoration: none;
     color: $color-text;
     font-size: $size-p;
-    margin-right: 0.75rem;
+    margin-right: 2rem;
+}
+.navbar-left {
+    margin-left: 2rem;
 }
 
 .navbar-left ul {
@@ -43,7 +46,7 @@
 .navbar-right {
     display: flex;
     align-items: center;
-    margin-right: 1rem;
+    margin-right: 2rem;
 }
 
 .profile-image {
