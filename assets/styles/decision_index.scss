@@ -86,9 +86,13 @@
     border-radius: $border-radius;
 }
 
-/*.owner_active{
+.owner_active{
+    border: 2px solid rebeccapurple;
+}
 
-}*/
+.expert {
+    border: 2px solid yellow;
+}
 
 .card-new-title {
     display: flex;
