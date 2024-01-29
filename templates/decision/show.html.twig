@@ -119,7 +119,7 @@
                 {% for user in users %}
                     <div class="decision-user-list-user">
                     <p>{{ user.firstname }}</p>
-                    <a href="{{ path('app_user_show', {id: user.id}) }}">
+                    <a href="{{ path('app_user_profile_show', {id: user.id}) }}">
                         <img src="{{ asset('uploads/images/photo/' ~ user.photo ) }}">
                     </a>
                     </div>
