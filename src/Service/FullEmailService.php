@@ -31,15 +31,12 @@ class FullEmailService
         $this->mailer->send($email);
     }
 
-    public function sendEmailsToUsers(ArrayCollection $users, string $subject, string $template): void
+    public function sendEmailsToUsers(array $allUsersEmails, string $subject, string $template): void
     {
-        $usersArray = $users->toArray();
-
-        foreach ($usersArray as $user) {
+        foreach ($allUsersEmails as $user) {
             if ($user instanceof User) {
                 $recipient = $user->getEmail();
                 $content = $this->twig->createTemplate($template)->render(['user' => $user]);
-
                 $this->sendEmail($recipient, $subject, $content);
             }
         }

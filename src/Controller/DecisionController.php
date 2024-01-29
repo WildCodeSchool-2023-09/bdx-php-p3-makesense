@@ -75,6 +75,23 @@ class DecisionController extends AbstractController
             $users = $form->get('users')->getData();
             $userExperts = $form->get('userExpert')->getData();
             $groupes = $form->get('groupes')->getData();
+            // Initialiser un tableau pour stocker les adresses e-mail des membres du groupe
+            $groupMembersEmails = [];
+            // Parcourir les groupes pour récupérer les adresses e-mail des membres
+            foreach ($groupes as $groupe) {
+                $groupMembers = $groupe->getUsers();
+                foreach ($groupMembers as $groupMember) {
+                    if ($groupMember instanceof User) {
+                        $groupMembersEmails[] = $groupMember;
+                    }
+                }
+            }
+            // Convertissez les ArrayCollection en tableaux
+            $usersArray = $users->toArray();
+            $userExpertsArray = $userExperts->toArray();
+
+            // Combinez les adresses e-mail des groupes avec les autres utilisateurs
+            $allUsersEmails = array_merge($usersArray, $userExpertsArray, $groupMembersEmails);
 
             // Envoyez un e-mail à tous les utilisateurs sélectionnés
             $subject = 'Nouvelle décision créée';
@@ -85,10 +102,7 @@ class DecisionController extends AbstractController
                 'groupes' => $groupes,
             ]);
 
-            $emailService->sendEmailsToUsers($users, $subject, $content);
-            $emailService->sendEmailsToUsers($userExperts, $subject, $content);
-            $emailService->sendEmailsToUsers($groupes, $subject, $content);
-
+            $emailService->sendEmailsToUsers($allUsersEmails, $subject, $content);
 
             return $this->redirectToRoute('app_decision_index', [], Response::HTTP_SEE_OTHER);
         }
