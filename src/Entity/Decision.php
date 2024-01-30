@@ -45,7 +45,7 @@ class Decision
     private ?string $context = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    #[Assert\NotBlank(message: 'L\'avantages ne doit pas être vide')]
+    #[Assert\NotBlank(message: 'L\'avantage ne doit pas être vide')]
     private ?string $benefits = null;
 
     #[ORM\Column(type: Types::TEXT)]
