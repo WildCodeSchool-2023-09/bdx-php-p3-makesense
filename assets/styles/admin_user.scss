@@ -42,35 +42,31 @@ h1 {
     padding-top: 0.5rem;
 }
 
-.table {
+.my-class {
     font-family: $font-text;
     color: #0B3A44;
-    width: 90rem;
+    width: 50%;
     border-collapse: collapse;
-    background-color: $color-first;
+    background-color: #9fa9b7;
     box-shadow: $box-shadow-total;
     padding: 1rem;
-    margin: 5rem;
+    margin: 7rem;
 }
 
-.table th,
-.table td {
-    padding: 8px;
+.my-class th,
+.my-class td {
+    padding: 0.2rem;
     line-height: 1.42857143;
     border: 1px #ddd;
 }
 
-.table {
-    background-color: #9fa9b7;
-}
-
-.table th {
+.my-class th {
     border-radius: 0rem 3.1rem;
     background-color: white;
 }
 
-.table tbody > tr:nth-child(odd) > td,
-.table tbody > tr:nth-child(odd) > th {
+.my-class tbody > tr:nth-child(odd) > td,
+.my-class tbody > tr:nth-child(odd) > th {
     background-color: #f9f9f9;
 }
 
@@ -79,14 +75,14 @@ h1 {
     cursor: pointer;
 }
 
-.table tbody > tr:hover {
+.my-class tbody > tr:hover {
     transition: transform .6s;
 }
 
 #user {
     width: 600px;
     margin: auto;
-    padding: 5rem;
+    padding: 3rem;
     color: #0B3A44;
     font-weight: bold;
     display: flex;
@@ -94,6 +90,11 @@ h1 {
     border-radius: $border-radius;
     background-color: $color-second;
     box-shadow: $box-shadow-total;
+}
+
+.container-admin {
+    display: flex;
+    justify-content: center;
 }
 
 #user_lastname,
@@ -122,16 +123,16 @@ h1 {
 }
 
 @media screen and (max-width: 768px) {
-    .table th,
-    .table td {
+    .my-class th,
+    .my-class td {
         display: flex;
         flex-direction: column;
         padding: 0.3px;
     }
-    .table th{
+    .my-class th{
         display: none;
     }
-    .table {
+    .my-class {
         width: 100%;
         margin: 1rem 0;
     }
@@ -145,5 +146,9 @@ h1 {
     #user_occupation {
         float: none;
         margin-right: 0;
+    }
+
+    #user{
+        width: 150px;
     }
 }
