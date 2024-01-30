@@ -26,7 +26,10 @@ class DecisionRepository extends ServiceEntityRepository
     public function findDecisionsForUser(User $user): array
     {
         return $this->createQueryBuilder('d')
-            ->andWhere('d.owner = :user OR :user MEMBER OF d.users OR :user MEMBER OF d.userExpert')
+            ->leftJoin('d.users', 'u')
+            ->leftJoin('d.userExpert', 'ue')
+            ->leftJoin('d.groupes', 'g')
+            ->andWhere('d.owner = :user OR u = :user OR ue = :user OR :user MEMBER OF g.users')
             ->setParameter('user', $user)
             ->getQuery()
             ->getResult();
