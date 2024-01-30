@@ -35,6 +35,7 @@ class DecisionController extends AbstractController
     {
         //Filtre les décisions par odre d'arriver
         $decisions = $decisionRepository->findAllOrderedByDeadlineDecisionDesc();
+        $actualDate = new DateTimeImmutable();
         foreach ($decisions as $decision) {
             $user = $decision->getOwner();
 
@@ -46,6 +47,7 @@ class DecisionController extends AbstractController
         }
         return $this->render('decision/index.html.twig', [
             'decisions' => $decisions,
+            'actualDate' => $actualDate
         ]);
     }
 
