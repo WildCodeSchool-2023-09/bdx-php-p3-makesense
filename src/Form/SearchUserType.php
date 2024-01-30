@@ -12,7 +12,7 @@ class SearchUserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('search', SearchType::class)
+            ->add('Recherche', SearchType::class)
         ;
     }
 
