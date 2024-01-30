@@ -10,7 +10,8 @@
         <button class="input">Rechercher</button>
     {{ form_end(form) }}
 </div>
-    <table class="table">
+    <div class="container-admin flex">
+    <table class="my-class">
         <div class="ref">
             <tr>
                 <th>Nom</th>
@@ -45,6 +46,7 @@
         {% endfor %}
         </tbody>
     </table>
+    </div>
 
 {#    <a href="{{ path('app_admin_new') }}">Créer</a>#}
 {% endblock %}
