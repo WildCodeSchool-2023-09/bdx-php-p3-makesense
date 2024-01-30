@@ -26,14 +26,14 @@
                     <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
                 </div>
             </div>
-    <input type="hidden" name="_csrf_token">
-
-          <div class="bloc-button">
-              <button class="button" type="submit">
-                Connexion
-              </button>
-              <a href="{{ path('app_register') }}" class="button">Inscription</a>
-              <a href="{{ path('app_forgot_password_request') }}" class="loginPasswordReset">Mot de passe oublié</a>
-          </div>
+            <input type="hidden" name="_csrf_token"
+                   value="{{ csrf_token('authenticate') }}">
+            <div class="bloc-button">
+                <button class="button" type="submit">
+                    Connexion
+                </button>
+                <a href="{{ path('app_register') }}" class="button">Inscription</a>
+                <a href="{{ path('app_forgot_password_request') }}" class="loginPasswordReset">Mot de passe oublié</a>
+            </div>
 </form>
 {% endblock %}
