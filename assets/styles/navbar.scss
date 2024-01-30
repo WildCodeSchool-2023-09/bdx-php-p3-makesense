@@ -14,6 +14,17 @@
     padding: 0;
 }
 
+.navbar-left > ul > li > a:hover {
+    text-shadow: 2px 2px 4px rgba(189, 185, 185, 0.8);
+    cursor: pointer;
+}
+
+.navbar-right > p > a {
+    color: $color-text;
+    list-style-type: none;
+}
+
+
 
 .navbar {
     position: fixed;
