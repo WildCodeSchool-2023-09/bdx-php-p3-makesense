@@ -17,7 +17,7 @@ class Opinion
     private ?int $id = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    #[Assert\NotBlank(message: 'L\'Opinion ne doit pas être vide')]
+    #[Assert\NotBlank(message: 'L\'avis ne doit pas être vide')]
     private ?string $text = null;
 
 

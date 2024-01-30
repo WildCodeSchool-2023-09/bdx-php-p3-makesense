@@ -51,7 +51,7 @@
         <div class="other-container">
             <h1> {{ decision.title }} </h1>
             <div>
-                <h2 class="textForHover"> Descritpion <i class="fa-solid fa-chevron-down"></i></h2>
+                <h2 class="textForHover"> Description <i class="fa-solid fa-chevron-down"></i></h2>
             </div>
             <div class="decisionP" id="descriptionContent" style="display: none;">
                 <p>{{ decision.description|raw }}</p>
@@ -104,9 +104,9 @@
                         </p>
                         <div>
                             {% if opinion.author == decision.owner %}
-                                Auteur
+                                Auteur.e
                             {% elseif opinion.author in decision.userExpert %}
-                                Expert
+                                Expert.e
                             {% endif %}
                         </div>
 
