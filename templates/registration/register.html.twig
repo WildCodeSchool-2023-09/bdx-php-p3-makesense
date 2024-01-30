@@ -8,7 +8,7 @@
     {% endfor %}
 
     <h1>Inscription</h1>
-
+<div class="formContainer">
     <div class="form-background">
 
         {{ form_errors(registrationForm) }}
@@ -20,9 +20,11 @@
             {{ form_row(registrationForm.plainPassword, {
                 label: 'Mot de passe'
             }) }}
+            <div class="flex">
             {{ form_row(registrationForm.agreeTerms, {
                 label: 'Accepter les conditions'
             }) }}
+            </div>
             {{ form_row(registrationForm.firstname, {
                 label: 'Prénom'
             }) }}
@@ -51,8 +53,9 @@
                 label: 'Mon réseau'
             }) }}
             {{ form_row(registrationForm.description) }}
+            <button type="submit" class="button center">Inscription</button>
+            {{ form_end(registrationForm) }}
         </div>
-        <button type="submit" class="button center">Inscription</button>
-        {{ form_end(registrationForm) }}
     </div>
+</div>
 {% endblock %}
