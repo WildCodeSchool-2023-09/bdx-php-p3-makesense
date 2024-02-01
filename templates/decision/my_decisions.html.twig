@@ -7,18 +7,21 @@
 
     <div class="decisionBox">
         {% for decision in decisions %}
-            <a class="noTextDecoration" href="{{ path('app_decision_show', {'id': decision.id}) }}">
-                <div class="my-card">
-                    <div class="my-card-body">
-                        <h2 class="my-card-title"> {{ decision.title }}</h2>
-                        <p class="my-card-text">{% autoescape false %} {{ decision.description|raw |split(' ')|slice(0, 20)|join(' ') ~ " ..." }}{% endautoescape %} </p>
-                        <p>Par {{ decision.owner.firstname }}</p>
-                        {# Ajoutez d'autres éléments de décision que vous souhaitez afficher #}
+                <a class="noTextDecoration" href="{{ path('app_decision_show', {'id': decision.id}) }}">
+                    <div class="my-card">
+                        <div class="my-card-body">
+                            <h2 class="my-card-title">{{ decision.title }}</h2>
+                            <p class="my-card-text">{% autoescape false %}{{ decision.description|raw |split(' ')|slice(0, 10)|join(' ') ~ " ..." }}{% endautoescape %}</p>
+                            <div class="container-profile">
+                                <img src="{{ asset('uploads/images/photo/' ~ decision.owner.photo) }}">
+                                <p>Par <span>{{ decision.owner.firstname }} </span></p>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </a>
-        {% else %}
-            <p>Aucune décision</p>
+                </a>
         {% endfor %}
     </div>
+    <a href="{{ path('app_decision_new') }}" class="button">
+        Créer une nouvelle décision
+    </a>
 {% endblock %}

@@ -51,7 +51,7 @@
         <div class="other-container">
             <h1> {{ decision.title }} </h1>
             <div>
-                <h2 class="textForHover"> Descritpion <i class="fa-solid fa-chevron-down"></i></h2>
+                <h2 class="textForHover"> Description <i class="fa-solid fa-chevron-down"></i></h2>
             </div>
             <div class="decisionP" id="descriptionContent" style="display: none;">
                 <p>{{ decision.description|raw }}</p>
@@ -87,20 +87,33 @@
             <div>
                 <h2> Avis sur la décision <i class="fa-solid fa-chevron-down"></i></h2>
             </div>
-          {% for opinion in decision.opinions %}
-              {% if opinion in currentStepOpinions or opinion in previousStepOpinions %}
-                  {#{% if decision.opinion == decision.owner %}
+            {% for opinion in decision.opinions %}
+                {% if opinion in currentStepOpinions or opinion in previousStepOpinions %}
+
+                    <div class="decisionP
+                       {% if opinion.author == decision.owner %}
                       owner_active
-                  {% endif %}">#}
-                  <div class="decisionP" id="opinionContent{{ loop.index }}">
-                      <p>{{ opinion.text }}</p>
-                      <p>{{ opinion.createdAt ? opinion.createdAt|date('Y-m-d H:i:s') : '' }}</p>
-                      {% if opinion.author %}
-                          <p>{{ opinion.author.firstname }} {{ opinion.author.lastname }}</p>
-                      {% endif %}
-                  </div>
-              {% endif %}
-          {% endfor %}
+                      {% elseif opinion.author in decision.userExpert %}
+                      expert
+                      {% endif %}"
+                         id="opinionContent{{ loop.index }}">
+                        <p>{{ opinion.text }}</p>
+                        <p>{{ opinion.createdAt ? opinion.createdAt|date('Y-m-d H:i:s') : '' }}</p>
+                        <p>
+                            {{ opinion.author.firstname }} {{ opinion.author.lastname }}
+                        </p>
+                        <div>
+                            {% if opinion.author == decision.owner %}
+                                Auteur.e
+                            {% elseif opinion.author in decision.userExpert %}
+                                Expert.e
+                            {% endif %}
+                        </div>
+
+
+                    </div>
+                {% endif %}
+            {% endfor %}
 
             {% if current_step == 3 or current_step == 5 %}
                 {% if app.user == decision.owner %}
@@ -123,10 +136,10 @@
             <div class="decision-user-list">
                 {% for user in users %}
                     <div class="decision-user-list-user">
-                    <p>{{ user.firstname }}</p>
-                    <a href="{{ path('app_user_profile_show', {id: user.id}) }}">
-                        <img src="{{ asset('uploads/images/photo/' ~ user.photo ) }}">
-                    </a>
+                        <p>{{ user.firstname }}</p>
+                        <a href="{{ path('app_user_profile_show', {id: user.id}) }}">
+                            <img src="{{ asset('uploads/images/photo/' ~ user.photo ) }}">
+                        </a>
                     </div>
                 {% endfor %}
             </div>

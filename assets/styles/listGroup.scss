@@ -163,4 +163,13 @@ span.action_btn>a:hover{
     table.table_responsive th{
         font-size: 0.75rem;
     }
+
+    table th,
+    table td{
+        padding-left: 0;
+        font-size: 0.75rem;
+    }
+    /*table.table_response > tbody > >tr > td{
+
+    }*/
 }

@@ -31,11 +31,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    #[Assert\NotBlank(message: 'Le email ne doit pas être vide')]
-    #[Assert\Email(message: 'Le email {{ value }} n\'ai pas valide.')]
+    #[Assert\NotBlank(message: 'L\'email ne doit pas être vide')]
+    #[Assert\Email(message: 'L\'email {{ value }} n\'est pas valide.')]
     #[Assert\Length(
         max: 100,
-        maxMessage: 'Le mail saisie {{ value }} est trop longue, elle ne devrait pas dépasser {{ limit }} caractères',
+        maxMessage: 'L\'email saisi {{ value }} est trop long, il ne devrait pas dépasser {{ limit }} caractères',
     )]
     private ?string $email = null;
 
