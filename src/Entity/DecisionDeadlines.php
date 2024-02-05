@@ -16,28 +16,28 @@ trait DecisionDeadlines
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     #[Assert\GreaterThan(
         propertyPath: "startingDate",
-        message: "La date limite de l'avis doit être antérieure à la date de début."
+        message: "La date n'est pas bonne."
     )]
     private ?\DateTimeImmutable $deadlineOpinion = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     #[Assert\GreaterThan(
         propertyPath: "deadlineOpinion",
-        message: "La date limite de la décision doit être antérieure à la date limite de l'avis."
+        message: "La date n'est pas bonne."
     )]
     private ?\DateTimeImmutable $deadlineDecision = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     #[Assert\GreaterThan(
         propertyPath: "deadlineDecision",
-        message: "La date limite du conflit doit être antérieure à la date limite de la décision."
+        message: "La date n'est pas bonne."
     )]
     private ?\DateTimeImmutable $deadlineConflict = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     #[Assert\GreaterThan(
         propertyPath: "deadlineConflict",
-        message: "La date limite finale doit être antérieure à la date limite du conflit."
+        message: "La date n'est pas bonne."
     )]
     private ?\DateTimeImmutable $deadlineFinal = null;
 

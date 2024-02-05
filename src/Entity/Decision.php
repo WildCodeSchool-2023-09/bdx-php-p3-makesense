@@ -21,31 +21,35 @@ class Decision
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 50)]
     #[Assert\NotBlank(message: 'Le titre ne doit pas être vide')]
+    #[Assert\Length(
+        max: 50,
+        maxMessage: 'Le titre ne doit pas dépasser {{ limit }} caractères.'
+    )]
     private ?string $title = null;
 
     #[ORM\Column]
     private ?bool $status = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    #[Assert\NotBlank(message: 'La description ne doit pas être vide')]
+    #[Assert\NotBlank(message: 'Le champ description ne doit pas être vide')]
     private ?string $description = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    #[Assert\NotBlank(message: 'L\'impact ne doit pas être vide')]
+    #[Assert\NotBlank(message: 'Le champ impact ne doit pas être vide')]
     private ?string $impact = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    #[Assert\NotBlank(message: 'Le contexte ne doit pas être vide')]
+    #[Assert\NotBlank(message: 'Le champ situation actuelle ne doit pas être vide')]
     private ?string $context = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    #[Assert\NotBlank(message: 'L\'avantages ne doit pas être vide')]
+    #[Assert\NotBlank(message: 'Le champ bénéfice ne doit pas être vide')]
     private ?string $benefits = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    #[Assert\NotBlank(message: 'Le risque ne doit pas être vide')]
+    #[Assert\NotBlank(message: 'Le champ risque ne doit pas être vide')]
     private ?string $risk = null;
 
     #[ORM\OneToMany(mappedBy: 'decision', targetEntity: Opinion::class, orphanRemoval: true)]

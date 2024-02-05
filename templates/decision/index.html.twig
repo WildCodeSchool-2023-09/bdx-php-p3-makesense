@@ -1,27 +1,50 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Decision index{% endblock %}
+{% block title %}Proposition index{% endblock %}
 
 {% block body %}
-    <h1>Les décisions en cours</h1>
+    <h1>Les proposition en cours</h1>
     <div class="decisionBox">
         {% for decision in decisions %}
-            <a class="noTextDecoration" href="{{ path('app_decision_show', {'id': decision.id}) }}">
-                <div class="my-card">
-                    <div class="my-card-body">
-                        <h2 class="my-card-title"> {{ decision.title }}</h2>
-                        <p class="my-card-text"> {{ decision.description|split(' ')|slice(0, 20)|join(' ') ~ " ..." }} </p>
-                        <p>Par {{ decision.owner.firstname }}</p>
+            {% if actualDate < decision.deadlineFinal %}
+                <a class="noTextDecoration" href="{{ path('app_decision_show', {'id': decision.id}) }}">
+                    <div class="my-card">
+                        <div class="my-card-body">
+                            <h2 class="my-card-title">{{ decision.title }}</h2>
+                            <p class="my-card-text">{% autoescape false %}{{ decision.description|raw |split(' ')|slice(0, 10)|join(' ') ~ " ..." }}{% endautoescape %}</p>
+                            <div class="container-profile">
+                                <img src="{{ asset('uploads/images/photo/' ~ decision.owner.photo) }}">
+                                <p>Par <span>{{ decision.owner.firstname }} </span></p>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </a>
-        {% else %}
-            Aucune décision
+                </a>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <h1>Les proposition terminées</h1>
+    <div class="decisionBox">
+        {% for decision in decisions %}
+            {% if actualDate > decision.deadlineFinal %}
+                <a class="noTextDecoration" href="{{ path('app_decision_show', {'id': decision.id}) }}">
+                    <div class="my-card">
+                        <div class="my-card-body">
+                            <h2 class="my-card-title">{{ decision.title }}</h2>
+                            <p class="my-card-text">{% autoescape false %}{{ decision.description|raw |split(' ')|slice(0, 10)|join(' ') ~ " ..." }}{% endautoescape %}</p>
+                            <div class="container-profile">
+                                <img src="{{ asset('uploads/images/photo/' ~ decision.owner.photo) }}">
+                                <p>Par <span>{{ decision.owner.firstname }} </span></p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            {% endif %}
         {% endfor %}
     </div>
     <a href="{{ path('app_decision_new') }}" class="button">
-        Créer une nouvelle décision
+        Créer une nouvelle proposition
     </a>
 {% endblock %}
-{# <a href="{{ path('app_decision_show', {'id': decision.id}) }}">show</a>
-                    <a href="{{ path('app_decision_edit', {'id': decision.id}) }}">edit</a> #}
+
+
+

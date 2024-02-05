@@ -1,21 +1,18 @@
 .my-card-box {
     width: 100%;
-    max-width: 120rem;
+    max-width: 90rem;
     border-radius: $border-radius;
     background-color: $color-second;
     box-shadow: $box-shadow-total;
     color: $color-text;
     justify-content: space-between;
-    padding: 3rem;
-    align-items: center;
-
+    padding: 1rem;
 }
 
 .bloc{
     flex-direction: column;
     padding: 5rem;
     text-align: center;
-
 }
 
 .txt {
@@ -26,16 +23,16 @@
 
 #inputEmail.form-control {
     border: none;
-    border-radius: 25px;
-    margin-top: 5px;
+    border-radius: 0.37rem;
+    padding-top: 0.5rem;
     height: 1.5rem;
     width: 100%;
 }
 
 #inputPassword.form-control {
     border: none;
-    border-radius: 25px;
-    margin-top: 5px;
+    border-radius: 0.37rem;
+    padding-top: 0.5rem;
     height: 1.5rem;
     width: 85%;
 }
@@ -46,8 +43,8 @@
     font-family: $font-text;
     color: $color-text;
     font-weight: bold;
-    align-items: center;
-    margin: 5%;
+    //align-items: center;
+    margin: 2rem;
     font-size: large;
 }
 
@@ -56,16 +53,22 @@
     font-family: $font-text;
     font-weight: bold;
     text-align: center;
-    margin: 6%;
+    margin: 0.3rem;
 }
 
+.bloc-button{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
 
 .my-button {
     color: $color-text;
     background-color: $color-button;
     border: none;
     border-radius: $border-radius-button;
-    padding: 0.6rem 1.8rem;
+    padding: 0.6rem;
     margin: $margin-little;
     font-size: $size-h2;
     font-family: $font-text;
@@ -73,10 +76,9 @@
     font-weight: bold;
     cursor: pointer;
     text-decoration: none;
-    display: flex;
-    margin-left: 41%;
-
 }
+
+
 
 @media screen and (max-width: 768px){
 .my-card-box{
@@ -99,12 +101,6 @@
 .log{
     padding: 0.5rem;
 }
-
-.my-button {
-        display: flex;
-        margin-left: 27%;
-
-    }
 }
 
 

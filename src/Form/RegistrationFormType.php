@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\User;
+use App\Entity\Picture;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -16,6 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
+use Symfony\Component\Validator\Constraints\Regex;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class RegistrationFormType extends AbstractType
@@ -38,7 +40,6 @@ class RegistrationFormType extends AbstractType
                                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'mapped' => false,
-                /*'placeholder' => 'coucou',*/
                 'attr' => ['autocomplete' => 'new-password',
                     'placeholder' => 'Entrez votre mot de passe',
                     ],
@@ -77,10 +78,12 @@ class RegistrationFormType extends AbstractType
                 'allow_delete'  => true, // not mandatory, default is true
                 'download_uri' => true, // not mandatory, default is true
             ])
-            ->add('reseau', UrlType::class, [
-                'required' => false,
-                'attr' => ['placeholder' => 'Entrez l\'URL de votre réseau social'],
-            ])
+            ->add('reseau', null, ['label' => false, 'required' => false, 'constraints' => [
+                new Regex([
+                    'pattern' =>
+                        "^((http|https)://)[-a-zA-Z0-9@:%._\\+~#?&//=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%._
+            \\+~#?&//=]*)$^",
+                    'message' => "Veuillez saisir une adresse URL valide"])]])
         ;
     }
 

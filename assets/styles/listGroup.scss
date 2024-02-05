@@ -7,6 +7,7 @@
     display: flex;
     justify-content: center;
     padding-right: 10px;
+
 }
 
 form[name="search_group"] > label.required{
@@ -15,7 +16,10 @@ form[name="search_group"] > label.required{
 
 input#search_group_search{
     margin-left: 1rem;
-    border-radius: 1rem;
+    border-radius: 0.37rem;
+    padding-top: 0.5rem;
+    font-size: 1.20rem;
+    padding-left: 1rem;
 }
 
 form[name="search_group"] > button.submit{
@@ -67,6 +71,7 @@ table.table_responsive>thead>tr>th{
 
 table>thead th{
     padding:0.5rem;
+    font-size: 1.25rem;
 }
 
 table>tbody{
@@ -76,7 +81,7 @@ table>tbody{
 table th,
 table td{
     border: 1px;
-    padding-left: 1rem;
+    padding-left: 5rem;
 }
 
 table.table_responsive th{
@@ -84,6 +89,7 @@ table.table_responsive th{
 }
 table td{
     padding-top: 0.5rem;
+    font-size: 1.25rem;
 }
 
 tr:nth-child(even):hover{
@@ -137,6 +143,10 @@ span.action_btn>a:hover{
 }
 
 @media only screen and (max-width: 600px){
+    div.searchGroup > form > div > label.required{
+        margin-left: 1rem;
+    }
+
     form[name="search_group"] > button.submit{
         margin-top: 0.5rem;
         margin-right: 2rem;
@@ -149,4 +159,17 @@ span.action_btn>a:hover{
     div.linkCreateGroupe{
         margin-left: 0.5rem;
     }
+
+    table.table_responsive th{
+        font-size: 0.75rem;
+    }
+
+    table th,
+    table td{
+        padding-left: 0;
+        font-size: 0.75rem;
+    }
+    /*table.table_response > tbody > >tr > td{
+
+    }*/
 }

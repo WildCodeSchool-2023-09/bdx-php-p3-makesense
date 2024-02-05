@@ -22,7 +22,7 @@ class AdminUserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $search = $form->getData()['search'];
+            $search = $form->getData()['Recherche'];
             $users = $userRepository->findLikeName($search);
         } else {
             $users = $userRepository->findAll();
@@ -82,7 +82,7 @@ class AdminUserController extends AbstractController
     #[Route('/{id}/delete', name: 'app_admin_delete', methods: ['POST'])]
     public function delete(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
-        dump($user);
+
         if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
             $entityManager->remove($user);
             $entityManager->flush();

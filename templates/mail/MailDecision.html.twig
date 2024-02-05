@@ -1,0 +1,27 @@
+<h1>Nouvelle proposition créée</h1>
+
+<p>Bonjour {{ user.firstname }},</p>
+
+<p>Une nouvelle proposition a été créée. Voici quelques détails :</p>
+
+<ul>
+    <li><strong>Propriétaire de la proposition :</strong> {{ user.firstname }}</li>
+    <li><strong>Utilisateurs :</strong>
+        {% for u in users %}
+            {{ u.firstname }}{% if not loop.last %}, {% endif %}
+        {% endfor %}
+    </li>
+    <li><strong>Experts :</strong>
+        {% for ue in userExperts %}
+            {{ ue.firstname }}{% if not loop.last %}, {% endif %}
+        {% endfor %}
+    </li>
+    <li><strong>Groupes :</strong>
+        {% for group in groupes %}
+            {{ group.name }}{% if not loop.last %}, {% endif %}
+        {% endfor %}
+    </li>
+</ul>
+
+<p>Merci,</p>
+<p>Votre application</p>

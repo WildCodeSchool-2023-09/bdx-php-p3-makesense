@@ -1,14 +1,39 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit User{% endblock %}
+{% block title %}Modifier votre profil{% endblock %}
 
 {% block body %}
-    <h1>EDITION</h1>
+    <h1>Modifier votre profil</h1>
 
-   {{ include('user/_form.html.twig', {'button_label': 'Modifier'}) }}
+        {{ form_start(form) }}
+    <div class="profil">
+        <div class="profil-bloc">
+            <img src="{{ vich_uploader_asset(user) }}" alt="{{ user.photo }}">
+            {{ form_widget(form.photoFile) }}
+            <h3>{{ user.firstname }} {{ user.lastname }}</h3>
 
-    <a href="{{ path('app_user_index') }}">Revenir à la liste</a>
+            <p>{{ user.occupation }}</p>
+            {{ form_widget(form.occupation) }}
+        </div>
+        <div class="profil-bloc">
+            <h3>Description</h3>
+            {{ form_widget(form.description) }}
+        </div>
+        <div class="profil-bloc">
+            <h3>Nom prénom : </h3>
+            {{ form_widget(form.firstname) }} {{ form_widget(form.lastname) }}
+            <h3>Mail :</h3>
+            {{ form_widget(form.email) }}
+            <h3>Téléphone :</h3>
+            {{ form_widget(form.phoneNumber) }}
+            <h3>Ville :</h3>
+            {{ form_widget(form.city) }}
+            <h3>Mon Reseau :</h3>
+            {{ form_widget(form.reseau) }}
+        </div>
+    </div>
+    <button class="btn">{{ button_label|default('Valider') }}</button>
+    {{ form_end(form) }}
 
-    {{ include('user/_delete_form.html.twig', {'user': user}) }}
-
+    <a class="btn" href="{{ path('app_user_show', {'id': app.user.id}) }}">Annuler</a>
 {% endblock %}

@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Decision;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -21,28 +22,28 @@ class DecisionRepository extends ServiceEntityRepository
         parent::__construct($registry, Decision::class);
     }
 
-//    /**
-//     * @return Decision[] Returns an array of Decision objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('d')
-//            ->andWhere('d.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('d.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
 
-//    public function findOneBySomeField($value): ?Decision
-//    {
-//        return $this->createQueryBuilder('d')
-//            ->andWhere('d.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function findDecisionsForUser(User $user): array
+    {
+        return $this->createQueryBuilder('d')
+            ->leftJoin('d.users', 'u')
+            ->leftJoin('d.userExpert', 'ue')
+            ->leftJoin('d.groupes', 'g')
+            ->andWhere('d.owner = :user OR u = :user OR ue = :user OR :user MEMBER OF g.users')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult();
+    }
+    /**
+     * Retourne toutes les décisions triées par ordre décroissant de la date de début.
+     *
+     * @return Decision[]
+     */
+    public function findAllOrderedByDeadlineDecisionDesc(): array
+    {
+        return $this->createQueryBuilder('d')
+            ->orderBy('d.deadlineDecision', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 }

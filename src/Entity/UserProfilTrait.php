@@ -11,6 +11,26 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[UniqueEntity(fields: ['phoneNumber'], message: 'Ce numéro de téléphone existe déjà')]
 trait UserProfilTrait
 {
+    #[ORM\Column(length: 100)]
+    #[Assert\NotBlank(message: 'Le Nom ne doit pas être vide')]
+    #[Assert\Length(
+        min: 2,
+        max: 100,
+        minMessage: 'Votre Nom doit comporter au moins {{ limit }} caractères',
+        maxMessage: 'Votre Nom ne peut pas contenir plus de {{ limit }} caractères',
+    )]
+    private ?string $lastname = null;
+
+    #[ORM\Column(length: 100)]
+    #[Assert\NotBlank(message: 'Le prénom  ne doit pas être vide')]
+    #[Assert\Length(
+        min: 2,
+        max: 100,
+        minMessage: 'Votre prénom doit comporter au moins {{ limit }} caractères',
+        maxMessage: 'Votre prénom ne peut pas contenir plus de {{ limit }} caractères',
+    )]
+    private ?string $firstname = null;
+
     #[ORM\Column(length: 50)]
     #[Assert\NotBlank(message: 'La ville ne doit pas être vide')]
     private ?string $city = null;
@@ -33,6 +53,33 @@ trait UserProfilTrait
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank(message: 'La description ne doit pas être vide')]
     private ?string $description = null;
+
+    #[ORM\Column]
+    private array $roles = [];
+
+    public function getLastname(): ?string
+    {
+        return $this->lastname;
+    }
+
+    public function setLastname(string $lastname): static
+    {
+        $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    public function getFirstname(): ?string
+    {
+        return $this->firstname;
+    }
+
+    public function setFirstname(string $firstname): static
+    {
+        $this->firstname = $firstname;
+
+        return $this;
+    }
 
     public function getDescription(): ?string
     {
@@ -89,6 +136,25 @@ trait UserProfilTrait
     public function setReseau(?string $reseau): static
     {
         $this->reseau = $reseau;
+
+        return $this;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // guarantee every admin at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): static
+    {
+        $this->roles = $roles;
 
         return $this;
     }

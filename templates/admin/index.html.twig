@@ -7,11 +7,12 @@
 <div class="search">
     {{ form_start(form) }}
     {{ form_widget(form) }}
-        <button class="input">Recherche</button>
+        <button class="input">Rechercher</button>
     {{ form_end(form) }}
 </div>
-    <table class="table">
-        <thead>
+    <div class="container-admin flex">
+    <table class="my-class">
+        <div class="ref">
             <tr>
                 <th>Nom</th>
                 <th>Prénom</th>
@@ -22,7 +23,7 @@
                 <th>Profession</th>
                 <th>Actions</th>
             </tr>
-        </thead>
+        </div>
         <tbody>
         {% for user in users %}
             <tr>
@@ -45,6 +46,7 @@
         {% endfor %}
         </tbody>
     </table>
+    </div>
 
 {#    <a href="{{ path('app_admin_new') }}">Créer</a>#}
 {% endblock %}

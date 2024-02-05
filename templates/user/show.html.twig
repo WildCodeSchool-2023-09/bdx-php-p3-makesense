@@ -1,46 +1,59 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}User{% endblock %}
+{% block title %} Profil {{ user.firstname }} {{ user.lastname }} {% endblock %}
 
 {% block body %}
-    <h1>User</h1>
+    <h1>{{ user.firstname }} {{ user.lastname }}</h1>
 
-    <table class="table">
-        <tbody>
-        <tr>
-            <th>Nom</th>
-            <td>{{ user.lastname }}</td>
-        </tr>
-        <tr>
-            <th>Prénom</th>
-            <td>{{ user.firstname }}</td>
-        </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ user.email }}</td>
-            </tr>
-            <tr>
-                <th>Roles</th>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-            </tr>
-            <tr>
-                <th>Téléphone</th>
-                <td>{{ user.phoneNumber }}</td>
-            </tr>
-            <tr>
-                <th>Ville</th>
-                <td>{{ user.city }}</td>
-            </tr>
-            <tr>
-                <th>Profession</th>
-                <td>{{ user.occupation }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="profil">
 
-    <a href="{{ path('app_user_index') }}">Revenir à la liste</a>
+        <div class="profil-bloc">
 
-    <a href="{{ path('app_user_edit', {'id': user.id}) }}">Modifier</a>
+            {% if user.photo is not null %}
+                <img src="{{ vich_uploader_asset(user) }}" alt="{{ user.photo }}">
+            {% else %}
+                {# Ajoutez le chemin vers l'image par défaut ici #}
+                <img src="https://media.istockphoto.com/id/1300845620/fr/vectoriel/appartement-dic%C3%B4ne-dutilisateur-isol%C3%A9-sur-le-fond-blanc-symbole-utilisateur.jpg?s=612x612&w=0&k=20&c=BVOfS7mmvy2lnfBPghkN__k8OMsg7Nlykpgjn0YOHj0=" alt="Image par défaut">
+            {% endif %}
+            <h3>{{ user.firstname }} {{ user.lastname }}</h3>
 
+            <p>{{ user.occupation }}</p>
+
+        </div>
+        <div class="profil-bloc">
+
+            <h3>Description</h3>
+            <p>{{ user.description }}</p>
+
+        </div>
+        <div class="profil-bloc">
+
+        <h3>Prénom Nom : </h3>
+        <p>{{ user.firstname }} {{ user.lastname }}</p>
+
+        <h3>Mail :</h3>
+        <p>{{ user.email }}</p>
+
+        <h3>Téléphone :</h3>
+        <p>{{ user.phoneNumber }}</p>
+
+        <h3>Ville :</h3>
+        <p>{{ user.city }}</p>
+
+        <h3>Mon Reseau :</h3>
+            {% if user.reseau %}
+                <a href="{{ user.reseau }}" target="_blank">{{ user.reseau }}</a>
+            {% else %}
+                <p>Aucun réseau social spécifié</p>
+            {% endif %}
+        </div>
+    </div>
+
+    {% if app.user == user or is_granted('ROLE_ADMIN') %}
+    <a class="btn" href="{{ path('app_user_edit', {'id': user.id}) }}">Modifier profil</a>
+    {% if is_granted('ROLE_ADMIN') %}
+        <a class="btn" href="{{ path('app_admin_index', {'id': user.id}) }}">Administration</a>
+    {% endif %}
     {{ include('user/_delete_form.html.twig') }}
+    {% endif %}
 {% endblock %}

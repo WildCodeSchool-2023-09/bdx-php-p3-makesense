@@ -1,4 +1,3 @@
-
 h1 {
     font-size: 2rem;
     font-family: $font-text;
@@ -16,6 +15,7 @@ h1 {
     display: flex;
     justify-content: flex-end;
     padding-right: 10px;
+    border-radius: 0.37rem;
 }
 
 .input {
@@ -32,47 +32,57 @@ h1 {
     cursor: pointer;
 }
 
-.table {
-    font-family: $font-text;
+.required {
+    margin-right: 1rem;
     color: #0B3A44;
-    margin-top: 20px;
-    width: 100%;
-    border-collapse: collapse;
-    border-radius: $border-radius;
-    background-color: $color-first;
-    border: 1px #ddd;
 }
 
-.table th,
-.table td {
-    padding: 8px;
+#search_user_Recherche {
+    border-radius: 0.37rem;
+    padding-top: 0.5rem;
+}
+
+.my-class {
+    font-family: $font-text;
+    color: #0B3A44;
+    width: 50%;
+    border-collapse: collapse;
+    background-color: #9fa9b7;
+    box-shadow: $box-shadow-total;
+    padding: 1rem;
+    margin: 7rem;
+}
+
+.my-class th,
+.my-class td {
+    padding: 0.2rem;
     line-height: 1.42857143;
     border: 1px #ddd;
 }
 
-.table th {
-    background-color: $color-second;
+.my-class th {
+    border-radius: 0rem 3.1rem;
+    background-color: white;
 }
 
-.table tbody > tr:nth-child(odd) > td,
-.table tbody > tr:nth-child(odd) > th {
+.my-class tbody > tr:nth-child(odd) > td,
+.my-class tbody > tr:nth-child(odd) > th {
     background-color: #f9f9f9;
 }
 
-tbody {
+.tbody {
     background-color: rgba(69, 124, 140, 0.3);
-    cursor:pointer;
+    cursor: pointer;
 }
 
-.table tbody > tr:hover {
-    transition: transform .4s;
+.my-class tbody > tr:hover {
+    transition: transform .6s;
 }
 
-#user{
+#user {
     width: 600px;
     margin: auto;
-    padding: 5rem;
-    border-radius: 5px;
+    padding: 3rem;
     color: #0B3A44;
     font-weight: bold;
     display: flex;
@@ -82,37 +92,18 @@ tbody {
     box-shadow: $box-shadow-total;
 }
 
-#user_lastname{
-    float: right;
-    color: #0B3A44;
+.container-admin {
+    display: flex;
+    justify-content: center;
 }
 
-#user_firstname{
-    float: right;
-    color: #0B3A44;
-}
-
-#user_email{
-    float: right;
-    color: #0B3A44;
-}
-
-#user_roles{
-    float: right;
-    color: #0B3A44;
-}
-
-#user_phoneNumber{
-    float: right;
-    color: #0B3A44;
-}
-
-#user_city{
-    float: right;
-    color: #0B3A44;
-}
-
-#user_occupation{
+#user_lastname,
+#user_firstname,
+#user_email,
+#user_roles,
+#user_phoneNumber,
+#user_city,
+#user_occupation {
     float: right;
     color: #0B3A44;
 }
@@ -132,43 +123,32 @@ tbody {
 }
 
 @media screen and (max-width: 768px) {
-.table th,
-.table td{
-    display: flex;
-    flex-direction: column;
-    padding: 0.3px;
-}
-.table thead tr th {
-    display: none;
-}
-
-    #user_lastname{
-        margin-right: 50%;
+    .my-class th,
+    .my-class td {
+        display: flex;
+        flex-direction: column;
+        padding: 0.3px;
+    }
+    .my-class th{
+        display: none;
+    }
+    .my-class {
+        width: 100%;
+        margin: 1rem 0;
     }
 
-    #user_firstname{
-        margin-right: 50%;
-    }
-
-    #user_email{
-        margin-right: 50%;
-    }
-
-    #user_roles{
-        margin-right: 50%;
-    }
-
-    #user_phoneNumber{
-        margin-right: 50%;
-    }
-
-    #user_city{
-        margin-right: 50%;
-    }
-
+    #user_lastname,
+    #user_firstname,
+    #user_email,
+    #user_roles,
+    #user_phoneNumber,
+    #user_city,
     #user_occupation {
-        margin-right: 50%;
+        float: none;
+        margin-right: 0;
+    }
+
+    #user{
+        width: 150px;
     }
 }
-
-

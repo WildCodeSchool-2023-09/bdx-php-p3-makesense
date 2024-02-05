@@ -5,6 +5,7 @@
 .decisionBox {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-evenly;
 }
 
 .decision-container {
@@ -34,11 +35,13 @@
     width: 100%;
     align-content: center;
     flex-wrap: wrap;
+    font-size: 1.5rem;
 }
 
 .dates-container > div:first-child {
     display: flex;
     justify-content: center;
+    font-size: 1.5rem;
 }
 
 .other-container {
@@ -48,7 +51,8 @@
 
 .date-child {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+/*    align-items: center;*/
 }
 
 .square-container-column-decision {
@@ -64,10 +68,89 @@
     align-content: center;
     flex-wrap: wrap;
 }
+.square-container-column-new {
+    display: flex;
+    border-radius: $border-radius;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: $color-second;
+    width: 90%; /* Utilisez 100% au lieu de 90% */
+    margin: 1rem auto;
+    padding: 0 2rem;
+    font-family: $font-text;
+    color: $color-text;
+    font-weight: bold;
+    box-shadow: $box-shadow;
+    box-sizing: border-box; /* Inclure le padding dans la largeur totale */
+}
+
+.date_active{
+    background-color: #9fa9b7;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.owner_active{
+    border: 2px solid rebeccapurple;
+}
+
+.expert {
+    border: 2px solid yellow;
+}
+
+.card-new-title {
+    display: flex;
+    justify-content: center;
+    margin: 2rem 0;
+}
+
+.card-new-title > div > input {
+    border-radius : 0.37rem;
+    padding : 0.3rem;
+}
+
+.date-box {
+    margin: 2rem 0;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin: 2%;
+    width: 90%;
+    padding: 2%;
+}
+
+.decision-send {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.textForHover {
+
+}
+
+.textForHover:hover {
+    text-shadow: 2px 2px 4px rgba(189, 185, 185, 0.8);
+    cursor: pointer;
+}
+
+.other-container > h1 {
+    background: white;
+    border-radius: 0.55rem;
+    box-shadow: 1px 1px 8px #555;
+}
+
+.warning-date {
+    color: red;
+    margin: 1rem;
+}
 
 
 
-@media screen and (min-width: 768px) {
+    @media screen and (min-width: 768px) {
     .square-container-column-decision {
         display: grid;
         grid-template-columns: 1fr 1fr; /* Deux colonnes égales en mode bureau */
@@ -94,6 +177,37 @@
     }
 }
 
+.decision-user-list {
+    display: flex;
+}
 
+.decision-user-list-user {
+    text-align: center;
 
+    & img {
+        width: 50px;
+        height: 50px;
+        border-radius: 100%;
+    }
+}
 
+.container-profile > img {
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    margin-right: 0.5rem;
+}
+
+.container-profile {
+    display: flex;
+    align-items: center;
+    margin-right: 0.5rem;
+    margin-top: 0.5rem;
+}
+.container-profile > p > span {
+    font-weight: bold;
+}
+
+.container-profile > p {
+    text-decoration: none;
+}

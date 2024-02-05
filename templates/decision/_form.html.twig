@@ -1,47 +1,49 @@
+<div class="square-container-column-new">
 {{ form_start(form) }}
-
-<div class="">
-    {{ form_row(form.title) }}
+<div class="card-new-title">
+    {{ form_row(form.title, {'label': 'Titre de la proposition* : '}) }}
 </div>
 
-<div class="">
-    {{ form_row(form.description) }}
+<div class="date-box">
+
+    {{ form_row(form.description, {'label': 'La déscription de votre proposition* : '}) }}
 </div>
 
-<div class="">
-    {{ form_row(form.impact) }}
+<div class="date-box">
+    {{ form_row(form.impact, {'label': "L'impact que va avoir votre proposition si elle est appliquée* : "}) }}
 </div>
 
-<div class="">
-    {{ form_row(form.context) }}
+<div class="date-box">
+    {{ form_row(form.context , {'label': 'Quelle est la situation actuelle par rapport à votre proposition ?* : '}) }}
 </div>
 
-<div class="">
-    {{ form_row(form.benefits) }}
+<div class="date-box">
+    {{ form_row(form.benefits, {'label': 'Les bénéfices que va apporter votre proposition si elle est appliquée* : '}) }}
 </div>
 
-<div class="">
-    {{ form_row(form.risk) }}
+<div class="date-box">
+    {{ form_row(form.risk, {'label': "Les risques qui peuvent être rencontrés si la proposition est appliquée* : "}) }}
 </div>
 
-<div class="">
-    {{ form_row(form.startingDate) }}
+<div class="date-box">
+    <p class="warning-date"> ⚠️Attention, vos dates doivent être logiques et se succéder ; la date de début doit se trouver avant la date limite pour donner son avis, et ainsi de suite.⚠️</p>
+    {{ form_row(form.startingDate , {'label': 'La décision commencera le* : '}) }}
 </div>
 
-<div class="">
-    {{ form_row(form.deadlineOpinion) }}
+<div class="date-box">
+    {{ form_row(form.deadlineOpinion, {'label': 'Date limite pour donner son avis* : '}) }}
 </div>
 
-<div class="">
-    {{ form_row(form.deadlineDecision) }}
+<div class="date-box">
+    {{ form_row(form.deadlineDecision, {'label': 'La première décision devra être prise avant le* : '}) }}
 </div>
 
-<div class="">
-    {{ form_row(form.deadlineConflict) }}
+<div class="date-box">
+    {{ form_row(form.deadlineConflict , {'label': 'Date finale pour donner son avis après que la première décision a été prise* : '}) }}
 </div>
 
-<div class="">
-    {{ form_row(form.deadlineFinal) }}
+<div class="date-box">
+    {{ form_row(form.deadlineFinal , {'label': 'La décision devra être prise avant le* : '}) }}
 </div>
 
 <div class="">
@@ -49,9 +51,21 @@
     {{ form_errors(form.users) }}
     {{ form_widget(form.users) }}
 </div>
+    <div class="">
+        {{ form_label(form.userExpert) }}
+        {{ form_errors(form.userExpert) }}
+        {{ form_widget(form.userExpert) }}
+    </div>
+    <div class="">
+        {{ form_label(form.groupes) }}
+        {{ form_errors(form.groupes) }}
+        {{ form_widget(form.groupes) }}
+    </div>
 
-<div class="">
-    <button class="button">{{ button_label|default('Save') }}</button>
+<div class="decision-send">
+    <button class="button">{{ button_label|default('Envoyer ma décision') }}</button>
 </div>
 
 {{ form_end(form) }}
+</div>
+
