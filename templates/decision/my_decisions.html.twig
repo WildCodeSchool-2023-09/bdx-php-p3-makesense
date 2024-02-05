@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Mes Décisions{% endblock %}
+{% block title %}Mes proposition{% endblock %}
 
 {% block body %}
-    <h1>Mes Décisions</h1>
+    <h1>Mes proposition</h1>
 
     <div class="decisionBox">
         {% for decision in decisions %}
@@ -22,6 +22,6 @@
         {% endfor %}
     </div>
     <a href="{{ path('app_decision_new') }}" class="button">
-        Créer une nouvelle décision
+        Créer une nouvelle proposition
     </a>
 {% endblock %}
