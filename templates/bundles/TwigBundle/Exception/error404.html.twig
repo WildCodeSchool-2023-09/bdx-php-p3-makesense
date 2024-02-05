@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+
+<div class="square-container-column">
+
+    <h1 id="h1-error">Page non trouvée</h1>
+
+    <h2 id="h2-error"> Erreur 404 </h2>
+    <p id="p1-error">La page demandée n'a pas été trouvée.</p>
+    <p id="p2-error">
+        <a href="{{ path('app_decision_index') }}">Retour aux décisions</a>.
+    </p>
+</div>
+{% endblock %}
