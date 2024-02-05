@@ -1,8 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Decision index{% endblock %}
+{% block title %}Proposition index{% endblock %}
 
 {% block body %}
+
     <h1>Les décisions en cours</h1>
     <div class="separator"></div>
     <div class="decisionBox">
@@ -23,6 +24,7 @@
             {% endif %}
         {% endfor %}
     </div>
+
     <h1>Les décisions terminées</h1>
     <div class="separator"></div>
     <div class="decisionBox">
@@ -44,7 +46,7 @@
         {% endfor %}
     </div>
     <a href="{{ path('app_decision_new') }}" class="button">
-        Créer une nouvelle décision
+        Créer une nouvelle proposition
     </a>
 {% endblock %}
 
