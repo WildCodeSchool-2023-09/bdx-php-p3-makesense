@@ -65,6 +65,11 @@ h1 {
     background-color: white;
 }
 
+.edit {
+    display: flex;
+    justify-content: center;
+}
+
 .my-class tbody > tr:nth-child(odd) > td,
 .my-class tbody > tr:nth-child(odd) > th {
     background-color: #f9f9f9;
