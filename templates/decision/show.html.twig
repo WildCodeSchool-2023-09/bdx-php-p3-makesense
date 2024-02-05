@@ -150,9 +150,16 @@
             <div>
                 <h2> Les personnes expertes</h2>
             </div>
+            <div class="decision-user-list">
             {% for user in userExpert %}
-                <li>{{ user.firstname }}</li>
+                <div class="decision-user-list-user">
+                    <p>{{ user.firstname }}</p>
+                    <a href="{{ path('app_user_profile_show', {id: user.id}) }}">
+                        <img src="{{ asset('uploads/images/photo/' ~ user.photo ) }}">
+                    </a>
+                </div>
             {% endfor %}
+            </div>
             <div>
                 <h2> Les groupes impactés</h2>
             </div>
