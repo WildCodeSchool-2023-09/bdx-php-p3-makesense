@@ -25,7 +25,6 @@ input#search_group_search{
 form[name="search_group"] > button.submit{
     float: right;
     margin-bottom: 1rem;
-    /*margin-top: 2rem;*/
     padding: 0.5rem 1rem;
     background-color: rgba(25, 108, 132, 0.3);
     border-radius: 6.25rem;
@@ -51,23 +50,13 @@ form[name="search_group"] > button.submit:hover{
     margin: auto;
     border-radius:2rem;
     box-shadow: $box-shadow-total;
-
-}
-
-table{
     width: 80%;
-    //white-space: nowrap;
-
 }
 
 table.table_responsive>thead>tr>th{
     background-color: white;
 }
-/*
-.table tbody > tr:nth-child(odd) > td,
-.table tbody > tr:nth-child(odd) > th {
-    background-color: whitesmoke;
-}*/
+
 
 table>thead th{
     padding:0.5rem;
@@ -169,7 +158,4 @@ span.action_btn>a:hover{
         padding-left: 0;
         font-size: 0.75rem;
     }
-    /*table.table_response > tbody > >tr > td{
-
-    }*/
 }
