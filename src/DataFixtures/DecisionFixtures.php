@@ -12,24 +12,62 @@ class DecisionFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
-        for ($i = 0; $i < 5; $i++) {
+        $decisionData = [
+            [
+                'title' => 'Decision Title 1',
+                'status' => true,
+                'description' => 'Description 2',
+                'impact' => 'Impact 1',
+                'context' => 'Context 1',
+                'benefits' => 'Benefits 1',
+                'risk' => 'Risk 1',
+                'startingDate' => new DateTimeImmutable(true),
+                'deadlineOpinion' => new DateTimeImmutable(true),
+                'deadlineDecision' => new DateTimeImmutable(true),
+                'deadlineConflict' => new DateTimeImmutable(false),
+                'deadlineFinal' => new DateTimeImmutable(false),
+                'user' => 'user_johan.doe@example.com',
+                'group' => $this->getReference("groupe"),
+                'owner' => 'john.doe@example.com',
+            ],
+            [
+                'title' => 'Decision Title 2',
+                'status' => true,
+                'description' => 'Description 2',
+                'impact' => 'Impact 2',
+                'context' => 'Context 2',
+                'benefits' => 'Benefits 2',
+                'risk' => 'Risk 2',
+                'startingDate' => new DateTimeImmutable(true),
+                'deadlineOpinion' => new DateTimeImmutable(true),
+                'deadlineDecision' => new DateTimeImmutable(true),
+                'deadlineConflict' => new DateTimeImmutable(false),
+                'deadlineFinal' => new DateTimeImmutable(false),
+                'user' => 'user_johan.doe@example.com',
+                'group' => $this->getReference("groupe"),
+                'owner' => 'john.doe@example.com',
+            ],
+        ];
+
+        foreach ($decisionData as $decisionDataItem) {
             $decision = new Decision();
-            $decision->setTitle('Title' . $i);
-            $decision->addUser($this->getReference('user_johan.doe@example.com'));
-            $decision->setStatus(true);
-            $decision->setDescription('description' . $i);
-            $decision->setImpact('impact' . $i);
-            $decision->setContext('context' . $i);
-            $decision->setBenefits('benefits' . $i);
-            $decision->setRisk('risk' . $i);
-            $decision->setStartingDate(new DateTimeImmutable(true));
-            $decision->setDeadlineOpinion(new DateTimeImmutable(true));
-            $decision->setDeadlineDecision(new DateTimeImmutable(true));
-            $decision->setDeadlineConflict(new DateTimeImmutable(false));
-            $decision->setDeadlineFinal(new DateTimeImmutable(false));
-            $this->addReference('decision_' . $i, $decision);
-            $decision->addGroupe($this->getReference("groupe"));
-            $decision->setOwner($this->getReference('user_johan.doe@example.com'));
+            $decision->setTitle($decisionDataItem['title']);
+            $decision->setStatus($decisionDataItem['status']);
+            $decision->setDescription($decisionDataItem['description']);
+            $decision->setImpact($decisionDataItem['impact']);
+            $decision->setContext($decisionDataItem['context']);
+            $decision->setBenefits($decisionDataItem['benefits']);
+            $decision->setRisk($decisionDataItem['risk']);
+            $decision->setStartingDate($decisionDataItem['startingDate']);
+            $decision->setDeadlineOpinion($decisionDataItem['deadlineOpinion']);
+            $decision->setDeadlineDecision($decisionDataItem['deadlineDecision']);
+            $decision->setDeadlineConflict($decisionDataItem['deadlineConflict']);
+            $decision->setDeadlineFinal($decisionDataItem['deadlineFinal']);
+            $decision->addUser($this->getReference($decisionDataItem['user']));
+            $decision->addGroupe($decisionDataItem['group']);
+            $decision->setOwner($this->getReference('user_' . $decisionDataItem['owner']));
+
+            $this->addReference('decision_' . $decisionDataItem['title'], $decision);
 
             $manager->persist($decision);
         }

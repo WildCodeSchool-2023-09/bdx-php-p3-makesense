@@ -100,7 +100,11 @@
                         <p>{{ opinion.text }}</p>
                         <p>{{ opinion.createdAt ? opinion.createdAt|date('Y-m-d H:i:s') : '' }}</p>
                         <p>
-                            {{ opinion.author.firstname }} {{ opinion.author.lastname }}
+                            {% if opinion.author is not null %}
+                                {{ opinion.author.firstname }} {{ opinion.author.lastname }}
+                            {% else %}
+                                Auteur.e inconnu.e
+                            {% endif %}
                         </p>
                         <div>
                             {% if opinion.author == decision.owner %}

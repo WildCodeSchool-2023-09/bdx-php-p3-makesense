@@ -26,11 +26,11 @@ class UserFixtures extends Fixture
                 'password' => 'tototata',
                 'lastname' => 'Doe',
                 'firstname' => 'John',
-                'phoneNumber' => '123456789',
+                'phoneNumber' => '0123456789',
                 'city' => 'New York',
                 'occupation' => 'Developer',
                 'description' => 'Passionate about coding.',
-                /*'photo' => 'john_doe.jpg',*/
+                'photo' => '/image/image.png',
                 'reseau' => 'http://www.johndoe.com',
             ],
             [
@@ -39,11 +39,11 @@ class UserFixtures extends Fixture
                 'password' => 'taratata',
                 'lastname' => 'Doe',
                 'firstname' => 'Jane',
-                'phoneNumber' => '987654321',
+                'phoneNumber' => '0987654321',
                 'city' => 'San Francisco',
                 'occupation' => 'Designer',
                 'description' => 'Creative and artistic.',
-               /* 'photo' => 'jane_doe.jpg',*/
+                'photo' => '/image/image.png',
                 'reseau' => 'http://www.janedoe.com',
             ],
 
@@ -53,11 +53,11 @@ class UserFixtures extends Fixture
                 'password' => 'azertyui',
                 'lastname' => 'Doe',
                 'firstname' => 'Johan',
-                'phoneNumber' => '897653412',
+                'phoneNumber' => '0897653412',
                 'city' => 'Las Vegas',
                 'occupation' => 'Developer',
                 'description' => 'Coding.',
-                /*'photo' => 'johan_doe.jpg',*/
+                'photo' => '/image/image.png',
                 'reseau' => 'http://www.johandoe.com',
             ],
         ];
@@ -73,6 +73,7 @@ class UserFixtures extends Fixture
             $user->setCity($userDataItem['city']);
             $user->setOccupation($userDataItem['occupation']);
             $user->setDescription($userDataItem['description']);
+            $user->setPhoto($userDataItem['photo']);
            /* $admin->setPhoto($userDataItem['photo']);*/
             $user->setReseau($userDataItem['reseau']);
             $this->addReference('user_' .  $userDataItem['email'], $user);
