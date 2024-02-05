@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Decision{% endblock %}
+{% block title %}Proposition{% endblock %}
 
 
 {% block body %}
@@ -14,7 +14,7 @@
                     date_active
                 {% endif %}">
                 <p>Commencée le : {{ decision.startingDate ? decision.startingDate|date('Y-m-d') : '' }}</p>
-                <p class="decision-starting">Prise de décision commencée</p>
+                <p class="decision-starting">Début de la proposition</p>
             </div>
 
             <div class="date-child
