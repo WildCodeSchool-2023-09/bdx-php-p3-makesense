@@ -3,7 +3,9 @@
 {% block title %}Proposition{% endblock %}
 
 {% block body %}
-    <h1>Les proposition en cours</h1>
+
+    <h1>Les décisions en cours</h1>
+    <div class="separator"></div>
     <div class="decisionBox">
         {% for decision in decisions %}
             {% if actualDate < decision.deadlineFinal %}
@@ -22,7 +24,9 @@
             {% endif %}
         {% endfor %}
     </div>
-    <h1>Les proposition terminées</h1>
+
+    <h1>Les décisions terminées</h1>
+    <div class="separator"></div>
     <div class="decisionBox">
         {% for decision in decisions %}
             {% if actualDate > decision.deadlineFinal %}

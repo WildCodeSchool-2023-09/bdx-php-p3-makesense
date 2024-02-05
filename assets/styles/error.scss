@@ -1,0 +1,31 @@
+p.square-container-column {
+    display: flex;
+    border-radius: $border-radius;
+    align-items: center;
+    justify-content: center;
+    background-color: $color-second;
+    width: 90%;
+    margin: 1rem auto;
+    padding: 0 2rem;
+    font-family: $font-text;
+    color: $color-text;
+    font-weight: bold;
+    box-shadow: $box-shadow;
+
+}
+
+#h1-error {
+padding-bottom: 0.37rem;
+}
+
+#h2-error{
+    padding-bottom: 1rem;
+}
+
+#p1-error{
+    padding-bottom: 1rem;
+}
+
+#p2-error{
+    padding-bottom: 0.37rem;
+}
