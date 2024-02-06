@@ -58,7 +58,7 @@
                 <p>{{ decision.description|raw }}</p>
             </div>
             <div>
-                <h2 class="textForHover"> Impact sur l’organisation <i class="fa-solid fa-chevron-down"></i></h2>
+                <h2 class="textForHover"> Impact sur l'organisation <i class="fa-solid fa-chevron-down"></i></h2>
             </div>
             <div class="decisionP" id="impactContent" style="display: none;">
                 <p>{{ decision.impact|raw }}</p>
@@ -101,7 +101,11 @@
                         <p>{{ opinion.text }}</p>
                         <p>{{ opinion.createdAt ? opinion.createdAt|date('Y-m-d H:i:s') : '' }}</p>
                         <p>
-                            {{ opinion.author.firstname }} {{ opinion.author.lastname }}
+                            {% if opinion.author is not null %}
+                                {{ opinion.author.firstname }} {{ opinion.author.lastname }}
+                            {% else %}
+                                Auteur.e inconnu.e
+                            {% endif %}
                         </p>
                         <div>
                             {% if opinion.author == decision.owner %}
@@ -147,9 +151,16 @@
             <div>
                 <h2> Les personnes expertes</h2>
             </div>
-            {% for user in userExpert %}
-                <li>{{ user.firstname }}</li>
-            {% endfor %}
+            <div class="decision-user-list">
+                {% for user in userExpert %}
+                    <div class="decision-user-list-user">
+                        <p>{{ user.firstname }}</p>
+                        <a href="{{ path('app_user_profile_show', {id: user.id}) }}">
+                            <img src="{{ asset('uploads/images/photo/' ~ user.photo ) }}">
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
             <div>
                 <h2> Les groupes impactés</h2>
             </div>
@@ -157,7 +168,7 @@
                 <li>{{ group.name }}</li>
             {% endfor %}
 
-{#            {% if current_step == 3 or current_step == 5 %}
+            {#            {% if current_step == 3 or current_step == 5 %}
                 {% if app.user == decision.owner %}
                     <div class="withMarginTop">
                         <a class="button" href="{{ path('new_opinion', {'id': decision.id}) }}"> Donner votre avis </a>
@@ -185,13 +196,3 @@
         {% endif %}
     </div>
 {% endblock %}
-
-
-
-
-
-
-
-
-
-
