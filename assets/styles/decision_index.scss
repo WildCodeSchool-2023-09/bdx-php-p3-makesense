@@ -9,10 +9,10 @@
 }
 
 .separator {
+    margin-bottom: 1rem;
     width: 100%;
     height: 1px;
-    background-color: #090909;
-    margin: -1rem;
+    background-color: $color-text;
 }
 
 .decision-container {
