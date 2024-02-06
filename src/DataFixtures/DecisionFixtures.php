@@ -21,11 +21,26 @@ class DecisionFixtures extends Fixture implements DependentFixtureInterface
                 'context' => 'Context 1',
                 'benefits' => 'Benefits 1',
                 'risk' => 'Risk 1',
-                'startingDate' => new DateTimeImmutable(true),
-                'deadlineOpinion' => new DateTimeImmutable(true),
-                'deadlineDecision' => new DateTimeImmutable(true),
-                'deadlineConflict' => new DateTimeImmutable(false),
-                'deadlineFinal' => new DateTimeImmutable(false),
+                'startingDate' => \Monolog\DateTimeImmutable::createFromFormat(
+                    'Y-m-d',
+                    '2024-02-05',
+                ),
+                'deadlineOpinion' => \Monolog\DateTimeImmutable::createFromFormat(
+                    'Y-m-d',
+                    '2024-02-10',
+                ),
+                'deadlineDecision' => \Monolog\DateTimeImmutable::createFromFormat(
+                    'Y-m-d',
+                    '2024-02-15',
+                ),
+                'deadlineConflict' => \Monolog\DateTimeImmutable::createFromFormat(
+                    'Y-m-d',
+                    '2024-02-20',
+                ),
+                'deadlineFinal' => \Monolog\DateTimeImmutable::createFromFormat(
+                    'Y-m-d',
+                    '2024-02-25',
+                ),
                 'user' => 'user_johan.doe@example.com',
                 'group' => $this->getReference("groupe"),
                 'owner' => 'john.doe@example.com',

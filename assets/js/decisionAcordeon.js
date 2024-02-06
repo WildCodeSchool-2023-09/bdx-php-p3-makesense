@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function () {
     descriptionTitles.forEach(function (title) {
         if (title.textContent.includes('Description')) {
             title.addEventListener('click', toggleDescription);
-        } else if (title.textContent.includes('Impact sur l’organisation')) {
+        } else if (title.textContent.includes('Impact sur l\'organisation')) {
             title.addEventListener('click', toggleImpact);
         } else if (title.textContent.includes('Situation actuelle')) {
             title.addEventListener('click', toggleSituation);
