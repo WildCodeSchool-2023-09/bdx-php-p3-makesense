@@ -12,7 +12,7 @@ class OpinionFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
-        $decision = $this->getReference('decision_0');
+        $decision = $this->getReference('decision_Decision Title 1');
 
         for ($i = 0; $i < 5; $i++) {
             $opinion = new Opinion();
