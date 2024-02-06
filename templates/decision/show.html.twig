@@ -88,6 +88,9 @@
             <div>
                 <h2> Avis sur la décision <i class="fa-solid fa-chevron-down"></i></h2>
             </div>
+            <p class="violet"> Violet = Auteur</p>
+            <p class="yellow"> Jaune = Personnes Expertes</p>
+            <p class="white"> Blanc = Utilisateurs</p>
             {% for opinion in decision.opinions %}
                 {% if opinion in currentStepOpinions or opinion in previousStepOpinions %}
 
