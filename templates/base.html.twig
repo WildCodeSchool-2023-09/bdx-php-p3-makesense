@@ -23,9 +23,15 @@
     </head>
     <body>
         {% include '_navbar.html.twig' %}
-            {% for flash in app.flashes('success') %}
-                <div class="alert alert-success">{{ flash }}</div>
-            {% endfor %}
+        {% for flashMessage in app.flashes('success') %}
+                <div class="alert alert-success" id="flash-message">{{ flashMessage }}</div>
+            <script>
+                // Cacher le message flash après 3 secondes
+                setTimeout(function() {
+                    document.getElementById('flash-message').style.display = 'none';
+                }, 3000); // 3000 millisecondes = 3 secondes
+            </script>
+        {% endfor %}
         <main>
             {% block body %}
             {% endblock %}
