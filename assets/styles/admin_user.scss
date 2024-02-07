@@ -4,28 +4,27 @@ h1 {
     color: #0B3A44;
     font-weight: bold;
     text-align: center;
-    margin: 3%;
+    margin: 2%;
 }
 
 .search {
     font-family: $font-text;
     color: #0B3A44;
-    font-size: 1rem;
+    font-size: 1.7rem;
     font-weight: bold;
     display: flex;
-    justify-content: flex-end;
-    padding-right: 10px;
+    justify-content: center;
     border-radius: 0.37rem;
 }
 
 .input {
     float: right;
-    margin-right: 5%;
-    margin-top: 8%;
+    margin-right: 0.1%;
+    margin-top: 3%;
     padding: 0.5rem;
     background-color: rgba(25, 108, 132, 0.30);
     border-radius: 6.6rem;
-    font-size: 1rem;
+    font-size: 1.5rem;
     font-weight: bold;
     color: #0B3A44;
     border: none;
@@ -39,6 +38,8 @@ h1 {
 
 #search_user_Recherche {
     border-radius: 0.37rem;
+    padding-left: 0.5rem;
+    width: 20rem;
     padding-top: 0.5rem;
 }
 
@@ -55,9 +56,9 @@ h1 {
 
 .my-class th,
 .my-class td {
-    padding: 0.2rem;
-    line-height: 1.42857143;
-    border: 1px #ddd;
+    padding-left: 1.5rem;
+    //line-height: 1.42857143;
+    border: 1px black;
 }
 
 .my-class th {
@@ -85,9 +86,10 @@ h1 {
 }
 
 #user {
-    width: 600px;
+    width: 400px;
     margin: auto;
-    padding: 3rem;
+    margin-bottom: -2rem;
+    padding: 2rem;
     color: #0B3A44;
     font-weight: bold;
     display: flex;
@@ -111,12 +113,15 @@ h1 {
 #user_occupation {
     float: right;
     color: #0B3A44;
+    margin-block: 0.3rem;
+    padding-top: 0.5rem;
+    border-radius: 0.37rem;
 }
 
 .btn {
     float: right;
     margin-right: 8%;
-    margin-top: 8%;
+    margin-top: 6%;
     padding: 0.5rem;
     background-color: rgba(25, 108, 132, 0.30);
     border-radius: 6.6rem;
@@ -155,5 +160,16 @@ h1 {
 
     #user{
         width: 150px;
+        margin-bottom: 0;
+    }
+
+    #search_user_Recherche {
+        border-radius: 0.37rem;
+        width: 10rem;
+
+    }
+
+    .input {
+        margin-right: 0.1rem;
     }
 }
