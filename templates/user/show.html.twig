@@ -42,7 +42,7 @@
 
         <h3>Mon Reseau :</h3>
             {% if user.reseau %}
-                <a href="{{ user.reseau }}" target="_blank">{{ user.reseau }}</a>
+                <a href="{{ user.reseau }}" target="_blank">{{ user.reseau|slice(0, 30) }}</a>
             {% else %}
                 <p>Aucun réseau social spécifié</p>
             {% endif %}

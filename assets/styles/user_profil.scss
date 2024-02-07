@@ -13,10 +13,37 @@
     background-color: $color-second;
     box-shadow: $box-shadow;
     padding: 5px;
-    width: 22.0625rem;
-    height: 16.0625rem;
+    width: 23rem;
+    height: 17rem;
     margin-top: 10px;
     margin-bottom: 10px;
+}
+
+.profil-bloc>textarea {
+    width: 20rem;
+    height: 10rem;
+}
+
+.profil-bloc-modif {
+   align-items: flex-start;
+}
+
+.profil-bloc-row>input {
+    width: calc(100% - 150px); /* Calculer la largeur pour occuper l'espace restant */
+    /* Vous pouvez ajuster cette valeur de largeur selon vos besoins */
+    margin-right: 10px;
+    padding-top: 0.5rem;
+    border-radius: 6px;
+    padding-left: 0.5rem;
+}
+
+.profil-bloc-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px;
+    width: 100%;
+
 }
 
 .profil-bloc>img {
