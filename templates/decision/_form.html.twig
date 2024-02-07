@@ -27,7 +27,7 @@
 
 <div class="date-box">
     <p class="warning-date"> ⚠️Attention, vos dates doivent être logiques et se succéder ; la date de début doit se trouver avant la date limite pour donner son avis, et ainsi de suite.⚠️</p>
-    {{ form_row(form.startingDate , {'label': 'La décision commencera le* : '}) }}
+    {{ form_row(form.startingDate , {'label': 'La proposition commencera le* : '}) }}
 </div>
 
 <div class="date-box">
@@ -63,7 +63,7 @@
     </div>
 
 <div class="decision-send">
-    <button class="button">{{ button_label|default('Envoyer ma décision') }}</button>
+    <button class="button">{{ button_label|default('Envoyer ma proposition') }}</button>
 </div>
 
 {{ form_end(form) }}

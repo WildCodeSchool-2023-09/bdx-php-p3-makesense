@@ -39,7 +39,7 @@
                    date_active
                 {% endif %}">
                 <p>Échéance le {{ decision.deadlineConflict ? decision.deadlineConflict|date('Y-m-d') : '' }}</p>
-                <p class="conflict">Rentrer en conflit</p>
+                <p class="conflict">Période de débat</p>
             </div>
             <div class="date-child
                 {% if current_step is defined and current_step == 5 %}
