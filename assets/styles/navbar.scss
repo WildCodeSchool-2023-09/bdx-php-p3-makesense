@@ -17,6 +17,11 @@
 .navbar-left > ul > li > a:hover {
     text-shadow: 2px 2px 4px rgba(189, 185, 185, 0.8);
     cursor: pointer;
+
+
+}.navbar-right > p a:hover {
+    text-shadow: 2px 2px 4px rgba(189, 185, 185, 0.8);
+    cursor: pointer;
 }
 
 .navbar-right > p > a {
@@ -59,6 +64,10 @@
     display: flex;
     align-items: center;
     margin-right: 2rem;
+}
+
+.navbar-right p a {
+    text-decoration: none;
 }
 
 .profile-image {
